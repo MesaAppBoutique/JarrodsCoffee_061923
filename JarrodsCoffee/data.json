@@ -1,0 +1,443 @@
+
+
+
+
+
+
+[
+    {
+        "id": "1",
+        "category": "Hot Beverages",
+        "menuItems": [
+            {
+                "id": "GHB65AXQ146EE",
+                "menuItem": "House Coffee",
+                "size1": "12 oz",
+                "size2": "16 oz",
+                "price1": 2.50,
+                "price2": 3.00
+            },
+            {
+                "id": "VAH9VC2N10TPE",
+                "menuItem": "Americano",
+                "size1": "12 oz",
+                "size2": "16 oz",
+                "price1": 3.25,
+                "price2": 3.75
+            },
+            {
+                "id": "DGNY8W9BF4NBG",
+                "menuItem": "Cappuccino",
+                "size1": "12 oz",
+                "size2": "16 oz",
+                "price2": 3.50,
+                "price2": 4.00
+            },
+            {
+                "id": "9ANHWMFCX1CSW",
+                "menuItem": "Latte",
+                "size1": "12 oz",
+                "size2": "16 oz",
+                "price1": 3.50,
+                "price2": 4.00
+            },
+            {
+                "id": "8CMRSZQ97RHDY",
+                "menuItem": "Chai Latte",
+                "size1": "12 oz",
+                "size2": "16 oz",
+                "price1": 3.75,
+                "price2": 4.25
+            },
+            {
+                "id": "8HQ42BPHTW5EM",
+                "menuItem": "Hot Tea",
+                "size1": "12 oz",
+                "size2": "16 oz",
+                "price1": 2.50,
+                "price2": 3.00
+            },
+            {
+                "id": "BH7KPDXWWYZ84",
+                "menuItem": "Hot Cocoa",
+                "size1": "12 oz",
+                "size2": "16 oz",
+                "price1": 2.50,
+                "price2": 3.00
+            },
+            {
+                "id": "0KX6GN9X5PT3E",
+                "menuItem": "Mocha",
+                "size1": "12 oz",
+                "size2": "16 oz",
+                "price1": 2.95,
+                "price2": 3.45
+            },
+            {
+                "id": "0KX6GN9X5PT3Z",
+                "menuItem": "Espresso Shot",
+                "size1": "Single",
+                "size2": "Double",
+                "price1": 2.50,
+                "price2": 3.50
+            },
+            {
+                "id": "PN3VR6RB1W0Y0",
+                "menuItem": "Caramel",
+                "size1": "12 oz",
+                "size2": "16 oz",
+                "price1": 2.95,
+                "price2": 3.45
+            },
+            {
+                "id": "4MM57WV5GJ9A8",
+                "menuItem": "Vanilla",
+                "size1": "12 oz",
+                "size2": "16 oz",
+                "price1": 2.95,
+                "price2": 3.45
+            },
+            {
+                "id": "4MM57WV5GJ9A9",
+                "menuItem": "Hot Chocolate",
+                "size1": "12 oz",
+                "size2": "16 oz",
+                "price1": 2.25,
+                "price2": 2.75
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "category": "Iced Beverages",
+        "menuItems": [
+            {
+                "id": "DPWTC6M47FJZG",
+                "menuItem": "Iced Americano",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 3.75,
+                "price2": 4.25
+            },
+            {
+                "id": "9BEZCR4WW94ER",
+                "menuItem": "Iced Love a Latte",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 3.75,
+                "price2": 4.25
+            },
+            {
+                "id": "Y2KFXZ9KKQPP0",
+                "menuItem": "Iced Caramel Latte(Ghiradelli)",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 4.00,
+                "price2": 4.50
+            },
+            {
+                "id": "417BXMXXKPA3C",
+                "menuItem": "Iced Mocha Latte(Ghiradelli)",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 3.50,
+                "price2": 4.00
+            },
+            {
+                "id": "C0QZS4BPV827E",
+                "menuItem": "Iced Vanilla Latte(Ghiradelli)",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 3.50,
+                "price2": 4.00
+            },
+            {
+                "id": "N7ZC62W20ER44",
+                "menuItem": "Iced Chai Latte",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 4.00,
+                "price2": 4.50
+            },
+            {
+                "id": "YXM69JP1K3JW6",
+                "menuItem": "Lemonade",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 2.50,
+                "price2": 3.25
+            },
+            {
+                "id": "MJ4ZMWQRSX48E",
+                "menuItem": "Shaved Ice",
+                "size1": "16 oz",
+                "price1": 3.00
+            },
+            {
+                "id": "C4K09J9SZA7NJ",
+                "menuItem": "Italian Soda",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 3.00,
+                "price2": 3.50
+            },
+            {
+                "id": "33G6MHNC65SC1",
+                "menuItem": "Iced Tea",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 2.50,
+                "price2": 3.25
+            }
+        ]
+    },
+    {
+       "id": "3",
+       "category": "Blended",
+       "menuItems": [
+            {
+                "id": "21Q9QKQRTTHXC",
+                "menuItem": "Caramel Kick",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 4.95,
+                "price2": 5.75
+            },
+            {
+                "id": "4047T6R5EW688",
+                "menuItem": "Cinnmon Bang",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 4.95,
+                "price2": 5.75
+            },
+            {
+                "id": "0X7C6MDS9PRSE",
+                "menuItem": "Mocha My-day",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 4.95,
+                "price2": 5.75
+            },
+            {
+                "id": "1B77NFBY2Q9RT",
+                "menuItem": "Vanilla Yum",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 4.95,
+                "price2": 5.75
+            },
+            {
+                "id": "FDKFD16Y1WNR2",
+                "menuItem": "Hazelnut Fun",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 4.95,
+                "price2": 5.75
+            },
+            {
+                "id": "X4E0BWT56GS48",
+                "menuItem": "Green Tea D’Lish",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 4.95,
+                "price2": 5.75
+            },
+            {
+                "id": "CRW4VM4BYCP4R",
+                "menuItem": "Chai Oh-Yea",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 4.95,
+                "price2": 5.75
+            },
+            {
+                "id": "Z58TG96F3BNYG",
+                "menuItem": "Peanutbutter Mocha Blast",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 4.95,
+                "price2": 5.75
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "category": "Smoothies",
+        "menuItems": [
+            {
+                "id": "DPWTC6M47FJZG",
+                "menuItem": "Straw Bangin Berry",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 4.75,
+                "price2": 5.50
+            },
+            {
+                "id": "GHB65AXQ146EE",
+                "menuItem": "Pina Lota Colada",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 4.75,
+                "price2": 5.50
+            },
+            {
+                "id": "35SW7RJQ2QVEP",
+                "menuItem": "Blueberry Pomegranate Explosion",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 4.75,
+                "price2": 5.50
+            },
+            {
+                "id": "DNNYHVM8EPC42",
+                "menuItem": "Mango Madness",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 4.75,
+                "price2": 5.50
+            },
+            {
+                "id": "5JW1XA0M47GQR",
+                "menuItem": "Banana Rama",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 4.75,
+                "price2": 5.50
+            }
+        ]
+    },
+    {
+        "id": "5",
+        "category": "Other Drinks",
+        "menuItems": [
+            {
+                "id": "MYQBFQ5WVG9HC",
+                "menuItem": "Black and Blue Iced Tea",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "size3": "32 oz",
+                "price1": 2.75,
+                "price2": 3.50,
+                "price3": 4.50
+            },
+            {
+                "id": "SYJ3SB4GGM5DE",
+                "menuItem": "Fresh Brewed Iced Tea",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 1.75,
+                "price2": 2.00
+            },
+            {
+                "id": "33G6MHNC65SC0",
+                "menuItem": "Arnold Palmer",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "size3": "32 oz",
+                "price1": 3.00,
+                "price2": 3.50,
+                "price3": 4.50
+            },
+            {
+                "id": "YXM69JP1K3JW7",
+                "menuItem": "Lightning Lemonade",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 2.50,
+                "price2": 3.25
+            },
+            {
+                "id": "C4K09J9SZA7NK",
+                "menuItem": "Italian Soda",
+                "size1": "16 oz",
+                "size2": "24 oz",
+                "price1": 3.00,
+                "price2": 3.50
+            }
+        ]
+    },
+    {
+       "id": "6",
+       "category": "Bakery Pastry",
+       "menuItems": [
+            {
+                "id": "D8ZFWCJAQ53G2",
+                "menuItem": "Bagels with Cream Cheese",
+                "price1": 2.25
+            },
+            {
+                "id": "Q5A56SYRMKPXW",
+                "menuItem": "Banana Nut Muffin",
+                "price1": 4.95
+            },
+            {
+                "id": "7NSH9FD0QH49P",
+                "menuItem": "Lemon Olive Oil Loaf",
+                "price1": 4.95
+            },
+            {
+                "id": "GRPJ3XBYJHH5T",
+                "menuItem": "Coffee Cake",
+                "price1": 4.95
+            },
+            {
+                "id": "9MT0HVQFA2FGJ",
+                "menuItem": "Cinnamon Roll",
+                "price1": 4.95
+            },
+            {
+                "id": "VNN9CAYKVJ1YJ",
+                "menuItem": "Raspberry Chocolate Loaf",
+                "price1": 4.95
+            },
+            {
+                "id": "D8ZFWCJAQ53G2",
+                "menuItem": "Blueberry Scone",
+                "price1": 4.95
+            },
+            {
+                "id": "D9CRRSF3N5WYC",
+                "menuItem": "Lemon Raspberry Scone",
+                "price1": 4.95
+            }
+       ]
+   },
+   {
+       "id": "7",
+       "category": "Extras",
+       "menuItems": [
+        {
+            "id": "242KQD60DRZSM",
+            "menuItem": "Espresso Shot",
+            "price1": 0.75
+        },
+        {
+            "id": "G6D3MQ0JXHC0C",
+            "menuItem": "Almond Milk",
+            "price1": 0.75
+        },
+        {
+            "id": "3RV0PWFQNYR12",
+            "menuItem": "Soy Milk",
+            "price1": 0.75
+        },
+        {
+            "id": "9MT0HVQFA2FGJ",
+            "menuItem": "Coconut Milk",
+            "price1": 0.75
+        },
+        {
+            "id": "JDN7ZPTK4B3JW",
+            "menuItem": "Whey Protein",
+            "price1": 0.75
+        },
+        {
+            "id": "80J89Z0NNGNT0",
+            "menuItem": "Soy Protein",
+            "price1": 0.75
+        }
+       ]
+   }
+]
+
