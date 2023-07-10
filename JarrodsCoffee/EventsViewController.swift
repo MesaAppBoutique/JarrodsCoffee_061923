@@ -9,6 +9,11 @@ import UIKit
 
 class EventsViewController: UIViewController {
 
+    @IBAction func closeAction(_ sender: Any) {
+        print("close")
+        self.dismiss(animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

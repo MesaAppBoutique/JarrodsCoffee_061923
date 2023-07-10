@@ -14,6 +14,9 @@ class ContactUsViewController: UIViewController, MFMailComposeViewControllerDele
         super.viewDidLoad()
 
     }
+    @IBAction func closeAction(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
     
     @IBAction func onClickPhone(_ sender: UIButton) {
         guard let number = URL(string: "tel://" + "4808227146") else { return }

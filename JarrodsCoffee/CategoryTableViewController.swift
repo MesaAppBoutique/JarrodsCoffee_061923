@@ -13,6 +13,10 @@ class CategoryTableViewController: UITableViewController {
     
     /// Array of menu items to be fetched from data
     var menuItems = [MenuItem]()
+    
+    @IBAction func closeAction(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
