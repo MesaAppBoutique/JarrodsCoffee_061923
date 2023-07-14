@@ -10,10 +10,8 @@
 		A6162AE5280F372E009B7F39 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AE4280F372E009B7F39 /* CategoryTableViewController.swift */; };
 		A6162AE7280F3756009B7F39 /* UITableViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AE6280F3756009B7F39 /* UITableViewControllerExtension.swift */; };
 		A6162AEB280F378E009B7F39 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AEA280F378E009B7F39 /* MenuController.swift */; };
-		A6162AED280F37AD009B7F39 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AEC280F37AD009B7F39 /* MenuItem.swift */; };
 		A6162AEF280F37D0009B7F39 /* MenuItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AEE280F37D0009B7F39 /* MenuItemDetailViewController.swift */; };
 		A6162AF1280F3811009B7F39 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AF0280F3811009B7F39 /* MenuTableViewController.swift */; };
-		A6162AF9280F38A7009B7F39 /* LocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AF8280F38A7009B7F39 /* LocalData.swift */; };
 		A6A79462268137F000D97421 /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A79461268137F000D97421 /* ContactUsViewController.swift */; };
 		C46D647A2A61F86B0032341B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C46D64792A61F86A0032341B /* GoogleService-Info.plist */; };
 		C46D647D2A61FADC0032341B /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C46D647C2A61FADC0032341B /* FirebaseAnalyticsSwift */; };
@@ -37,10 +35,8 @@
 		A6162AE4280F372E009B7F39 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
 		A6162AE6280F3756009B7F39 /* UITableViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewControllerExtension.swift; sourceTree = "<group>"; };
 		A6162AEA280F378E009B7F39 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
-		A6162AEC280F37AD009B7F39 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		A6162AEE280F37D0009B7F39 /* MenuItemDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemDetailViewController.swift; sourceTree = "<group>"; };
 		A6162AF0280F3811009B7F39 /* MenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
-		A6162AF8280F38A7009B7F39 /* LocalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalData.swift; sourceTree = "<group>"; };
 		A6A79461268137F000D97421 /* ContactUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
 		C46D64792A61F86A0032341B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C46D64842A61FEBF0032341B /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
@@ -78,8 +74,6 @@
 			isa = PBXGroup;
 			children = (
 				C46D64842A61FEBF0032341B /* DataModel.swift */,
-				A6162AF8280F38A7009B7F39 /* LocalData.swift */,
-				A6162AEC280F37AD009B7F39 /* MenuItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -245,10 +239,8 @@
 				A6A79462268137F000D97421 /* ContactUsViewController.swift in Sources */,
 				A6162AE7280F3756009B7F39 /* UITableViewControllerExtension.swift in Sources */,
 				C46D64852A61FEBF0032341B /* DataModel.swift in Sources */,
-				A6162AF9280F38A7009B7F39 /* LocalData.swift in Sources */,
 				A6162AE5280F372E009B7F39 /* CategoryTableViewController.swift in Sources */,
 				A6162AEB280F378E009B7F39 /* MenuController.swift in Sources */,
-				A6162AED280F37AD009B7F39 /* MenuItem.swift in Sources */,
 				D3D6BAD22741C5670042A455 /* MapViewController.swift in Sources */,
 				A6162AF1280F3811009B7F39 /* MenuTableViewController.swift in Sources */,
 				E4DE03722A409B0000F0F099 /* EventsViewController.swift in Sources */,

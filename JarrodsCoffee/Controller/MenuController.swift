@@ -18,11 +18,6 @@ class MenuController {
         /// Execute GET request for categories
         func fetchCategories(completion: @escaping ([String]?) -> Void) {
             
-            // if data is local use it
-            if LocalData.isLocal {
-                completion(LocalData.categories)
-                return
-            }
             
             let categoryURL = baseURL.appendingPathComponent("categories")
             
@@ -83,11 +78,7 @@ class MenuController {
         // fetch image data
         func fetchImage(url: URL, completion: @escaping (UIImage?) -> Void) {
             
-            // use local data
-            if LocalData.isLocal {
-                completion(UIImage(named: url.relativeString))
-                return
-            }
+
             
             // construct URL components from URL
             guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
