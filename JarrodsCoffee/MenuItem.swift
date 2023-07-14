@@ -29,10 +29,7 @@
 //    }
 //}
 //
-//struct MenuItems: Codable {
-//    let items: [MenuItem]
-//}
-//
+
 //struct OptionModel {
 //    var sizeOption = [String]()
 //    var priceOption = [Double]()

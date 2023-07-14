@@ -43,34 +43,41 @@ class MenuController {
     
         // fetch menuItems in selkected category
         func fetchMenuItems(categoryName: String = "", completion: @escaping([MenuItem]?) -> Void) {
-            if LocalData.isLocal {
-                completion(LocalData.menuItems.filter { $0.category == categoryName || categoryName.isEmpty })
-                return
-            }
             
-            let initialMenuURL = baseURL.appendingPathComponent("menu")
+            print("LOAD DATA FROM CLOUD")
+            print("IF NO MENU DATA ASK USER TO CHECK INTERNET CONNECTION")
+
+            //FIXME: Replace the Fetch of Menu Items with Firebase data.
             
-            var components = URLComponents(url: initialMenuURL, resolvingAgainstBaseURL: true)!
-            
-            // add category only if categoryName is not empty
-            if categoryName != "" {
-                components.queryItems = [URLQueryItem(name: "category", value: categoryName)]
-            }
-            
-            let menuURL = components.url!
-            
-            let task = URLSession.shared.dataTask(with: menuURL) { data, response, error in
-                // data from /menu converted into an array of MenuItem objects
-                let jsonDecoder = JSONDecoder()
-                if let data = data,
-                    let menuItems = try? jsonDecoder.decode(MenuItems.self, from: data) {
-                    completion(menuItems.items)
-                } else {
-                    completion(nil)
-                }
-            }
+//
+//            if LocalData.isLocal {
+//                completion(LocalData.menuItems.filter { $0.category == categoryName || categoryName.isEmpty })
+//                return
+//            }
+//
+//            let initialMenuURL = baseURL.appendingPathComponent("menu")
+//
+//            var components = URLComponents(url: initialMenuURL, resolvingAgainstBaseURL: true)!
+//
+//            // add category only if categoryName is not empty
+//            if categoryName != "" {
+//                components.queryItems = [URLQueryItem(name: "category", value: categoryName)]
+//            }
+//
+//            let menuURL = components.url!
+//
+//            let task = URLSession.shared.dataTask(with: menuURL) { data, response, error in
+//                // data from /menu converted into an array of MenuItem objects
+//                let jsonDecoder = JSONDecoder()
+//                if let data = data,
+//                    let menuItems = try? jsonDecoder.decode(MenuItems.self, from: data) {
+//                    completion(menuItems.items)
+//                } else {
+//                    completion(nil)
+//                }
+//            }
             // begin the category menu call
-            task.resume()
+//            task.resume()
         }
         
         // fetch image data
