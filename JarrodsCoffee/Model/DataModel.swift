@@ -24,14 +24,6 @@ struct MenuItem: Codable {
     // These items were imported from the JSON that is hosted and referenced here..
     // https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json
     var id: String
-    var menuItem: String = "" //what is this?
-    //let size1: Size1?
-    //let size2: Size2?
-   // let price1, price2: Double?
-   // let size3: String?
-    //let price3: Double?
-    
-    // These properties were referenced in the Local Data model, but not the GitHub JSON data model.  Including all properties until it is determined which are useful and which are cruft.
     var name: String
     var size = [String]()
     var price = [Double]()
