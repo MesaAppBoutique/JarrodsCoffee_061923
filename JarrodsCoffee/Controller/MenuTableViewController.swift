@@ -19,7 +19,7 @@ class MenuTableViewController: UITableViewController {
         
         // Table title is capitalized category name
         title = category.capitalized
-        
+                
         // Load the menu for a given category
         MenuController.shared.fetchMenuItems(categoryName: category) { (menuItems) in
             // if we indeed got the menu items
@@ -28,6 +28,10 @@ class MenuTableViewController: UITableViewController {
                 self.updateUI(with: menuItems)
             }
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        updateUI(with: MenuItem.allItems)
     }
     
     /// Set the property and update the interface
@@ -77,7 +81,8 @@ class MenuTableViewController: UITableViewController {
         cell.textLabel?.text = menuItem.name
         
         // fetch the image from the server
-        MenuController.shared.fetchImage(url: menuItem.imageURL) { image in
+        //FIXME: Replace default image
+        MenuController.shared.fetchImage(url: URL(string:menuItem.imageURL) ?? URL(string:"https://static.wixstatic.com/media/3fde0f_21019cad931b465c880811f19594557a~mv2.png/v1/fill/w_804,h_998,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/white.png")!) { image in
             // check that the image was fetched successfully
             guard let image = image else { return }
             

@@ -81,7 +81,8 @@ class CategoryTableViewController: UITableViewController {
         }) else { return }
         
         // fetch the image from assets
-        MenuController.shared.fetchImage(url: menuItem.imageURL) { image in
+        //FIXME: Replace default image
+        MenuController.shared.fetchImage(url: URL(string:menuItem.imageURL) ?? URL(string:"https://static.wixstatic.com/media/3fde0f_21019cad931b465c880811f19594557a~mv2.png/v1/fill/w_804,h_998,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/white.png")!) { image in
             guard let image = image else { return }
             
             DispatchQueue.main.async {

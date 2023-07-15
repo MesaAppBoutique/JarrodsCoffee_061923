@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import Firebase
 
 class MenuController {
     
         /// Used to share MenuController across all view controllers in the app
         static let shared = MenuController()
         
+    
         /// Base URL
         let baseURL = URL(string: "https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json")!
 
@@ -36,45 +38,88 @@ class MenuController {
             task.resume()
         }
     
-        // fetch menuItems in selkected category
-        func fetchMenuItems(categoryName: String = "", completion: @escaping([MenuItem]?) -> Void) {
-            
-            print("LOAD DATA FROM CLOUD")
-            print("IF NO MENU DATA ASK USER TO CHECK INTERNET CONNECTION")
+    
+    
+    //TODO: New Cloud Fetch
+    func fetchMenuItems(categoryName: String = "", completion: @escaping([MenuItem]?) -> Void) {
 
-            //FIXME: Replace the Fetch of Menu Items with Firebase data.
-            
-//
-//            if LocalData.isLocal {
-//                completion(LocalData.menuItems.filter { $0.category == categoryName || categoryName.isEmpty })
-//                return
-//            }
-//
-//            let initialMenuURL = baseURL.appendingPathComponent("menu")
-//
-//            var components = URLComponents(url: initialMenuURL, resolvingAgainstBaseURL: true)!
-//
-//            // add category only if categoryName is not empty
-//            if categoryName != "" {
-//                components.queryItems = [URLQueryItem(name: "category", value: categoryName)]
-//            }
-//
-//            let menuURL = components.url!
-//
-//            let task = URLSession.shared.dataTask(with: menuURL) { data, response, error in
-//                // data from /menu converted into an array of MenuItem objects
-//                let jsonDecoder = JSONDecoder()
-//                if let data = data,
-//                    let menuItems = try? jsonDecoder.decode(MenuItems.self, from: data) {
-//                    completion(menuItems.items)
-//                } else {
-//                    completion(nil)
-//                }
-//            }
-            // begin the category menu call
-//            task.resume()
-        }
+        print("New Cloud Fetch for Menu Items")
         
+        //FIXME:  THE DATA IS GETTING BLOCKED BY FIRESTORE PERMISSIONS SOMEWHERE "Missing or insufficient permissions."
+        
+        
+        let db = Firestore.firestore() //init firestore
+        
+        db.collection("menuItems").getDocuments { snapshot, error in
+            
+            if error == nil {
+                //no problems
+                if let snapshot = snapshot {
+                    //get all the data and make menu items
+                    DispatchQueue.main.async {
+                        //assign the menu items on the main thread
+                        MenuItem.allItems = snapshot.documents.map { item in
+                            return MenuItem(id: item.documentID,
+                                            name: item["name"] as? String ?? "",
+                                            size: item["size"] as? [String] ?? [""],
+                                            price: item["price"] as? [Double] ?? [0],
+                                            category: item["category"] as? String ?? "",
+                                            imageURL: item["imageURL"] as? String ?? "")
+                        }
+                    }
+                }
+                
+            } else {
+                // handle the error
+            }
+            
+        }
+    }
+    
+    
+        // fetch menuItems in selkected category
+//        func fetchMenuItems(categoryName: String = "", completion: @escaping([MenuItem]?) -> Void) {
+//
+//            print("LOAD DATA FROM CLOUD")
+//            print("IF NO MENU DATA ASK USER TO CHECK INTERNET CONNECTION")
+//
+//       //TODO: https://www.youtube.com/watch?v=xkxGoNfpLXs
+//            //Documents = Document
+//            //Collection [Document]
+//            //menuItems = [MenuItem]
+//            //FIXME: Replace the Fetch of Menu Items with Firebase data.
+//
+////
+////            if LocalData.isLocal {
+////                completion(LocalData.menuItems.filter { $0.category == categoryName || categoryName.isEmpty })
+////                return
+////            }
+////
+////            let initialMenuURL = baseURL.appendingPathComponent("menu")
+////
+////            var components = URLComponents(url: initialMenuURL, resolvingAgainstBaseURL: true)!
+////
+////            // add category only if categoryName is not empty
+////            if categoryName != "" {
+////                components.queryItems = [URLQueryItem(name: "category", value: categoryName)]
+////            }
+////
+////            let menuURL = components.url!
+////
+////            let task = URLSession.shared.dataTask(with: menuURL) { data, response, error in
+////                // data from /menu converted into an array of MenuItem objects
+////                let jsonDecoder = JSONDecoder()
+////                if let data = data,
+////                    let menuItems = try? jsonDecoder.decode(MenuItems.self, from: data) {
+////                    completion(menuItems.items)
+////                } else {
+////                    completion(nil)
+////                }
+////            }
+//            // begin the category menu call
+////            task.resume()
+//        }
+//
         // fetch image data
         func fetchImage(url: URL, completion: @escaping (UIImage?) -> Void) {
             

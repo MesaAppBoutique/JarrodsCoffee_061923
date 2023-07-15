@@ -9,26 +9,22 @@
 // To parse the JSON, add this file to your project and do:
 //
 //   let welcome1 = try Welcome1(json)
+// https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json
 
 import Foundation
 
-// MARK: - Welcome1Element
-struct Welcome1Element {
-    let id, category: String
-    let menuItems: [MenuItem]
-}
 
 // MARK: - MenuItem
 struct MenuItem: Codable {
     
-    // These items were imported from the JSON that is hosted and referenced here..
-    // https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json
-    var id: String
-    var name: String
-    var size = [String]()
-    var price = [Double]()
-    var category: String
-    var imageURL: URL
+    static var allItems: [MenuItem] = []
+    
+    var id: String //UID
+    var name: String //Displayed to User
+    var size: [String] //Small medium large, for example
+    var price: [Double] // Cooresponding cost for small medium or large
+    var category: String // category of menu item like beverage, snack, etc.
+    var imageURL: String // url of the image to show
     
     
     // This was included also in the local data model. May not be needed for Firebase cloud data.
@@ -40,6 +36,9 @@ struct MenuItem: Codable {
 //        case category
 //        case imageURL = "image_url"
 //    }
+    
+    
+        
     
 }
 
