@@ -15,7 +15,7 @@ class MenuController {
         
     
         /// Base URL
-        let baseURL = URL(string: "https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json")!
+         let baseURL = URL(string: "https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json")!
 
         /// Execute GET request for categories
         func fetchCategories(completion: @escaping ([String]?) -> Void) {
@@ -39,104 +39,45 @@ class MenuController {
         }
     
     
-    
-    //TODO: New Cloud Fetch
-   // func fetchMenuItems(categoryName: String = "", completion: @escaping([MenuItem]?) -> Void) {
+    func addMenuItem(name:String, size:[String], price:[String], category:String, imageURL:String) {
+        let db = Firestore.firestore() //init firestore
 
-        //print("New Cloud Fetch for Menu Items")
+        db.collection("menuItems").addDocument(data: ["category":category, "imageURL":imageURL, "name":name, "price":price, "size": size])
+
+    }
+    
+    func fetchMenuItems(categoryName: String = "", completion: @escaping([MenuItem]?) -> Void) {
+
+        print("Loading menu items from Firestore cloud data.")
         
-        //FIXME:  THE DATA IS GETTING BLOCKED BY FIRESTORE PERMISSIONS SOMEWHERE "Missing or insufficient permissions."
+        let db = Firestore.firestore() //init firestore
         
-        
-       // let db = Firestore.firestore() //init firestore
-        
-        
-//        let listener = db.collection("parties").addSnapshotListener { (snapshot, error) in
-//            switch (snapshot, error) {
-//            case (.none, .none):
-//                print("no data")
-//            case (.none, .some(let error)):
-//                print("some error \(error.localizedDescription)")
-//            case (.some(let snapshot), _):
-//                print("collection updated, now it contains \(snapshot.documents.count) documents")
-//            }
-//        }
-        //TEST:
         //TEST This will add a new document
         //db.collection("menuItems").addDocument(data: ["year" : 2023, "type":"Merlot", "label":"Apothic"])
-
         
-//        db.collection("menuItems").getDocuments { snapshot, error in
-//
-//            if error == nil {
-//                //no problems
-//                if let snapshot = snapshot {
-//                    //get all the data and make menu items
-//                    DispatchQueue.main.async {
-//                        //assign the menu items on the main thread
-//                        MenuItem.allItems = snapshot.documents.map { item in
-//                            return MenuItem(id: item.documentID,
-//                                            name: item["name"] as? String ?? "",
-//                                            size: item["size"] as? [String] ?? [""],
-//                                            price: item["price"] as? [String] ?? ["unknown"],
-//                                            category: item["category"] as? String ?? "",
-//                                            imageURL: item["imageURL"] as? String ?? "")
-//                        }
-//                    }
-//                }
-
-//            } else {
-//                // handle the error
-//                print("ERROR in getting documents.")
-//            }
-
-       // }
-   // }
+        db.collection("menuItems").addSnapshotListener { snapshot, error in
+            if error == nil {
+                
+                if let snapshot = snapshot {
+                    MenuItem.allItems = snapshot.documents.map { item in
+                        
+                        print("First item is \(item["imageURL"] ?? "")")
+                        
+                        return MenuItem(id: item.documentID,
+                                        category: item["category"] as? String ?? "",
+                                        imageURL: item["imageURL"] as? String ?? "",
+                                        name: item["name"] as? String ?? "",
+                                        price: item["price"] as? [String] ?? ["unknown"],
+                                        size: item["size"] as? [String] ?? [""])
+                    }
+                }
+                completion(MenuItem.allItems)
+            } else {
+                print("error fetching!")
+            }
+        }
+    }
     
-    
-        // fetch menuItems in selkected category
-//        func fetchMenuItems(categoryName: String = "", completion: @escaping([MenuItem]?) -> Void) {
-//
-//            print("LOAD DATA FROM CLOUD")
-//            print("IF NO MENU DATA ASK USER TO CHECK INTERNET CONNECTION")
-//
-//       //TODO: https://www.youtube.com/watch?v=xkxGoNfpLXs
-//            //Documents = Document
-//            //Collection [Document]
-//            //menuItems = [MenuItem]
-//            //FIXME: Replace the Fetch of Menu Items with Firebase data.
-//
-////
-////            if LocalData.isLocal {
-////                completion(LocalData.menuItems.filter { $0.category == categoryName || categoryName.isEmpty })
-////                return
-////            }
-////
-////            let initialMenuURL = baseURL.appendingPathComponent("menu")
-////
-////            var components = URLComponents(url: initialMenuURL, resolvingAgainstBaseURL: true)!
-////
-////            // add category only if categoryName is not empty
-////            if categoryName != "" {
-////                components.queryItems = [URLQueryItem(name: "category", value: categoryName)]
-////            }
-////
-////            let menuURL = components.url!
-////
-////            let task = URLSession.shared.dataTask(with: menuURL) { data, response, error in
-////                // data from /menu converted into an array of MenuItem objects
-////                let jsonDecoder = JSONDecoder()
-////                if let data = data,
-////                    let menuItems = try? jsonDecoder.decode(MenuItems.self, from: data) {
-////                    completion(menuItems.items)
-////                } else {
-////                    completion(nil)
-////                }
-////            }
-//            // begin the category menu call
-////            task.resume()
-//        }
-//
         // fetch image data
         func fetchImage(url: URL, completion: @escaping (UIImage?) -> Void) {
             
@@ -146,7 +87,7 @@ class MenuController {
             guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
             
             // replace the host for the base URL's host
-            components.host = baseURL.host
+           // components.host = baseURL.host
             
             // construct the new url with the replaced host
             guard let url = components.url else { return }

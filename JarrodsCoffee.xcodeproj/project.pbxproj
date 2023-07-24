@@ -14,6 +14,7 @@
 		A6162AF1280F3811009B7F39 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AF0280F3811009B7F39 /* MenuTableViewController.swift */; };
 		A6A79462268137F000D97421 /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A79461268137F000D97421 /* ContactUsViewController.swift */; };
 		C41E8E1C2A6EEF010012DBA6 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C41E8E1B2A6EEF010012DBA6 /* FirebaseFirestore */; };
+		C41E8E1E2A6F19560012DBA6 /* EditMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E8E1D2A6F19560012DBA6 /* EditMenuItem.swift */; };
 		C46D647A2A61F86B0032341B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C46D64792A61F86A0032341B /* GoogleService-Info.plist */; };
 		C46D64832A61FADC0032341B /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C46D64822A61FADC0032341B /* FirebaseFirestoreSwift */; };
 		C46D64852A61FEBF0032341B /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46D64842A61FEBF0032341B /* DataModel.swift */; };
@@ -36,6 +37,7 @@
 		A6162AEE280F37D0009B7F39 /* MenuItemDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemDetailViewController.swift; sourceTree = "<group>"; };
 		A6162AF0280F3811009B7F39 /* MenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		A6A79461268137F000D97421 /* ContactUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
+		C41E8E1D2A6F19560012DBA6 /* EditMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuItem.swift; sourceTree = "<group>"; };
 		C46D64792A61F86A0032341B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C46D64842A61FEBF0032341B /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		D34C58472742D8D200AADF0E /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -98,6 +100,7 @@
 				A6162AEE280F37D0009B7F39 /* MenuItemDetailViewController.swift */,
 				A6162AF0280F3811009B7F39 /* MenuTableViewController.swift */,
 				D3B8820F263A1F4B00BC294C /* SceneDelegate.swift */,
+				C41E8E1D2A6F19560012DBA6 /* EditMenuItem.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 				A6162AE7280F3756009B7F39 /* UITableViewControllerExtension.swift in Sources */,
 				C46D64852A61FEBF0032341B /* DataModel.swift in Sources */,
 				A6162AE5280F372E009B7F39 /* CategoryTableViewController.swift in Sources */,
+				C41E8E1E2A6F19560012DBA6 /* EditMenuItem.swift in Sources */,
 				A6162AEB280F378E009B7F39 /* MenuController.swift in Sources */,
 				D3D6BAD22741C5670042A455 /* MapViewController.swift in Sources */,
 				A6162AF1280F3811009B7F39 /* MenuTableViewController.swift in Sources */,
