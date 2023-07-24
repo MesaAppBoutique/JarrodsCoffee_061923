@@ -20,12 +20,12 @@ struct MenuItem: Codable {
     static var allItems: [MenuItem] = []
     
     var id: String //UID
-    var name: String //Displayed to User
-    var size: [String] //Small medium large, for example
-    var price: [Double] // Cooresponding cost for small medium or large
     var category: String // category of menu item like beverage, snack, etc.
     var imageURL: String // url of the image to show
-    
+    var name: String //Displayed to User
+    var price: [String] // Cooresponding cost for small medium or large
+    var size: [String] //Small medium large, for example
+
     
     // This was included also in the local data model. May not be needed for Firebase cloud data.
 //    enum CodingKeys: String, CodingKey {
@@ -48,9 +48,9 @@ struct MenuItem: Codable {
 
 struct OptionModel {
     var sizeOption = [String]()
-    var priceOption = [Double]()
+    var priceOption = [String]()
 
-        init(sizeOption: [String] = [String](), priceOption: [Double] = [Double]()) {
+        init(sizeOption: [String] = [String](), priceOption: [String] = [String]()) {
             self.sizeOption = sizeOption
             self.priceOption = priceOption
     }

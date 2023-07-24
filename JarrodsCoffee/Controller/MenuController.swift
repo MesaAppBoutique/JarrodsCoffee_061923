@@ -41,40 +41,57 @@ class MenuController {
     
     
     //TODO: New Cloud Fetch
-    func fetchMenuItems(categoryName: String = "", completion: @escaping([MenuItem]?) -> Void) {
+   // func fetchMenuItems(categoryName: String = "", completion: @escaping([MenuItem]?) -> Void) {
 
-        print("New Cloud Fetch for Menu Items")
+        //print("New Cloud Fetch for Menu Items")
         
         //FIXME:  THE DATA IS GETTING BLOCKED BY FIRESTORE PERMISSIONS SOMEWHERE "Missing or insufficient permissions."
         
         
-        let db = Firestore.firestore() //init firestore
+       // let db = Firestore.firestore() //init firestore
         
-        db.collection("menuItems").getDocuments { snapshot, error in
-            
-            if error == nil {
-                //no problems
-                if let snapshot = snapshot {
-                    //get all the data and make menu items
-                    DispatchQueue.main.async {
-                        //assign the menu items on the main thread
-                        MenuItem.allItems = snapshot.documents.map { item in
-                            return MenuItem(id: item.documentID,
-                                            name: item["name"] as? String ?? "",
-                                            size: item["size"] as? [String] ?? [""],
-                                            price: item["price"] as? [Double] ?? [0],
-                                            category: item["category"] as? String ?? "",
-                                            imageURL: item["imageURL"] as? String ?? "")
-                        }
-                    }
-                }
-                
-            } else {
-                // handle the error
-            }
-            
-        }
-    }
+        
+//        let listener = db.collection("parties").addSnapshotListener { (snapshot, error) in
+//            switch (snapshot, error) {
+//            case (.none, .none):
+//                print("no data")
+//            case (.none, .some(let error)):
+//                print("some error \(error.localizedDescription)")
+//            case (.some(let snapshot), _):
+//                print("collection updated, now it contains \(snapshot.documents.count) documents")
+//            }
+//        }
+        //TEST:
+        //TEST This will add a new document
+        //db.collection("menuItems").addDocument(data: ["year" : 2023, "type":"Merlot", "label":"Apothic"])
+
+        
+//        db.collection("menuItems").getDocuments { snapshot, error in
+//
+//            if error == nil {
+//                //no problems
+//                if let snapshot = snapshot {
+//                    //get all the data and make menu items
+//                    DispatchQueue.main.async {
+//                        //assign the menu items on the main thread
+//                        MenuItem.allItems = snapshot.documents.map { item in
+//                            return MenuItem(id: item.documentID,
+//                                            name: item["name"] as? String ?? "",
+//                                            size: item["size"] as? [String] ?? [""],
+//                                            price: item["price"] as? [String] ?? ["unknown"],
+//                                            category: item["category"] as? String ?? "",
+//                                            imageURL: item["imageURL"] as? String ?? "")
+//                        }
+//                    }
+//                }
+
+//            } else {
+//                // handle the error
+//                print("ERROR in getting documents.")
+//            }
+
+       // }
+   // }
     
     
         // fetch menuItems in selkected category

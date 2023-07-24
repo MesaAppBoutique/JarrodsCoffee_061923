@@ -21,23 +21,25 @@ class CategoryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Load the menu for all categories
-        MenuController.shared.fetchMenuItems() { (menuItems) in
-            if let menuItems = menuItems {
-                for item in menuItems {
+        
+        menuItems = MenuItem.allItems
+         //Load the menu for all categories
+        //MenuController.shared.fetchMenuItems() { (menuItems) in
+            //if let menuItems = menuItems {
+                for item in MenuItem.allItems {
                     let category = item.category
                     // add category only if it was not added before
                     if !self.categories.contains(category) {
                         self.categories.append(category)
                     }
-                }
+                //}
                 // remember the list of items
-                self.menuItems = menuItems
-                
+                //self.menuItems = menuItems
+
                 // update the table with categories
                 self.updateUI(with: self.categories)
             }
-        }
+        //}
     }
     
     // Update categories

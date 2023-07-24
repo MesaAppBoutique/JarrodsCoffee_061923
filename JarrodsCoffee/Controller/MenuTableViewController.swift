@@ -6,28 +6,46 @@
 //
 
 import UIKit
+import Firebase
 
 class MenuTableViewController: UITableViewController {
     //category name from CategoryViewController
     var category: String!
     
     //array of menuItems
-    var menuItems = [MenuItem]()
+    //var menuItems = [MenuItem]()
+    
+    //we need to listen for changes to the Firestore database
+    //let db = Firestore.firestore()
+    //let listener: ListenerRegistration? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        db.collection("menuItems").addSnapshotListener { (snapshot, error) in
+//            switch (snapshot, error) {
+//            case (.none, .none):
+//                print("no data")
+//            case (.none, .some(let error)):
+//                print("some error \(error.localizedDescription)")
+//            case (.some(let snapshot), _):
+//                print("collection updated, now it contains \(snapshot.documents.count) documents")
+//            }
+//        }
+        
+        
         // Table title is capitalized category name
         title = category.capitalized
                 
-        // Load the menu for a given category
-        MenuController.shared.fetchMenuItems(categoryName: category) { (menuItems) in
-            // if we indeed got the menu items
-            if let menuItems = menuItems {
-                // update the interface
-                self.updateUI(with: menuItems)
-            }
-        }
+//        // Load the menu for a given category
+//        MenuController.shared.fetchMenuItems(categoryName: category) { (menuItems) in
+//            // if we indeed got the menu items
+//
+//            if let menuItems = menuItems {
+//                // update the interface
+//                self.updateUI(with: menuItems)
+//            }
+//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -39,7 +57,7 @@ class MenuTableViewController: UITableViewController {
         // have to go back to main queue from background queue where network requests are executed
         DispatchQueue.main.async {
             // remember the menu items for diplaying in the table
-            self.menuItems = menuItems
+            MenuItem.allItems = menuItems
             
             // reload the table
             self.tableView.reloadData()
@@ -60,7 +78,7 @@ class MenuTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // the number of cells is equal to the size of menu items array
-        return menuItems.count
+        return MenuItem.allItems.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -75,7 +93,7 @@ class MenuTableViewController: UITableViewController {
     
     func configure(cell: UITableViewCell, forItemAt indexPath: IndexPath) {
         // get the needed menu item for corresponding table row
-        let menuItem = menuItems[indexPath.row]
+        let menuItem = MenuItem.allItems[indexPath.row]
         
         // the left label of the cell should display the name of the item
         cell.textLabel?.text = menuItem.name
@@ -156,7 +174,7 @@ class MenuTableViewController: UITableViewController {
             let index = tableView.indexPathForSelectedRow!.row
             
             // pass selected menuItem to destination MenuItemDetailViewController
-            menuItemDetailViewController.menuItem = menuItems[index]
+            menuItemDetailViewController.menuItem = MenuItem.allItems[index]
         }
     }
 
