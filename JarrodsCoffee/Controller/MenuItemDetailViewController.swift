@@ -84,14 +84,8 @@ class DropdownCell: UITableViewCell {
             addToOrderButton1.layer.cornerRadius = 5
             addToOrderButton2.layer.cornerRadius = 5
             
-            // get the image for the menu item
-                //FIXME: Replace default iamge
-            MenuController.shared.fetchImage(url: URL(string:menuItem.imageURL) ?? URL(string:"https://static.wixstatic.com/media/3fde0f_21019cad931b465c880811f19594557a~mv2.png/v1/fill/w_804,h_998,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/white.png")!) { image in
-                guard let image = image else { return }
-                
-                DispatchQueue.main.async {
-                    self.imageView.image = image
-                }
+            DispatchQueue.main.async {
+                self.imageView.image = MenuController.shared.downloadImage(path: self.menuItem.imageURL)
             }
         }
         

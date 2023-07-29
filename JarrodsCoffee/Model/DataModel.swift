@@ -12,16 +12,19 @@
 // https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json
 
 import Foundation
+import UIKit
 
 
 // MARK: - MenuItem
-struct MenuItem: Codable {
+struct MenuItem {
     
     static var allItems: [MenuItem] = []
     
     var id: String //UID
     var category: String // category of menu item like beverage, snack, etc.
     var imageURL: String // url of the image to show
+    var image: UIImage = UIImage(named: "Image")!
+    
     var name: String //Displayed to User
     var price: [String] // Cooresponding cost for small medium or large
     var size: [String] //Small medium large, for example

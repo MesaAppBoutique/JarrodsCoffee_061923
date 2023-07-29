@@ -83,5 +83,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app would like access to the photo library to select photos to use when configuring items in the app.</string>
 </dict>
 </plist>

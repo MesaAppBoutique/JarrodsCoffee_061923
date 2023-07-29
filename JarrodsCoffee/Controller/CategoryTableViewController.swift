@@ -23,6 +23,7 @@ class CategoryTableViewController: UITableViewController {
         
         
         menuItems = MenuItem.allItems
+        MenuController.shared.downloadImages()
          //Load the menu for all categories
         //MenuController.shared.fetchMenuItems() { (menuItems) in
             //if let menuItems = menuItems {

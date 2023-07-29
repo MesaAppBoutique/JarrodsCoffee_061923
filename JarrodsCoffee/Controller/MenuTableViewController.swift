@@ -97,28 +97,34 @@ class MenuTableViewController: UITableViewController {
         
         // the left label of the cell should display the name of the item
         cell.textLabel?.text = menuItem.name
-        
+        cell.imageView?.sizeToFit()
         // fetch the image from the server
         //FIXME: Replace default image
-        MenuController.shared.fetchImage(url: URL(string:menuItem.imageURL) ?? URL(string:"https://static.wixstatic.com/media/3fde0f_21019cad931b465c880811f19594557a~mv2.png/v1/fill/w_804,h_998,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/white.png")!) { image in
-            // check that the image was fetched successfully
-            guard let image = image else { return }
+        DispatchQueue.main.async  {
             
-            // return to main thread after the network request in background
-            DispatchQueue.main.async {
-                // get the current index path
-                guard let currentIndexPath = self.tableView.indexPath(for: cell) else { return }
-                
-                // check if the cell was not yet recycled
-                guard currentIndexPath == indexPath else { return }
-                
-                // set the thumbnail image
-                cell.imageView?.image = image
-                
-                // fit the image to the cell
-                self.fitImage(in: cell)
-            }
+            cell.imageView?.image = MenuController.shared.downloadImage(path: menuItem.imageURL)
+            //cell.imageView?.sizeToFit()
         }
+        
+//        MenuController.shared.fetchImage(url: URL(string:menuItem.imageURL) ?? URL(string:"https://static.wixstatic.com/media/3fde0f_21019cad931b465c880811f19594557a~mv2.png/v1/fill/w_804,h_998,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/white.png")!) { image in
+//            // check that the image was fetched successfully
+//            guard let image = image else { return }
+//
+//            // return to main thread after the network request in background
+//            DispatchQueue.main.async {
+//                // get the current index path
+//                guard let currentIndexPath = self.tableView.indexPath(for: cell) else { return }
+//
+//                // check if the cell was not yet recycled
+//                guard currentIndexPath == indexPath else { return }
+//
+//                // set the thumbnail image
+//                cell.imageView?.image = image
+//
+//                // fit the image to the cell
+//                self.fitImage(in: cell)
+//            }
+        //}
     }
     
     // adjust the cell height to make images look better

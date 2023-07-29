@@ -13,6 +13,7 @@
 		A6162AEF280F37D0009B7F39 /* MenuItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AEE280F37D0009B7F39 /* MenuItemDetailViewController.swift */; };
 		A6162AF1280F3811009B7F39 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AF0280F3811009B7F39 /* MenuTableViewController.swift */; };
 		A6A79462268137F000D97421 /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A79461268137F000D97421 /* ContactUsViewController.swift */; };
+		C40460A62A7446330056BC57 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C40460A52A7446330056BC57 /* FirebaseStorage */; };
 		C41E8E1C2A6EEF010012DBA6 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C41E8E1B2A6EEF010012DBA6 /* FirebaseFirestore */; };
 		C41E8E1E2A6F19560012DBA6 /* EditMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E8E1D2A6F19560012DBA6 /* EditMenuItem.swift */; };
 		C46D647A2A61F86B0032341B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C46D64792A61F86A0032341B /* GoogleService-Info.plist */; };
@@ -60,6 +61,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C46D64832A61FADC0032341B /* FirebaseFirestoreSwift in Frameworks */,
+				C40460A62A7446330056BC57 /* FirebaseStorage in Frameworks */,
 				D34C58482742D8D200AADF0E /* MapKit.framework in Frameworks */,
 				C41E8E1C2A6EEF010012DBA6 /* FirebaseFirestore in Frameworks */,
 			);
@@ -170,6 +172,7 @@
 			packageProductDependencies = (
 				C46D64822A61FADC0032341B /* FirebaseFirestoreSwift */,
 				C41E8E1B2A6EEF010012DBA6 /* FirebaseFirestore */,
+				C40460A52A7446330056BC57 /* FirebaseStorage */,
 			);
 			productName = JarrodsCoffee;
 			productReference = D3B8820A263A1F4B00BC294C /* JarrodsCoffee.app */;
@@ -460,6 +463,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C40460A52A7446330056BC57 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C46D647B2A61FADC0032341B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		C41E8E1B2A6EEF010012DBA6 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C46D647B2A61FADC0032341B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
