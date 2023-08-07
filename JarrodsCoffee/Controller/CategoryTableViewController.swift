@@ -3,7 +3,7 @@
 //  JarrodsMenuRev
 //
 //  Created by Jason Carter on 4/4/22.
-//
+//  Modified by David Levy on 8/7/23.
 
 import UIKit
 
@@ -23,7 +23,7 @@ class CategoryTableViewController: UITableViewController {
         
         
         menuItems = MenuItem.allItems
-        MenuController.shared.downloadImages()
+        MenuController.shared.downloadImagesFromCloud()
          //Load the menu for all categories
         //MenuController.shared.fetchMenuItems() { (menuItems) in
             //if let menuItems = menuItems {
@@ -85,8 +85,6 @@ class CategoryTableViewController: UITableViewController {
         
         // fetch the image from assets
         //FIXME: Replace default image
-        MenuController.shared.fetchImage(url: URL(string:menuItem.imageURL) ?? URL(string:"https://static.wixstatic.com/media/3fde0f_21019cad931b465c880811f19594557a~mv2.png/v1/fill/w_804,h_998,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/white.png")!) { image in
-            guard let image = image else { return }
             
             DispatchQueue.main.async {
                 guard let currentIndexPath = self.tableView.indexPath(for: cell) else { return }
@@ -95,12 +93,11 @@ class CategoryTableViewController: UITableViewController {
                 guard currentIndexPath == indexPath else { return }
                 
                 // set the thumbnail image
-                cell.imageView?.image = image
-                
+                cell.imageView?.image = MenuController.shared.assignImage(path: menuItem.imageURL)
+
                 // fit the image to the cell
                 self.fitImage(in: cell)
             }
-        }
     }
     
     // adjust the cell height to make images look better

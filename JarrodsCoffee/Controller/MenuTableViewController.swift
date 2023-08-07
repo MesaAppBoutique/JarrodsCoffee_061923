@@ -3,7 +3,7 @@
 //  JarrodsMenuRev
 //
 //  Created by Jason Carter on 4/4/22.
-//
+//  Modified by David Levy on 8/7/23.
 
 import UIKit
 import Firebase
@@ -21,7 +21,7 @@ class MenuTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        MenuController.shared.downloadImagesFromCloud()
 //        db.collection("menuItems").addSnapshotListener { (snapshot, error) in
 //            switch (snapshot, error) {
 //            case (.none, .none):
@@ -93,38 +93,14 @@ class MenuTableViewController: UITableViewController {
     
     func configure(cell: UITableViewCell, forItemAt indexPath: IndexPath) {
         // get the needed menu item for corresponding table row
-        let menuItem = MenuItem.allItems[indexPath.row]
+        var menuItem = MenuItem.allItems[indexPath.row]
         
         // the left label of the cell should display the name of the item
         cell.textLabel?.text = menuItem.name
         cell.imageView?.sizeToFit()
-        // fetch the image from the server
-        //FIXME: Replace default image
         DispatchQueue.main.async  {
-            
-            cell.imageView?.image = MenuController.shared.downloadImage(path: menuItem.imageURL)
-            //cell.imageView?.sizeToFit()
+            cell.imageView?.image = MenuController.shared.assignImage(path: menuItem.imageURL)
         }
-        
-//        MenuController.shared.fetchImage(url: URL(string:menuItem.imageURL) ?? URL(string:"https://static.wixstatic.com/media/3fde0f_21019cad931b465c880811f19594557a~mv2.png/v1/fill/w_804,h_998,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/white.png")!) { image in
-//            // check that the image was fetched successfully
-//            guard let image = image else { return }
-//
-//            // return to main thread after the network request in background
-//            DispatchQueue.main.async {
-//                // get the current index path
-//                guard let currentIndexPath = self.tableView.indexPath(for: cell) else { return }
-//
-//                // check if the cell was not yet recycled
-//                guard currentIndexPath == indexPath else { return }
-//
-//                // set the thumbnail image
-//                cell.imageView?.image = image
-//
-//                // fit the image to the cell
-//                self.fitImage(in: cell)
-//            }
-        //}
     }
     
     // adjust the cell height to make images look better

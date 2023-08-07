@@ -3,7 +3,7 @@
 //  JarrodsMenuRev
 //
 //  Created by Jason Carter on 4/4/22.
-//
+//  Modified by David Levy on 8/7/23.
 
 import UIKit
 
@@ -85,7 +85,7 @@ class DropdownCell: UITableViewCell {
             addToOrderButton2.layer.cornerRadius = 5
             
             DispatchQueue.main.async {
-                self.imageView.image = MenuController.shared.downloadImage(path: self.menuItem.imageURL)
+                self.imageView.image = MenuController.shared.assignImage(path: self.menuItem.imageURL)
             }
         }
         

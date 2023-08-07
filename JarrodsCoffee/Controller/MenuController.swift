@@ -3,7 +3,7 @@
 //  JarrodsMenuRev
 //
 //  Created by Jason Carter on 4/4/22.
-//
+//  Modified by David Levy on 8/7/23.
 
 import Foundation
 import UIKit
@@ -14,15 +14,16 @@ class MenuController {
     
     /// Used to share MenuController across all view controllers in the app
     static let shared = MenuController()
-    var downloadedImages = [UIImage]()
+    var downloadedImages = [MenuImage]()
+    var downloadedMenu = [MenuItem]()
     var selectedImage = UIImage(named: "Image")!
     /// Base URL
-    let baseURL = URL(string: "https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json")!
+   let baseURL = URL(string: "https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json")!
     
     
     /// Execute GET request for categories
+    //FIXME: Move categories data to cloud data
     func fetchCategories(completion: @escaping ([String]?) -> Void) {
-        
         
         let categoryURL = baseURL.appendingPathComponent("categories")
         
@@ -43,20 +44,15 @@ class MenuController {
     
     
     func addMenuItem(name: String, size: [String], price: [String], category: String, image: UIImage?) {
-        
-        
         let db = Firestore.firestore() //init firestore
         let imageURL = uploadImage(image)
-        
-        
-        // Upload that data
-        
         //Save reference to file in Firestore DB
-        
         db.collection("menuItems").addDocument(data: ["category":category, "imageURL": imageURL, "name":name, "price":price, "size": size])
         
-        MenuController.shared.downloadImages()
-
+        //TODO: Instead of downloading all images again, we can just append the new image to the downloaded array
+        let menuImage = MenuImage(imageURL: imageURL, image: image ?? UIImage(named: "Image")!)
+        self.downloadedImages.append(menuImage)
+        
     }
     
     func uploadImage(_ image: UIImage?) -> String {
@@ -80,7 +76,8 @@ class MenuController {
                 db.collection("images").document().setData(["url":path])
                 DispatchQueue.main.async {
                     if let image = image {
-                        self.downloadedImages.append(image)
+                        let menuImage = MenuImage(imageURL: path, image: image)
+                        self.downloadedImages.append(menuImage)
                     }
                 }
             }
@@ -88,37 +85,28 @@ class MenuController {
         return path
     }
     
-    func downloadImages() {
-        let db = Firestore.firestore()
+    func downloadImagesFromCloud() {
         
         //clear images
         downloadedImages = []
         
+        //download all images from firestore
+        let db = Firestore.firestore()
         db.collection("images").getDocuments { snapshot, error in
-            
             if error == nil && snapshot != nil {
-                
                 var paths = [String]()
-                
                 for doc in snapshot!.documents {
-                    
                     paths.append(doc["url"] as! String)
                 }
-                
                 for path in paths {
-                    
                     let storageRef = Storage.storage().reference()
-                    
                     let fileRef = storageRef.child(path)
-                    
                     fileRef.getData(maxSize: 5 * 2000 * 2000) { data, error in
-                        
                         if error == nil && data != nil {
                             if let imageFromData = UIImage(data: data!) {
-                                
                                 DispatchQueue.main.async {
-                                    self.downloadedImages.append(imageFromData)
-                                    print(self.downloadedImages)
+                                    let menuImage = MenuImage(imageURL: path, image: imageFromData)
+                                    self.downloadedImages.append(menuImage)
                                 }
                             }
                         }
@@ -128,59 +116,35 @@ class MenuController {
         }
     }
     
-    func downloadImage(path: String) -> UIImage {
-        
-        print("download at \(path) <-")
-        
-        let imageSeeking = UIImage(named: path)
-        
-        let db = Firestore.firestore()
-        
-        
-        var newImage = MenuController.shared.downloadedImages.first { image in
-            image == imageSeeking
+    /// Return the image that is downloaded based on the url path that is stored for each menuImage
+    func assignImage(path: String) -> UIImage {
+        // Of the menuImages we have downloaded from Firestore data, return if any match the url for this menu item.
+        if let menuImage = MenuController.shared.downloadedImages.first (where: { $0.imageURL == path } ) {
+            return menuImage.image
+        } else {
+            //If none match then just return the default image.
+            return UIImage(named: "Image")!
         }
-                
-//        let storageRef = Storage.storage().reference()
-//
-//        let fileRef = storageRef.child(path)
-//
-//        print("file ref is \(fileRef)")
-//        fileRef.getData(maxSize: 5 * 2000 * 2000) { data, error in
-//
-//            if error == nil && data != nil {
-//                if let imageFromData = UIImage(data: data!) {
-//                    print("imaging from data!")
-//                        newImage = imageFromData
-//                    }
-//            } else {
-//                print("error creating image \(String(describing: error))")
-//            }
-//            }
-        return newImage ?? UIImage(named: "Image")!
     }
     
     
     func fetchMenuItems(categoryName: String = "", completion: @escaping([MenuItem]?) -> Void) {
         
-        print("Loading menu items from Firestore cloud data.")
-        
+        //print("Load menu items from Firestore cloud data.")
         let db = Firestore.firestore() //init firestore
-        
-        //TEST This will add a new document
-        //db.collection("menuItems").addDocument(data: ["year" : 2023, "type":"Merlot", "label":"Apothic"])
-        
-        db.collection("menuItems").addSnapshotListener { snapshot, error in
+        db.collection("menuItems").addSnapshotListener { [self] snapshot, error in
             if error == nil {
-                
                 if let snapshot = snapshot {
                     MenuItem.allItems = snapshot.documents.map { item in
-                        
-                        print("First item is \(item["imageURL"] ?? "")")
-                        
+                        let imageURL = item["imageURL"] as? String ?? ""
+                        var tempImage = assignImage(path: imageURL)
+                        DispatchQueue.main.async {
+                            tempImage = self.assignImage(path: imageURL)
+                        }
                         return MenuItem(id: item.documentID,
                                         category: item["category"] as? String ?? "",
                                         imageURL: item["imageURL"] as? String ?? "",
+                                        image: tempImage,
                                         name: item["name"] as? String ?? "",
                                         price: item["price"] as? [String] ?? ["unknown"],
                                         size: item["size"] as? [String] ?? [""])
@@ -188,37 +152,10 @@ class MenuController {
                 }
                 completion(MenuItem.allItems)
             } else {
+                //TODO: Alert user there was an error fetching.  No internet?
                 print("error fetching!")
             }
         }
-    }
-    
-    // fetch image data
-    func fetchImage(url: URL, completion: @escaping (UIImage?) -> Void) {
-        
-        
-        
-        // construct URL components from URL
-        guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
-        
-        // replace the host for the base URL's host
-        // components.host = baseURL.host
-        
-        // construct the new url with the replaced host
-        guard let url = components.url else { return }
-        
-        // create a task for image fetch URL call
-        let task = URLSession.shared.dataTask(with: url) { data, responce, error in
-            // check the data is returned and image is valid
-            if let data = data, let image = UIImage(data: data) {
-                completion(image)
-            } else {
-                completion(nil)
-            }
-        }
-        
-        // begin the image fetch network call
-        task.resume()
     }
 }
 

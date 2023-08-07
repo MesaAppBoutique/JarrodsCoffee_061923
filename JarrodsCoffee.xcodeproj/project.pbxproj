@@ -143,10 +143,10 @@
 		D3B8820C263A1F4B00BC294C /* JarrodsCoffee */ = {
 			isa = PBXGroup;
 			children = (
-				C46D64892A62071D0032341B /* Helpers */,
-				C46D64882A6206F20032341B /* Controller */,
-				C46D64872A6206EB0032341B /* View */,
 				C46D64862A6206E20032341B /* Model */,
+				C46D64872A6206EB0032341B /* View */,
+				C46D64882A6206F20032341B /* Controller */,
+				C46D64892A62071D0032341B /* Helpers */,
 				D3B8821B263A1F4C00BC294C /* Info.plist */,
 				C46D64792A61F86A0032341B /* GoogleService-Info.plist */,
 			);
