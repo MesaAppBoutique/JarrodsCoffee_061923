@@ -39,6 +39,10 @@ class EditMenuItemViewController: UIViewController {
         vc.allowsEditing = true
         present(vc, animated: true)
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
 

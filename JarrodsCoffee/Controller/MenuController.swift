@@ -3,7 +3,7 @@
 //  JarrodsMenuRev
 //
 //  Created by Jason Carter on 4/4/22.
-//  Modified by David Levy on 8/7/23.
+//
 
 import Foundation
 import UIKit
@@ -18,12 +18,12 @@ class MenuController {
     var downloadedMenu = [MenuItem]()
     var selectedImage = UIImage(named: "Image")!
     /// Base URL
-   let baseURL = URL(string: "https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json")!
+    let baseURL = URL(string: "https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json")!
     
     
     /// Execute GET request for categories
-    //FIXME: Move categories data to cloud data
     func fetchCategories(completion: @escaping ([String]?) -> Void) {
+        
         
         let categoryURL = baseURL.appendingPathComponent("categories")
         
@@ -44,15 +44,20 @@ class MenuController {
     
     
     func addMenuItem(name: String, size: [String], price: [String], category: String, image: UIImage?) {
+        
+        
         let db = Firestore.firestore() //init firestore
         let imageURL = uploadImage(image)
+        
+        
+        // Upload that data
+        
         //Save reference to file in Firestore DB
+        
         db.collection("menuItems").addDocument(data: ["category":category, "imageURL": imageURL, "name":name, "price":price, "size": size])
         
-        //TODO: Instead of downloading all images again, we can just append the new image to the downloaded array
-        let menuImage = MenuImage(imageURL: imageURL, image: image ?? UIImage(named: "Image")!)
-        self.downloadedImages.append(menuImage)
-        
+        MenuController.shared.downloadImagesFromCloud()
+
     }
     
     func uploadImage(_ image: UIImage?) -> String {
@@ -76,6 +81,7 @@ class MenuController {
                 db.collection("images").document().setData(["url":path])
                 DispatchQueue.main.async {
                     if let image = image {
+                        print("Before saving to downloadedImages after upload the image is \(image)")
                         let menuImage = MenuImage(imageURL: path, image: image)
                         self.downloadedImages.append(menuImage)
                     }
@@ -86,12 +92,11 @@ class MenuController {
     }
     
     func downloadImagesFromCloud() {
+        let db = Firestore.firestore()
         
         //clear images
         downloadedImages = []
         
-        //download all images from firestore
-        let db = Firestore.firestore()
         db.collection("images").getDocuments { snapshot, error in
             if error == nil && snapshot != nil {
                 var paths = [String]()
@@ -105,8 +110,10 @@ class MenuController {
                         if error == nil && data != nil {
                             if let imageFromData = UIImage(data: data!) {
                                 DispatchQueue.main.async {
+                                    print("Before saving to downloadedImages after download the snapshot doc is \(imageFromData)")
                                     let menuImage = MenuImage(imageURL: path, image: imageFromData)
                                     self.downloadedImages.append(menuImage)
+                                    print("image count is \(self.downloadedImages.count)")
                                 }
                             }
                         }
@@ -116,11 +123,12 @@ class MenuController {
         }
     }
     
-    /// Return the image that is downloaded based on the url path that is stored for each menuImage
+    /// Associate the image that is downloaded based on the url path that is stored for each menuImage
     func assignImage(path: String) -> UIImage {
         // Of the menuImages we have downloaded from Firestore data, return if any match the url for this menu item.
         if let menuImage = MenuController.shared.downloadedImages.first (where: { $0.imageURL == path } ) {
             return menuImage.image
+            
         } else {
             //If none match then just return the default image.
             return UIImage(named: "Image")!
@@ -130,17 +138,25 @@ class MenuController {
     
     func fetchMenuItems(categoryName: String = "", completion: @escaping([MenuItem]?) -> Void) {
         
-        //print("Load menu items from Firestore cloud data.")
+        print("Loading menu items from Firestore cloud data.")
+        
         let db = Firestore.firestore() //init firestore
+        
         db.collection("menuItems").addSnapshotListener { [self] snapshot, error in
             if error == nil {
+                
                 if let snapshot = snapshot {
                     MenuItem.allItems = snapshot.documents.map { item in
+                        
+                        print("First item is \(item["imageURL"] ?? "")")
+                        
                         let imageURL = item["imageURL"] as? String ?? ""
                         var tempImage = assignImage(path: imageURL)
+
                         DispatchQueue.main.async {
                             tempImage = self.assignImage(path: imageURL)
                         }
+                                                
                         return MenuItem(id: item.documentID,
                                         category: item["category"] as? String ?? "",
                                         imageURL: item["imageURL"] as? String ?? "",
@@ -152,7 +168,6 @@ class MenuController {
                 }
                 completion(MenuItem.allItems)
             } else {
-                //TODO: Alert user there was an error fetching.  No internet?
                 print("error fetching!")
             }
         }

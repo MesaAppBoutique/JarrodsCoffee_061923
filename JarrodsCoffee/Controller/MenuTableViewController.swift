@@ -97,7 +97,6 @@ class MenuTableViewController: UITableViewController {
         
         // the left label of the cell should display the name of the item
         cell.textLabel?.text = menuItem.name
-        cell.imageView?.sizeToFit()
         DispatchQueue.main.async  {
             cell.imageView?.image = MenuController.shared.assignImage(path: menuItem.imageURL)
         }
@@ -107,6 +106,8 @@ class MenuTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
+    
+
 
     /*
     // Override to support conditional editing of the table view.
