@@ -11,7 +11,7 @@ import Firebase
 class MenuTableViewController: UITableViewController {
     //category name from CategoryViewController
     var category: String!
-    
+    var showItems: [MenuItem]!
     //array of menuItems
     //var menuItems = [MenuItem]()
     
@@ -21,7 +21,7 @@ class MenuTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        MenuController.shared.downloadImagesFromCloud()
+        //MenuController.shared.downloadImagesFromCloud()
 //        db.collection("menuItems").addSnapshotListener { (snapshot, error) in
 //            switch (snapshot, error) {
 //            case (.none, .none):
@@ -49,7 +49,7 @@ class MenuTableViewController: UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        updateUI(with: MenuItem.allItems)
+        updateUI(with: showItems)
     }
     
     /// Set the property and update the interface
@@ -57,7 +57,7 @@ class MenuTableViewController: UITableViewController {
         // have to go back to main queue from background queue where network requests are executed
         DispatchQueue.main.async {
             // remember the menu items for diplaying in the table
-            MenuItem.allItems = menuItems
+            self.showItems = menuItems
             
             // reload the table
             self.tableView.reloadData()
@@ -78,7 +78,7 @@ class MenuTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // the number of cells is equal to the size of menu items array
-        return MenuItem.allItems.count
+        return showItems.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -93,7 +93,7 @@ class MenuTableViewController: UITableViewController {
     
     func configure(cell: UITableViewCell, forItemAt indexPath: IndexPath) {
         // get the needed menu item for corresponding table row
-        var menuItem = MenuItem.allItems[indexPath.row]
+        var menuItem = showItems[indexPath.row]
         
         // the left label of the cell should display the name of the item
         cell.textLabel?.text = menuItem.name
@@ -157,7 +157,7 @@ class MenuTableViewController: UITableViewController {
             let index = tableView.indexPathForSelectedRow!.row
             
             // pass selected menuItem to destination MenuItemDetailViewController
-            menuItemDetailViewController.menuItem = MenuItem.allItems[index]
+            menuItemDetailViewController.menuItem = showItems[index]
         }
     }
 

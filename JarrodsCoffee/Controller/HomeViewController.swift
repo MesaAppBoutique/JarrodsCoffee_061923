@@ -19,13 +19,7 @@ class HomeViewController: UIViewController {
 
             //Using a shared Singleton pattern to fetch items
             MenuController.shared.fetchMenuItems { (menuItems) in
-                
-                //Do we want to do something with the fetched items yet?
-                //            if let menuItems = menuItems {
-                //                for item in menuItems {
-                //                    print("Found Item!  \(item)")
-                //                    }
-                //                }
+                MenuItem.loadCategories()
             }
         }
         

@@ -323,16 +323,101 @@
             </objects>
             <point key="canvasLocation" x="-3442" y="-1830"/>
         </scene>
+        <!--Edit Category View Controller-->
+        <scene sceneID="kDg-xn-Jef">
+            <objects>
+                <viewController id="aE9-8X-zpw" customClass="EditCategoryViewController" customModule="JarrodsCoffee" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KKI-dJ-gQK">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="enn-kw-r3P">
+                                <rect key="frame" x="20" y="68" width="374" height="450"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Hpo-TV-IEx">
+                                        <rect key="frame" x="0.0" y="0.0" width="273.5" height="50"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DVJ-we-nhj">
+                                                <rect key="frame" x="0.0" y="0.0" width="70.5" height="50"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1MU-dA-1qd" userLabel="Category Outlet">
+                                                <rect key="frame" x="73.5" y="0.0" width="200" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="200" id="wtP-o9-Eft"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="RSm-hu-2so"/>
+                                        </constraints>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fV6-es-o0C">
+                                        <rect key="frame" x="0.0" y="50" width="139.5" height="50"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Add/Edit Image"/>
+                                        <connections>
+                                            <action selector="editCategoryAction:" destination="aE9-8X-zpw" eventType="touchUpInside" id="hgC-6P-BLs"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zzi-Jw-gUm">
+                                        <rect key="frame" x="0.0" y="100" width="98.5" height="50"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Save Item"/>
+                                        <connections>
+                                            <action selector="saveCategoryAction:" destination="aE9-8X-zpw" eventType="touchUpInside" id="gfM-Ts-ZPF"/>
+                                        </connections>
+                                    </button>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QgP-9I-WlU">
+                                        <rect key="frame" x="0.0" y="150" width="300" height="300"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="NAf-Wa-SQY"/>
+                                            <constraint firstAttribute="width" constant="300" id="SZE-d6-ZZ7"/>
+                                            <constraint firstAttribute="height" constant="300" id="sb0-Qm-1A2"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="300" id="ucn-Ld-Ky5"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="fV6-es-o0C" firstAttribute="leading" secondItem="Hpo-TV-IEx" secondAttribute="leading" id="6kT-0s-uBd"/>
+                                    <constraint firstItem="Zzi-Jw-gUm" firstAttribute="height" secondItem="Hpo-TV-IEx" secondAttribute="height" id="jvl-uA-FaS"/>
+                                    <constraint firstItem="fV6-es-o0C" firstAttribute="height" secondItem="Hpo-TV-IEx" secondAttribute="height" id="kFA-OC-L7P"/>
+                                    <constraint firstItem="Zzi-Jw-gUm" firstAttribute="leading" secondItem="Hpo-TV-IEx" secondAttribute="leading" id="pUG-rf-qta"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ksv-i0-GoY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="enn-kw-r3P" firstAttribute="leading" secondItem="ksv-i0-GoY" secondAttribute="leading" constant="20" id="I1D-U5-ycF"/>
+                            <constraint firstItem="ksv-i0-GoY" firstAttribute="trailing" secondItem="enn-kw-r3P" secondAttribute="trailing" constant="20" id="V7k-vZ-f4M"/>
+                            <constraint firstItem="enn-kw-r3P" firstAttribute="top" secondItem="ksv-i0-GoY" secondAttribute="top" constant="20" id="g9n-MV-ANW"/>
+                            <constraint firstItem="ksv-i0-GoY" firstAttribute="bottom" secondItem="enn-kw-r3P" secondAttribute="bottom" priority="900" constant="20" id="yJv-qt-iue"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="categoryOutlet" destination="1MU-dA-1qd" id="LtV-bl-pFJ"/>
+                        <outlet property="imageOutlet" destination="QgP-9I-WlU" id="t3f-px-ooz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TRf-eD-7hG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-338" y="-2808"/>
+        </scene>
         <!--Add Menu Item-->
         <scene sceneID="dv8-sT-EfQ">
             <objects>
                 <viewController title="Add Menu Item" id="9H7-J4-dKa" customClass="EditMenuItemViewController" customModule="JarrodsCoffee" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="IHT-Oc-nXk">
+                    <view key="view" contentMode="scaleToFill" id="IHT-Oc-nXk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="lxx-SV-0vb">
-                                <rect key="frame" x="20" y="20" width="374" height="650"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="lxx-SV-0vb">
+                                <rect key="frame" x="20" y="20" width="374" height="700"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="LcH-jj-nIH">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="50"/>
@@ -353,27 +438,8 @@
                                             <constraint firstAttribute="height" constant="50" id="qnh-8i-lqW"/>
                                         </constraints>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="eah-bH-PVb">
-                                        <rect key="frame" x="0.0" y="50" width="105.5" height="50"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1gX-FF-8n9">
-                                                <rect key="frame" x="0.0" y="0.0" width="70.5" height="50"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xep-iW-A2y" userLabel="Category Outlet">
-                                                <rect key="frame" x="73.5" y="0.0" width="32" height="50"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="xS7-O3-HkJ"/>
-                                        </constraints>
-                                    </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8Kf-gh-46P">
-                                        <rect key="frame" x="0.0" y="100" width="182.5" height="50"/>
+                                        <rect key="frame" x="0.0" y="50" width="182.5" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Size 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lxj-yE-VUN">
                                                 <rect key="frame" x="0.0" y="0.0" width="44" height="50"/>
@@ -403,7 +469,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2sR-mU-dU9">
-                                        <rect key="frame" x="0.0" y="150" width="187.5" height="50"/>
+                                        <rect key="frame" x="0.0" y="100" width="187.5" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Size 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qmM-ft-hlC">
                                                 <rect key="frame" x="0.0" y="0.0" width="46.5" height="50"/>
@@ -433,7 +499,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fV5-gY-CYt">
-                                        <rect key="frame" x="0.0" y="200" width="188.5" height="50"/>
+                                        <rect key="frame" x="0.0" y="150" width="188.5" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Size 3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gr0-P3-epZ">
                                                 <rect key="frame" x="0.0" y="0.0" width="47" height="50"/>
@@ -462,24 +528,47 @@
                                             <constraint firstAttribute="height" constant="50" id="tdX-RK-S9S"/>
                                         </constraints>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nvv-iE-ZUS">
-                                        <rect key="frame" x="0.0" y="250" width="139.5" height="50"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="eah-bH-PVb">
+                                        <rect key="frame" x="0.0" y="200" width="320" height="50"/>
+                                        <subviews>
+                                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vuq-rr-LRi">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="category"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="200" id="ewI-FR-uOm"/>
+                                                </constraints>
+                                            </pickerView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" priority="900" constant="50" id="xS7-O3-HkJ"/>
+                                        </constraints>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nvv-iE-ZUS" userLabel="Add/Edit Categories">
+                                        <rect key="frame" x="0.0" y="250" width="176" height="50"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Add/Edit Categories"/>
+                                        <connections>
+                                            <segue destination="OfT-Bc-bO6" kind="show" id="dE9-Xt-CjJ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V2R-Mi-w8t">
+                                        <rect key="frame" x="0.0" y="300" width="139.5" height="50"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Add/Edit Image"/>
                                         <connections>
-                                            <action selector="editImageAction:" destination="9H7-J4-dKa" eventType="touchUpInside" id="WKb-S3-Efo"/>
+                                            <action selector="editImageAction:" destination="9H7-J4-dKa" eventType="touchUpInside" id="dQK-JP-Sel"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MQn-GB-icN">
-                                        <rect key="frame" x="0.0" y="300" width="98.5" height="50"/>
+                                        <rect key="frame" x="0.0" y="350" width="98.5" height="50"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Save Item"/>
                                         <connections>
                                             <action selector="saveItemAction:" destination="9H7-J4-dKa" eventType="touchUpInside" id="Xdx-uM-BqU"/>
                                         </connections>
                                     </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SeH-VX-Zhk">
-                                        <rect key="frame" x="0.0" y="350" width="300" height="300"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SeH-VX-Zhk">
+                                        <rect key="frame" x="0.0" y="400" width="300" height="300"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="300" id="CQB-TD-Noa"/>
                                             <constraint firstAttribute="width" constant="300" id="lP6-X1-IpQ"/>
@@ -488,9 +577,10 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Nvv-iE-ZUS" firstAttribute="height" secondItem="fV5-gY-CYt" secondAttribute="height" id="BpF-lB-b2M"/>
-                                    <constraint firstItem="eah-bH-PVb" firstAttribute="height" secondItem="LcH-jj-nIH" secondAttribute="height" id="LWR-Ee-PME"/>
+                                    <constraint firstItem="MQn-GB-icN" firstAttribute="height" secondItem="Nvv-iE-ZUS" secondAttribute="height" id="DMA-se-zPf"/>
                                     <constraint firstItem="8Kf-gh-46P" firstAttribute="height" secondItem="LcH-jj-nIH" secondAttribute="height" id="MQL-3S-aPk"/>
                                     <constraint firstItem="MQn-GB-icN" firstAttribute="height" secondItem="fV5-gY-CYt" secondAttribute="height" id="Ud6-HW-W6m"/>
+                                    <constraint firstItem="V2R-Mi-w8t" firstAttribute="height" secondItem="Nvv-iE-ZUS" secondAttribute="height" id="VIE-RV-2qR"/>
                                     <constraint firstItem="2sR-mU-dU9" firstAttribute="height" secondItem="LcH-jj-nIH" secondAttribute="height" id="xic-C7-ZtZ"/>
                                     <constraint firstItem="fV5-gY-CYt" firstAttribute="height" secondItem="LcH-jj-nIH" secondAttribute="height" id="ySy-wm-a7i"/>
                                 </constraints>
@@ -507,9 +597,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="wW4-ab-W3A"/>
                     <connections>
-                        <outlet property="categoryOutlet" destination="xep-iW-A2y" id="QLC-Rj-W3K"/>
                         <outlet property="imageOutlet" destination="SeH-VX-Zhk" id="dAD-hQ-Qb1"/>
                         <outlet property="nameOutlet" destination="mFw-AP-Lzm" id="KMY-60-RuI"/>
+                        <outlet property="picker" destination="vuq-rr-LRi" id="BAz-gG-mZg"/>
                         <outlet property="price1Outlet" destination="Q0Q-b6-VPP" id="QBf-tA-b4l"/>
                         <outlet property="price2Outlet" destination="a3a-w7-IqS" id="JgA-od-VaM"/>
                         <outlet property="price3Outlet" destination="chS-75-dO3" id="BaQ-DJ-xyT"/>
@@ -521,6 +611,35 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ISa-Uu-7Oe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2359.4202898550725" y="-2550"/>
+        </scene>
+        <!--Edit Category Table View Controller-->
+        <scene sceneID="SSX-4M-qJI">
+            <objects>
+                <tableViewController id="OfT-Bc-bO6" customClass="EditCategoryTableViewController" customModule="JarrodsCoffee" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="An6-ok-pqU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="CPi-dm-7lH">
+                                <rect key="frame" x="0.0" y="50" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CPi-dm-7lH" id="tK0-GJ-gK4">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="OfT-Bc-bO6" id="NuL-kx-cqo"/>
+                            <outlet property="delegate" destination="OfT-Bc-bO6" id="EJf-9d-41q"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="mBy-ch-3aM"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GPz-Qu-a8k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1395" y="-2692"/>
         </scene>
         <!--Events-->
         <scene sceneID="xeC-cu-OFg">

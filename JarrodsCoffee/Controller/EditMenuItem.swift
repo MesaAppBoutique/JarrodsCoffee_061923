@@ -16,8 +16,10 @@ import UIKit
 class EditMenuItemViewController: UIViewController {
     
 
+    @IBOutlet weak var picker: UIPickerView!
+
+
     @IBOutlet weak var nameOutlet: UITextField!
-    @IBOutlet weak var categoryOutlet: UITextField!
     
     @IBOutlet weak var imageURLOutlet: UITextField!
     @IBOutlet weak var size1Outlet: UITextField!
@@ -28,7 +30,7 @@ class EditMenuItemViewController: UIViewController {
     @IBOutlet weak var price3Outlet: UITextField!
     @IBOutlet weak var imageOutlet: UIImageView!
     @IBAction func saveItemAction(_ sender: Any) {
-        MenuController.shared.addMenuItem(name: nameOutlet.text ?? "", size: [size1Outlet.text ?? "", size2Outlet.text ?? "", size3Outlet.text ?? ""], price: [price1Outlet.text ?? "", price2Outlet.text ?? "", price3Outlet.text ?? ""], category: categoryOutlet.text ?? "", image: imageOutlet.image)
+        MenuController.shared.addMenuItem(name: nameOutlet.text ?? "", size: [size1Outlet.text ?? "", size2Outlet.text ?? "", size3Outlet.text ?? ""], price: [price1Outlet.text ?? "", price2Outlet.text ?? "", price3Outlet.text ?? ""], category: MenuItem.allCategories[picker.selectedRow(inComponent: 0)] , image: imageOutlet.image)
         self.dismiss(animated: true)
     }
     
@@ -38,6 +40,12 @@ class EditMenuItemViewController: UIViewController {
         vc.delegate = self
         vc.allowsEditing = true
         present(vc, animated: true)
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        picker.delegate = self as UIPickerViewDelegate
+        picker.dataSource = self as UIPickerViewDataSource
+        picker.center = self.view.center
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -60,5 +68,22 @@ extension EditMenuItemViewController: UIImagePickerControllerDelegate, UINavigat
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
     }
+    
+}
+
+
+extension EditMenuItemViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+
+       func numberOfComponents(in pickerView: UIPickerView) -> Int {
+          return 1
+       }
+       func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+          return MenuItem.allCategories.count
+       }
+       func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+          let row = MenuItem.allCategories[row]
+          return row
+       }
     
 }

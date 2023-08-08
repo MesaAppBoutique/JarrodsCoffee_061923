@@ -9,10 +9,13 @@
 import Foundation
 import UIKit
 
-
+struct MenuCategory {
+    var key: String
+    var image: UIImage
+}
 
 struct MenuImage {
-    var imageURL: String
+    var key: String
     var image: UIImage
 }
 
@@ -20,7 +23,9 @@ struct MenuImage {
 struct MenuItem {
     
     static var allItems: [MenuItem] = []
-    
+    static var allCategories: [String] = []
+    static var displayItems: [MenuItem] = []
+
     var id: String //  UID
     var category: String // category of menu item like beverage, snack, etc.
     var imageURL: String // url of the image to show
@@ -30,12 +35,34 @@ struct MenuItem {
     var size: [String] //  Small medium large, for example
     
     mutating func loadImage() -> MenuImage {
+        // Configure menuImage
             for thisImage in MenuController.shared.downloadedImages {
-                if thisImage.imageURL == imageURL {
+                if thisImage.key == imageURL {
                             return thisImage
                         }
                 }
-        return MenuImage(imageURL: "imageURL", image: UIImage(named: "Iced_Tea")!)
+        return MenuImage(key: "imageURL", image: UIImage(named: "Iced_Tea")!)
+    }
+    
+    func loadCategory() -> MenuCategory {
+        
+        for thisImage in MenuController.shared.downloadedImages {
+            
+            //Can we find an image for this category?
+            if thisImage.key == category {
+                return MenuCategory(key: thisImage.key, image: thisImage.image)
+                    }
+            }
+        
+    return MenuCategory(key: category, image: UIImage(named: "Image")!)
+    }
+    
+    static func loadCategories() {
+        // Add to list of categories
+        for eachItem in MenuItem.allItems {
+            if !MenuItem.allCategories.contains(eachItem.category) { MenuItem.allCategories.append(eachItem.category) }
+
+        }
     }
 }
 

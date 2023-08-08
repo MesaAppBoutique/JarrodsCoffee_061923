@@ -21,9 +21,9 @@ class CategoryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        menuItems = MenuItem.allItems
         MenuController.shared.downloadImagesFromCloud()
+
+        menuItems = MenuItem.allItems
          //Load the menu for all categories
         //MenuController.shared.fetchMenuItems() { (menuItems) in
             //if let menuItems = menuItems {
@@ -92,8 +92,10 @@ class CategoryTableViewController: UITableViewController {
                 // check if the cell was not yet recycled
                 guard currentIndexPath == indexPath else { return }
                 
+                let menuCategory = menuItem.loadCategory()
+                
                 // set the thumbnail image
-                cell.imageView?.image = MenuController.shared.assignImage(path: menuItem.imageURL)
+                cell.imageView?.image = menuCategory.image
 
                 // fit the image to the cell
                 self.fitImage(in: cell)
@@ -149,6 +151,8 @@ class CategoryTableViewController: UITableViewController {
             let menuTableViewController = segue.destination as! MenuTableViewController
             let index = tableView.indexPathForSelectedRow!.row
             
+            let filteredMenuItems = MenuController.shared.menuFiltered(by: categories[index], fromItems: MenuItem.allItems)
+            menuTableViewController.showItems = filteredMenuItems
             menuTableViewController.category = categories[index]
         }
     }

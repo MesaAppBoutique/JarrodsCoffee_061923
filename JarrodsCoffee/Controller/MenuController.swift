@@ -82,7 +82,7 @@ class MenuController {
                 DispatchQueue.main.async {
                     if let image = image {
                         print("Before saving to downloadedImages after upload the image is \(image)")
-                        let menuImage = MenuImage(imageURL: path, image: image)
+                        let menuImage = MenuImage(key: path, image: image)
                         self.downloadedImages.append(menuImage)
                     }
                 }
@@ -111,7 +111,7 @@ class MenuController {
                             if let imageFromData = UIImage(data: data!) {
                                 DispatchQueue.main.async {
                                     print("Before saving to downloadedImages after download the snapshot doc is \(imageFromData)")
-                                    let menuImage = MenuImage(imageURL: path, image: imageFromData)
+                                    let menuImage = MenuImage(key: path, image: imageFromData)
                                     self.downloadedImages.append(menuImage)
                                     print("image count is \(self.downloadedImages.count)")
                                 }
@@ -126,7 +126,7 @@ class MenuController {
     /// Associate the image that is downloaded based on the url path that is stored for each menuImage
     func assignImage(path: String) -> UIImage {
         // Of the menuImages we have downloaded from Firestore data, return if any match the url for this menu item.
-        if let menuImage = MenuController.shared.downloadedImages.first (where: { $0.imageURL == path } ) {
+        if let menuImage = MenuController.shared.downloadedImages.first (where: { $0.key == path } ) {
             return menuImage.image
             
         } else {
@@ -171,6 +171,10 @@ class MenuController {
                 print("error fetching!")
             }
         }
+    }
+    
+    func menuFiltered(by category: String, fromItems menuItems: [MenuItem]) -> [MenuItem] {
+        return menuItems.filter({ $0.category == category })
     }
 }
 
