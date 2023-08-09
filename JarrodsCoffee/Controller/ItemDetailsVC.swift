@@ -148,7 +148,7 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         // checks this segue is from MenuTableViewController to MenuItemDetailViewController
         if segue.identifier == "EditDetailSegue" {
             // we can safely downcast to MenuItemDetailViewController
-            let editCtrl = segue.destination as! EditMenuItemViewController
+            let editCtrl = segue.destination as! EditItemVC
             
             // selected cell's row is the index for array of menuItems
 //            let index = tableView.indexPathForSelectedRow!.row

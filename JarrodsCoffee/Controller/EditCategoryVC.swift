@@ -47,4 +47,6 @@ extension EditCategoryVC: UIImagePickerControllerDelegate, UINavigationControlle
         picker.dismiss(animated: true)
     }
     
+    
+ 
 }

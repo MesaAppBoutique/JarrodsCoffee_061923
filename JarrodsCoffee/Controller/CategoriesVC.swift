@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CategoryTableVC: UITableViewController {
+class CategoriesVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +57,11 @@ class CategoryTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            let category = MenuItem.allCategories[indexPath.row]
+            
+            MenuItem.allCategories.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            MenuControl.shared.removeReference(to: category)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -87,6 +91,5 @@ class CategoryTableVC: UITableViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    
 
 }

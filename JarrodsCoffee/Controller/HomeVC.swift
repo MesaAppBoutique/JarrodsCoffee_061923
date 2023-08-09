@@ -18,7 +18,7 @@ class HomeVC: UIViewController {
         DispatchQueue.main.async {
 
             //Using a shared Singleton pattern to fetch items
-            MenuController.shared.fetchMenuItems { (menuItems) in
+            MenuControl.shared.fetchMenuItems { (menuItems) in
                 MenuItem.loadCategories()
             }
         }

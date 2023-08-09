@@ -176,5 +176,18 @@ class MenuControl {
     func menuFiltered(by category: String, fromItems menuItems: [MenuItem]) -> [MenuItem] {
         return menuItems.filter({ $0.category == category })
     }
+    
+    func removeReference(to category:String) {
+        for (index, item) in MenuItem.allItems.enumerated() {
+            if item.category == category {
+                MenuItem.allItems[index].category = "Undefined Category"
+            }
+        }
+        persist()
+    }
+    
+    func persist() {
+        print("PERSIST ADD CODE")
+    }
 }
 

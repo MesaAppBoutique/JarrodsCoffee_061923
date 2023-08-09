@@ -14,10 +14,6 @@ class MenuCategoriesTableVC: UITableViewController {
     /// Array of menu items to be fetched from data
     var menuItems = [MenuItem]()
     
-    @IBAction func closeAction(_ sender: Any) {
-        self.dismiss(animated: true)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -158,7 +154,7 @@ class MenuCategoriesTableVC: UITableViewController {
         if segue.identifier == "MenuSegue" {
  
             if let menuVC = segue.destination as?
-                MenuTableVC {
+                MenuItemsTableVC {
                 
                 let index = tableView.indexPathForSelectedRow!.row
                 

@@ -36,7 +36,7 @@ struct MenuItem {
     
     mutating func loadImage() -> MenuImage {
         // Configure menuImage
-            for thisImage in MenuController.shared.downloadedImages {
+            for thisImage in MenuControl.shared.downloadedImages {
                 if thisImage.key == imageURL {
                             return thisImage
                         }
@@ -46,7 +46,7 @@ struct MenuItem {
     
     func loadCategory() -> MenuCategory {
         
-        for thisImage in MenuController.shared.downloadedImages {
+        for thisImage in MenuControl.shared.downloadedImages {
             
             //Can we find an image for this category?
             if thisImage.key == category {

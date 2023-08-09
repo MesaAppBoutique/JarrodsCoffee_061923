@@ -35,6 +35,10 @@ class EditItemVC: UIViewController {
         MenuControl.shared.addMenuItem(name: nameOutlet.text ?? "", size: [size1Outlet.text ?? "", size2Outlet.text ?? "", size3Outlet.text ?? ""], price: [price1Outlet.text ?? "", price2Outlet.text ?? "", price3Outlet.text ?? ""], category: MenuItem.allCategories[picker.selectedRow(inComponent: 0)] , image: imageOutlet.image)
         self.dismiss(animated: true)
     }
+    @IBAction func cancelAction(_ sender: Any) {
+        self.dismiss(animated: true)
+
+    }
     
     @IBAction func editImageAction(_ sender: Any) {
         let vc = UIImagePickerController()
