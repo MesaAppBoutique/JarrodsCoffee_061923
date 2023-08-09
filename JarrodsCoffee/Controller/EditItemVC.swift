@@ -13,15 +13,17 @@
 
 import UIKit
 
-class EditMenuItemViewController: UIViewController {
+class EditItemVC: UIViewController {
     
 
+    var menuItem: MenuItem?
+    
     @IBOutlet weak var picker: UIPickerView!
 
 
     @IBOutlet weak var nameOutlet: UITextField!
     
-    @IBOutlet weak var imageURLOutlet: UITextField!
+//    @IBOutlet weak var imageURLOutlet: UITextField!
     @IBOutlet weak var size1Outlet: UITextField!
     @IBOutlet weak var price1Outlet: UITextField!
     @IBOutlet weak var size2Outlet: UITextField!
@@ -30,7 +32,7 @@ class EditMenuItemViewController: UIViewController {
     @IBOutlet weak var price3Outlet: UITextField!
     @IBOutlet weak var imageOutlet: UIImageView!
     @IBAction func saveItemAction(_ sender: Any) {
-        MenuController.shared.addMenuItem(name: nameOutlet.text ?? "", size: [size1Outlet.text ?? "", size2Outlet.text ?? "", size3Outlet.text ?? ""], price: [price1Outlet.text ?? "", price2Outlet.text ?? "", price3Outlet.text ?? ""], category: MenuItem.allCategories[picker.selectedRow(inComponent: 0)] , image: imageOutlet.image)
+        MenuControl.shared.addMenuItem(name: nameOutlet.text ?? "", size: [size1Outlet.text ?? "", size2Outlet.text ?? "", size3Outlet.text ?? ""], price: [price1Outlet.text ?? "", price2Outlet.text ?? "", price3Outlet.text ?? ""], category: MenuItem.allCategories[picker.selectedRow(inComponent: 0)] , image: imageOutlet.image)
         self.dismiss(animated: true)
     }
     
@@ -46,16 +48,38 @@ class EditMenuItemViewController: UIViewController {
         picker.delegate = self as UIPickerViewDelegate
         picker.dataSource = self as UIPickerViewDataSource
         picker.center = self.view.center
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        fillFields()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
+    func fillFields () {
+        nameOutlet.text = menuItem?.name
+        
+        size1Outlet.text = menuItem?.size[0]
+        price1Outlet.text = menuItem?.price[0]
+        size2Outlet.text = menuItem?.size[1]
+        price2Outlet.text = menuItem?.price[1]
+        size3Outlet.text = menuItem?.size[2]
+        price3Outlet.text = menuItem?.price[2]
+
+        
+        DispatchQueue.main.async {
+            self.imageOutlet.image = MenuControl.shared.assignImage(path: self.menuItem?.imageURL ?? "Image")
+        }
+    }
 }
 
 
 // Required for the photo picker
-extension EditMenuItemViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension EditItemVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         //get photo
@@ -72,7 +96,7 @@ extension EditMenuItemViewController: UIImagePickerControllerDelegate, UINavigat
 }
 
 
-extension EditMenuItemViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension EditItemVC: UIPickerViewDelegate, UIPickerViewDataSource {
     
 
        func numberOfComponents(in pickerView: UIPickerView) -> Int {

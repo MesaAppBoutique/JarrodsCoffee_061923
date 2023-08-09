@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class EventSafariViewController: UIViewController, WKUIDelegate {
+class EventsBrowserVC: UIViewController, WKUIDelegate {
     
     
     var webView: WKWebView!

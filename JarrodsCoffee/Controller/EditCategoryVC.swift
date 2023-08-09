@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditCategoryViewController: UIViewController {
+class EditCategoryVC: UIViewController {
     
 
     @IBOutlet weak var categoryOutlet: UITextField!
@@ -33,7 +33,7 @@ class EditCategoryViewController: UIViewController {
 
 
 // Required for the photo picker
-extension EditCategoryViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension EditCategoryVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         //get photo

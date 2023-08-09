@@ -10,10 +10,10 @@ import UIKit
 import Firebase
 import FirebaseStorage
 
-class MenuController {
+class MenuControl {
     
     /// Used to share MenuController across all view controllers in the app
-    static let shared = MenuController()
+    static let shared = MenuControl()
     var downloadedImages = [MenuImage]()
     var downloadedMenu = [MenuItem]()
     var selectedImage = UIImage(named: "Image")!
@@ -56,7 +56,7 @@ class MenuController {
         
         db.collection("menuItems").addDocument(data: ["category":category, "imageURL": imageURL, "name":name, "price":price, "size": size])
         
-        MenuController.shared.downloadImagesFromCloud()
+        MenuControl.shared.downloadImagesFromCloud()
 
     }
     
@@ -126,7 +126,7 @@ class MenuController {
     /// Associate the image that is downloaded based on the url path that is stored for each menuImage
     func assignImage(path: String) -> UIImage {
         // Of the menuImages we have downloaded from Firestore data, return if any match the url for this menu item.
-        if let menuImage = MenuController.shared.downloadedImages.first (where: { $0.key == path } ) {
+        if let menuImage = MenuControl.shared.downloadedImages.first (where: { $0.key == path } ) {
             return menuImage.image
             
         } else {

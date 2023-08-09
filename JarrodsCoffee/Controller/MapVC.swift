@@ -12,7 +12,7 @@ import CoreLocation
 import CoreLocationUI
 
 
-class MapViewController: UIViewController,
+class MapVC: UIViewController,
  MKMapViewDelegate,  CLLocationManagerDelegate, UIGestureRecognizerDelegate {
     
     private var locationManager = CLLocationManager()

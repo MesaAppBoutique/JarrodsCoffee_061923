@@ -8,7 +8,7 @@
 import UIKit
 import MessageUI
 
-class ContactUsViewController: UIViewController, MFMailComposeViewControllerDelegate {
+class ContactVC: UIViewController, MFMailComposeViewControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()

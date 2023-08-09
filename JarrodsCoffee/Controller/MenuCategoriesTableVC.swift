@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CategoryTableViewController: UITableViewController {
+class MenuCategoriesTableVC: UITableViewController {
     /// Names of the menu categories
     var categories = [String]()
     
@@ -21,7 +21,7 @@ class CategoryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        MenuController.shared.downloadImagesFromCloud()
+        MenuControl.shared.downloadImagesFromCloud()
 
         menuItems = MenuItem.allItems
          //Load the menu for all categories
@@ -147,13 +147,25 @@ class CategoryTableViewController: UITableViewController {
     //pass the name of the chosen category before showing the category menu
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // make sure the segue is from category to menu table view controllers
+//        if segue.identifier == "MenuSegue" {
+//            let menuTableViewController = segue.destination as! MenuTableViewController
+//            let index = tableView.indexPathForSelectedRow!.row
+//
+//            let filteredMenuItems = MenuController.shared.menuFiltered(by: categories[index], fromItems: MenuItem.allItems)
+//            menuTableViewController.showItems = filteredMenuItems
+//            menuTableViewController.category = categories[index]
+//        }
         if segue.identifier == "MenuSegue" {
-            let menuTableViewController = segue.destination as! MenuTableViewController
-            let index = tableView.indexPathForSelectedRow!.row
-            
-            let filteredMenuItems = MenuController.shared.menuFiltered(by: categories[index], fromItems: MenuItem.allItems)
-            menuTableViewController.showItems = filteredMenuItems
-            menuTableViewController.category = categories[index]
+ 
+            if let menuVC = segue.destination as?
+                MenuTableVC {
+                
+                let index = tableView.indexPathForSelectedRow!.row
+                
+                let filteredMenuItems = MenuControl.shared.menuFiltered(by: categories[index], fromItems: MenuItem.allItems)
+                menuVC.showItems = filteredMenuItems
+                menuVC.category = categories[index]
+            }
         }
     }
 }

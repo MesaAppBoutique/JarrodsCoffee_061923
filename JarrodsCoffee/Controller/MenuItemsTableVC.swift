@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 
-class MenuTableViewController: UITableViewController {
+class MenuItemsTableVC: UITableViewController {
     //category name from CategoryViewController
     var category: String!
     var showItems: [MenuItem]!
@@ -98,7 +98,7 @@ class MenuTableViewController: UITableViewController {
         // the left label of the cell should display the name of the item
         cell.textLabel?.text = menuItem.name
         DispatchQueue.main.async  {
-            cell.imageView?.image = MenuController.shared.assignImage(path: menuItem.imageURL)
+            cell.imageView?.image = MenuControl.shared.assignImage(path: menuItem.imageURL)
         }
     }
     
@@ -151,7 +151,7 @@ class MenuTableViewController: UITableViewController {
         // checks this segue is from MenuTableViewController to MenuItemDetailViewController
         if segue.identifier == "MenuDetailSegue" {
             // we can safely downcast to MenuItemDetailViewController
-            let menuItemDetailViewController = segue.destination as! MenuItemDetailViewController
+            let menuItemDetailViewController = segue.destination as! ItemDetailsVC
             
             // selected cell's row is the index for array of menuItems
             let index = tableView.indexPathForSelectedRow!.row

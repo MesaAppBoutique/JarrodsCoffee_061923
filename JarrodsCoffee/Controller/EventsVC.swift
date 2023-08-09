@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EventsViewController: UIViewController {
+class EventsVC: UIViewController {
 
     @IBAction func closeAction(_ sender: Any) {
         print("close")
