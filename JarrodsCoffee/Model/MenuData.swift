@@ -21,26 +21,26 @@ class MenuData {
     let baseURL = URL(string: "https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json")!
     
     
-    /// Execute GET request for categories
-    func fetchCategories(completion: @escaping ([String]?) -> Void) {
-        
-        
-        let categoryURL = baseURL.appendingPathComponent("categories")
-        
-        // create a task for network call to get the list of categories
-        let task = URLSession.shared.dataTask(with: categoryURL) { data, response, error in
-            // /categories endpoint decoded into a Categories object
-            if let data = data,
-               let jsonDictionary = ((try? JSONSerialization.jsonObject(with: data) as? [String:Any]) as [String : Any]??),
-               let categories = jsonDictionary?["categories"] as? [String] {
-                completion(categories)
-            } else {
-                completion(nil)
-            }
-        }
-        // begin the call to get the list of categories
-        task.resume()
-    }
+//    /// Execute GET request for categories
+//    func fetchCategories(completion: @escaping ([String]?) -> Void) {
+//
+//
+//        let categoryURL = baseURL.appendingPathComponent("categories")
+//
+//        // create a task for network call to get the list of categories
+//        let task = URLSession.shared.dataTask(with: categoryURL) { data, response, error in
+//            // /categories endpoint decoded into a Categories object
+//            if let data = data,
+//               let jsonDictionary = ((try? JSONSerialization.jsonObject(with: data) as? [String:Any]) as [String : Any]??),
+//               let categories = jsonDictionary?["categories"] as? [String] {
+//                completion(categories)
+//            } else {
+//                completion(nil)
+//            }
+//        }
+//        // begin the call to get the list of categories
+//        task.resume()
+//    }
     
     
     func addMenuItem(name: String, size: [String], price: [String], category: String, image: UIImage?) {
@@ -228,7 +228,7 @@ class MenuData {
                         
                         print("First item is \(item["imageURL"] ?? "")")
                         let imageURL =  item["imageURL"] as? String ?? ""
-                        var tempImage = assignImage(path: imageURL)
+                        let tempImage = assignImage(path: imageURL)
 
                                                 
                         return MenuCategory(id: item.documentID,

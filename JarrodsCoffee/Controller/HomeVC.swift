@@ -19,7 +19,8 @@ class HomeVC: UIViewController {
 
             //Using a shared Singleton pattern to fetch items
             MenuData.shared.fetchMenuItems { (menuItems) in
-                MenuCategory.shared.loadCategories()
+                //MenuCategory.shared.loadCategories()
+                    print("items have been fetched!")
             }
             
             //bringing in an array of category objects
