@@ -9,6 +9,9 @@ import UIKit
 
 class CategoriesVC: UITableViewController {
 
+    
+    var categoryId: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,7 +31,7 @@ class CategoriesVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return MenuItem.allCategories.count
+        return MenuItem.categories.count
     }
 
   
@@ -36,9 +39,12 @@ class CategoriesVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
         // Configure the cell...
-
-        cell.textLabel?.text = MenuItem.allCategories[indexPath.row]
         
+        let categoryId = MenuItem.categories[indexPath.row].id
+        let category = MenuCategory.shared.loadCategory(withId: categoryId)
+        cell.textLabel?.text = category.name
+        cell.detailTextLabel?.text = category.imageURL
+        cell.imageView?.image = category.image
         
         return cell
     }
@@ -57,17 +63,39 @@ class CategoriesVC: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            let category = MenuItem.allCategories[indexPath.row]
+            let category = MenuItem.categories[indexPath.row].name
             
-            MenuItem.allCategories.remove(at: indexPath.row)
+            MenuItem.categories.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            MenuControl.shared.removeReference(to: category)
+            MenuData.shared.removeReference(to: category)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
    
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        categoryId = MenuItem.categories[indexPath.row].id
+    }
+    
+    /// Passes MenuItem to MenuItemDetailViewController before the segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // checks this segue is from MenuTableViewController to MenuItemDetailViewController
+        if segue.identifier == "EditCatSegue" {
+            // we can safely downcast to MenuItemDetailViewController
+            let edit = segue.destination as! EditCategoryVC
+            
+            
+            let category = MenuCategory.shared.loadCategory(withId: categoryId ?? UUID().uuidString)
+            // selected cell's row is the index for array of menuItems
+//            let index = tableView.indexPathForSelectedRow!.row
+            
+            // pass selected menuItem to destination MenuItemDetailViewController
+            edit.categoryId = category.id
+            edit.categoryName = category.name
+           // edit.categoryOutlet.text = category.name
+        }
+    }
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
@@ -84,12 +112,5 @@ class CategoriesVC: UITableViewController {
     */
 
    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
 
 }

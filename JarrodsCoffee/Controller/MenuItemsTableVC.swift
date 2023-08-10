@@ -98,7 +98,7 @@ class MenuItemsTableVC: UITableViewController {
         // the left label of the cell should display the name of the item
         cell.textLabel?.text = menuItem.name
         DispatchQueue.main.async  {
-            cell.imageView?.image = MenuControl.shared.assignImage(path: menuItem.imageURL)
+            cell.imageView?.image = MenuData.shared.assignImage(path: menuItem.imageURL)
         }
     }
     

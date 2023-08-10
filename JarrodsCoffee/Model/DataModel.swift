@@ -10,8 +10,49 @@ import Foundation
 import UIKit
 
 struct MenuCategory {
-    var key: String
-    var image: UIImage
+    var id: String = ""
+    var name: String = ""
+    var imageURL: String = ""
+    var image: UIImage = UIImage(named: "Image")!
+    
+    static let shared = MenuCategory()
+    
+    func loadCategory(withId id: String) -> MenuCategory {
+
+        //Look for category in cloud data
+        
+        //Look for image in downloaded images
+        
+        //create a menu category for this uid
+        
+        //Can we find an image for this category with the name of x?
+//        let foundImage = MenuControl.shared.assignImage(path: name )
+        let category = MenuCategory(id: id, name: "name", imageURL: "url", image: UIImage(named: "Iced_Tea")!)
+        return category
+    }
+   
+    func loadCategories() {
+        //just the cateogry uid strings
+        MenuItem.categories = []
+        // Add to list of categories
+//         let itemsWithUniqueCategories = MenuItem.allItems.unique{$0.category}
+//         for each in itemsWithUniqueCategories { //ew.  But it at least adds all unique categories
+//
+//             let newCategory = MenuCategory(
+//
+//             MenuItem.categories.append(each)
+//         }
+        
+        //bringing in an array of category objects
+        MenuData.shared.fetchCategories { categories in
+            print("Categories have been fetched.")
+        }
+        
+        
+        
+    
+    }
+    
 }
 
 struct MenuImage {
@@ -23,7 +64,8 @@ struct MenuImage {
 struct MenuItem {
     
     static var allItems: [MenuItem] = []
-    static var allCategories: [String] = []
+//    static var categoryIds: [String] = []
+    static var categories: [MenuCategory] = []
     static var displayItems: [MenuItem] = []
 
     var id: String //  UID
@@ -36,7 +78,7 @@ struct MenuItem {
     
     mutating func loadImage() -> MenuImage {
         // Configure menuImage
-            for thisImage in MenuControl.shared.downloadedImages {
+            for thisImage in MenuData.shared.downloadedImages {
                 if thisImage.key == imageURL {
                             return thisImage
                         }
@@ -44,26 +86,7 @@ struct MenuItem {
         return MenuImage(key: "imageURL", image: UIImage(named: "Iced_Tea")!)
     }
     
-    func loadCategory() -> MenuCategory {
-        
-        for thisImage in MenuControl.shared.downloadedImages {
-            
-            //Can we find an image for this category?
-            if thisImage.key == category {
-                return MenuCategory(key: thisImage.key, image: thisImage.image)
-                    }
-            }
-        
-    return MenuCategory(key: category, image: UIImage(named: "Image")!)
-    }
     
-    static func loadCategories() {
-        // Add to list of categories
-        for eachItem in MenuItem.allItems {
-            if !MenuItem.allCategories.contains(eachItem.category) { MenuItem.allCategories.append(eachItem.category) }
-
-        }
-    }
 }
 
 

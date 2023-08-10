@@ -10,11 +10,18 @@ import UIKit
 
 class EditCategoryVC: UIViewController {
     
+    var categoryId: String = ""
+    var categoryName: String = ""
+    var imageURL: String = ""
+    var categoryImage: UIImage = UIImage(named: "Image")!
 
     @IBOutlet weak var categoryOutlet: UITextField!
     @IBOutlet weak var imageOutlet: UIImageView!
     @IBAction func saveCategoryAction(_ sender: Any) {
-        //MenuController.shared.addMenuItem(name: nameOutlet.text ?? "", size: [size1Outlet.text ?? "", size2Outlet.text ?? "", size3Outlet.text ?? ""], price: [price1Outlet.text ?? "", price2Outlet.text ?? "", price3Outlet.text ?? ""], category: categoryOutlet.text ?? "", image: imageOutlet.image)
+        
+        MenuData.shared.addCategory(name: categoryOutlet.text ?? "", imageURL: imageURL, image: categoryImage)
+        
+
         self.dismiss(animated: true)
     }
     
@@ -26,9 +33,20 @@ class EditCategoryVC: UIViewController {
         present(vc, animated: true)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        categoryOutlet.text = categoryName
+        imageOutlet.image = categoryImage
+        
+        DispatchQueue.main.async {
+            self.imageOutlet.image = MenuData.shared.assignImage(path: self.categoryName)
+        }
+        
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
 }
 
 

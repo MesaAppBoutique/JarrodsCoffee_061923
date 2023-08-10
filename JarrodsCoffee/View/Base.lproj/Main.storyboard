@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="Wcq-Dc-ixX">
-                                <rect key="frame" x="0.0" y="92" width="414" height="770"/>
+                                <rect key="frame" x="20" y="92" width="414" height="770"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="AxW-Ol-snr">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
@@ -329,13 +329,13 @@
         <!--Edit CategoryVC-->
         <scene sceneID="kDg-xn-Jef">
             <objects>
-                <viewController id="aE9-8X-zpw" customClass="EditCategoryVC" customModule="JarrodsCoffee" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="flipHorizontal" id="aE9-8X-zpw" customClass="EditCategoryVC" customModule="JarrodsCoffee" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KKI-dJ-gQK">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="enn-kw-r3P">
-                                <rect key="frame" x="20" y="68" width="374" height="450"/>
+                                <rect key="frame" x="20" y="20" width="374" height="450"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Hpo-TV-IEx">
                                         <rect key="frame" x="0.0" y="0.0" width="273.5" height="50"/>
@@ -402,6 +402,7 @@
                             <constraint firstItem="ksv-i0-GoY" firstAttribute="bottom" secondItem="enn-kw-r3P" secondAttribute="bottom" priority="900" constant="20" id="yJv-qt-iue"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="FS5-1V-6KD"/>
                     <connections>
                         <outlet property="categoryOutlet" destination="1MU-dA-1qd" id="LtV-bl-pFJ"/>
                         <outlet property="imageOutlet" destination="QgP-9I-WlU" id="t3f-px-ooz"/>
@@ -667,6 +668,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="aE9-8X-zpw" kind="show" identifier="EditCatSegue" id="wcD-k1-JIU"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

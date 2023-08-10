@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		A6162AE5280F372E009B7F39 /* MenuCategoriesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AE4280F372E009B7F39 /* MenuCategoriesTableVC.swift */; };
 		A6162AE7280F3756009B7F39 /* UITableViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AE6280F3756009B7F39 /* UITableViewControllerExtension.swift */; };
-		A6162AEB280F378E009B7F39 /* MenuControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AEA280F378E009B7F39 /* MenuControl.swift */; };
+		A6162AEB280F378E009B7F39 /* MenuData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AEA280F378E009B7F39 /* MenuData.swift */; };
 		A6162AEF280F37D0009B7F39 /* ItemDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AEE280F37D0009B7F39 /* ItemDetailsVC.swift */; };
 		A6162AF1280F3811009B7F39 /* MenuItemsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6162AF0280F3811009B7F39 /* MenuItemsTableVC.swift */; };
 		A6A79462268137F000D97421 /* ContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A79461268137F000D97421 /* ContactVC.swift */; };
@@ -21,6 +21,7 @@
 		C46D647A2A61F86B0032341B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C46D64792A61F86A0032341B /* GoogleService-Info.plist */; };
 		C46D64832A61FADC0032341B /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C46D64822A61FADC0032341B /* FirebaseFirestoreSwift */; };
 		C46D64852A61FEBF0032341B /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46D64842A61FEBF0032341B /* DataModel.swift */; };
+		C48538712A858E240035F520 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48538702A858E240035F520 /* Array.swift */; };
 		D34C58482742D8D200AADF0E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D34C58472742D8D200AADF0E /* MapKit.framework */; };
 		D3B8820E263A1F4B00BC294C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B8820D263A1F4B00BC294C /* AppDelegate.swift */; };
 		D3B88210263A1F4B00BC294C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B8820F263A1F4B00BC294C /* SceneDelegate.swift */; };
@@ -36,7 +37,7 @@
 /* Begin PBXFileReference section */
 		A6162AE4280F372E009B7F39 /* MenuCategoriesTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCategoriesTableVC.swift; sourceTree = "<group>"; };
 		A6162AE6280F3756009B7F39 /* UITableViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewControllerExtension.swift; sourceTree = "<group>"; };
-		A6162AEA280F378E009B7F39 /* MenuControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuControl.swift; sourceTree = "<group>"; };
+		A6162AEA280F378E009B7F39 /* MenuData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuData.swift; sourceTree = "<group>"; };
 		A6162AEE280F37D0009B7F39 /* ItemDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailsVC.swift; sourceTree = "<group>"; };
 		A6162AF0280F3811009B7F39 /* MenuItemsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemsTableVC.swift; sourceTree = "<group>"; };
 		A6A79461268137F000D97421 /* ContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactVC.swift; sourceTree = "<group>"; };
@@ -45,6 +46,7 @@
 		C454F7C52A830419004068C2 /* CategoriesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesVC.swift; sourceTree = "<group>"; };
 		C46D64792A61F86A0032341B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C46D64842A61FEBF0032341B /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		C48538702A858E240035F520 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		D34C58472742D8D200AADF0E /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D3B8820A263A1F4B00BC294C /* JarrodsCoffee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JarrodsCoffee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3B8820D263A1F4B00BC294C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -78,7 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				C46D64842A61FEBF0032341B /* DataModel.swift */,
-				A6162AEA280F378E009B7F39 /* MenuControl.swift */,
+				A6162AEA280F378E009B7F39 /* MenuData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				A6162AE6280F3756009B7F39 /* UITableViewControllerExtension.swift */,
+				C48538702A858E240035F520 /* Array.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 				E4DE03702A3CEE7700F0F099 /* EventsBrowserVC.swift in Sources */,
 				D3B88212263A1F4B00BC294C /* HomeVC.swift in Sources */,
 				C454F7C42A82F4AF004068C2 /* EditCategoryVC.swift in Sources */,
+				C48538712A858E240035F520 /* Array.swift in Sources */,
 				C454F7C62A830419004068C2 /* CategoriesVC.swift in Sources */,
 				D3B8820E263A1F4B00BC294C /* AppDelegate.swift in Sources */,
 				A6A79462268137F000D97421 /* ContactVC.swift in Sources */,
@@ -249,7 +253,7 @@
 				C46D64852A61FEBF0032341B /* DataModel.swift in Sources */,
 				A6162AE5280F372E009B7F39 /* MenuCategoriesTableVC.swift in Sources */,
 				C41E8E1E2A6F19560012DBA6 /* EditItemVC.swift in Sources */,
-				A6162AEB280F378E009B7F39 /* MenuControl.swift in Sources */,
+				A6162AEB280F378E009B7F39 /* MenuData.swift in Sources */,
 				D3D6BAD22741C5670042A455 /* MapVC.swift in Sources */,
 				A6162AF1280F3811009B7F39 /* MenuItemsTableVC.swift in Sources */,
 				E4DE03722A409B0000F0F099 /* EventsVC.swift in Sources */,

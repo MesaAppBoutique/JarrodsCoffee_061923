@@ -9,7 +9,6 @@ import UIKit
 
 class MenuCategoriesTableVC: UITableViewController {
     /// Names of the menu categories
-    var categories = [String]()
     
     /// Array of menu items to be fetched from data
     var menuItems = [MenuItem]()
@@ -17,35 +16,35 @@ class MenuCategoriesTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        MenuControl.shared.downloadImagesFromCloud()
+        MenuData.shared.downloadImagesFromCloud()
 
-        menuItems = MenuItem.allItems
-         //Load the menu for all categories
-        //MenuController.shared.fetchMenuItems() { (menuItems) in
-            //if let menuItems = menuItems {
-                for item in MenuItem.allItems {
-                    let category = item.category
-                    // add category only if it was not added before
-                    if !self.categories.contains(category) {
-                        self.categories.append(category)
-                    }
-                //}
-                // remember the list of items
-                //self.menuItems = menuItems
-
-                // update the table with categories
-                self.updateUI(with: self.categories)
-            }
-        //}
+//        menuItems = MenuItem.allItems
+//         //Load the menu for all categories
+//        //MenuController.shared.fetchMenuItems() { (menuItems) in
+//            //if let menuItems = menuItems {
+//                for item in MenuItem.allItems {
+//                    let category = item.category
+//                    // add category only if it was not added before
+//                    if !self.categories.contains(category) {
+//                        self.categories.append(category)
+//                    }
+//                //}
+//                // remember the list of items
+//                //self.menuItems = menuItems
+//
+//                // update the table with categories
+//                self.updateUI(with: self.categories)
+//            }
+//        //}
     }
     
-    // Update categories
-    func updateUI(with categories: [String]) {
-        DispatchQueue.main.async {
-            self.categories = categories
-            self.tableView.reloadData()
-        }
-    }
+//    // Update categories
+//    func updateUI(with categories: [String]) {
+//        DispatchQueue.main.async {
+//            self.categories = categories
+//            self.tableView.reloadData()
+//        }
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -58,7 +57,7 @@ class MenuCategoriesTableVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return MenuItem.categories.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -71,12 +70,12 @@ class MenuCategoriesTableVC: UITableViewController {
     
     // Configure category cells
     func configure(cell: UITableViewCell, forItemAt indexPath: IndexPath) {
-        let categoryString = categories[indexPath.row]
+        let category = MenuItem.categories[indexPath.row]
         
-        cell.textLabel?.text = categoryString.capitalized
+        cell.textLabel?.text = category.name.capitalized
         
         guard let menuItem = menuItems.first(where: { item in
-            return item.category == categoryString
+            return item.category == category.name
         }) else { return }
         
         // fetch the image from assets
@@ -88,7 +87,7 @@ class MenuCategoriesTableVC: UITableViewController {
                 // check if the cell was not yet recycled
                 guard currentIndexPath == indexPath else { return }
                 
-                let menuCategory = menuItem.loadCategory()
+                let menuCategory = MenuCategory.shared.loadCategory(withId: menuItem.category)
                 
                 // set the thumbnail image
                 cell.imageView?.image = menuCategory.image
@@ -158,9 +157,9 @@ class MenuCategoriesTableVC: UITableViewController {
                 
                 let index = tableView.indexPathForSelectedRow!.row
                 
-                let filteredMenuItems = MenuControl.shared.menuFiltered(by: categories[index], fromItems: MenuItem.allItems)
+                let filteredMenuItems = MenuData.shared.menuFiltered(by: MenuItem.categories[index].name, fromItems: MenuItem.allItems)
                 menuVC.showItems = filteredMenuItems
-                menuVC.category = categories[index]
+                menuVC.category = MenuItem.categories[index].name
             }
         }
     }

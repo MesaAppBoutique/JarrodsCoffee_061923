@@ -10,10 +10,10 @@ import UIKit
 import Firebase
 import FirebaseStorage
 
-class MenuControl {
+class MenuData {
     
     /// Used to share MenuController across all view controllers in the app
-    static let shared = MenuControl()
+    static let shared = MenuData()
     var downloadedImages = [MenuImage]()
     var downloadedMenu = [MenuItem]()
     var selectedImage = UIImage(named: "Image")!
@@ -45,18 +45,61 @@ class MenuControl {
     
     func addMenuItem(name: String, size: [String], price: [String], category: String, image: UIImage?) {
         
-        
         let db = Firestore.firestore() //init firestore
         let imageURL = uploadImage(image)
         
+        db.collection("menuItems")
+            .whereField("name", isEqualTo: name)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    // Some error occured
+                } else if querySnapshot!.documents.count == 0 {
+                    //none exist with that name, let's make a new one!
+                    db.collection("menuItems").addDocument(data: ["category":category, "imageURL": imageURL, "name":name, "price":price, "size": size])
+                } else {
+                    // lets update the first record with the same name
+                    let document = querySnapshot!.documents.first
+                    document?.reference.updateData(["category":category, "imageURL": imageURL, "name":name, "price":price, "size": size])
+                }
+            }
         
         // Upload that data
         
-        //Save reference to file in Firestore DB
         
-        db.collection("menuItems").addDocument(data: ["category":category, "imageURL": imageURL, "name":name, "price":price, "size": size])
+        //Do we need this HERE?
+        MenuData.shared.downloadImagesFromCloud()
+
+    }
+    
+    
+    func addCategory(name: String, imageURL: String, image: UIImage?) {
         
-        MenuControl.shared.downloadImagesFromCloud()
+        let db = Firestore.firestore() //init firestore
+        
+        db.collection("categories")
+            .whereField("name", isEqualTo: name)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    // Some error occured
+                } else if querySnapshot!.documents.count == 0 {
+                    //none exist with that name, let's make a new one!
+                    let newURL = self.uploadImage(image)
+                    db.collection("categories").addDocument(data: ["imageURL": newURL, "name": name])
+
+                } else {
+                    // lets update the first record with the same name
+                    let document = querySnapshot!.documents.first
+                    let newURL = self.uploadImage(image)
+
+                    document?.reference.updateData(["imageURL": newURL, "name": name])
+                }
+            }
+        
+        // Upload that data
+        
+        
+        //Do we need this HERE?
+        MenuData.shared.downloadImagesFromCloud()
 
     }
     
@@ -126,7 +169,7 @@ class MenuControl {
     /// Associate the image that is downloaded based on the url path that is stored for each menuImage
     func assignImage(path: String) -> UIImage {
         // Of the menuImages we have downloaded from Firestore data, return if any match the url for this menu item.
-        if let menuImage = MenuControl.shared.downloadedImages.first (where: { $0.key == path } ) {
+        if let menuImage = MenuData.shared.downloadedImages.first (where: { $0.key == path } ) {
             return menuImage.image
             
         } else {
@@ -153,9 +196,6 @@ class MenuControl {
                         let imageURL = item["imageURL"] as? String ?? ""
                         var tempImage = assignImage(path: imageURL)
 
-                        DispatchQueue.main.async {
-                            tempImage = self.assignImage(path: imageURL)
-                        }
                                                 
                         return MenuItem(id: item.documentID,
                                         category: item["category"] as? String ?? "",
@@ -167,6 +207,37 @@ class MenuControl {
                     }
                 }
                 completion(MenuItem.allItems)
+            } else {
+                print("error fetching!")
+            }
+        }
+    }
+    
+    
+    func fetchCategories(categoryId: String = "", completion: @escaping([MenuCategory]?) -> Void) {
+        
+        print("Loading categories from Firestore cloud data.")
+        
+        let db = Firestore.firestore() //init firestore
+        
+        db.collection("categories").addSnapshotListener { [self] snapshot, error in
+            if error == nil {
+                
+                if let snapshot = snapshot {
+                    MenuItem.categories = snapshot.documents.map { item in
+                        
+                        print("First item is \(item["imageURL"] ?? "")")
+                        let imageURL =  item["imageURL"] as? String ?? ""
+                        var tempImage = assignImage(path: imageURL)
+
+                                                
+                        return MenuCategory(id: item.documentID,
+                                            name: item["name"] as? String ?? "",
+                                            imageURL: imageURL,
+                                            image: tempImage)
+                    }
+                }
+                completion(MenuItem.categories)
             } else {
                 print("error fetching!")
             }
