@@ -46,7 +46,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <segue destination="RHy-cr-wAW" kind="show" id="WGY-HO-1jU"/>
+                                                    <segue destination="RHy-cr-wAW" kind="show" identifier="MenuCategorySegue" id="WGY-HO-1jU"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="juk-36-SJF">
@@ -682,7 +682,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GPz-Qu-a8k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2231.8840579710145" y="-1299.1071428571429"/>
+            <point key="canvasLocation" x="1825" y="38"/>
         </scene>
         <!--Events-->
         <scene sceneID="xeC-cu-OFg">
@@ -693,7 +693,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="jkB-02-kSO">
-                                <rect key="frame" x="0.0" y="97" width="414.5" height="780"/>
+                                <rect key="frame" x="0.0" y="97" width="414.5" height="760"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nAW-QU-ocB">
                                         <rect key="frame" x="13.5" y="0.0" width="388" height="125"/>
@@ -722,10 +722,10 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="95" translatesAutoresizingMaskIntoConstraints="NO" id="fEC-Rk-14c">
-                                        <rect key="frame" x="15" y="149" width="384.5" height="444.5"/>
+                                        <rect key="frame" x="15" y="149" width="384.5" height="424.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8c-UA-lzx">
-                                                <rect key="frame" x="0.0" y="0.0" width="384.5" height="319.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="384.5" height="299.5"/>
                                                 <string key="text">   Jarrod's is the place to be when it comes to events.  You can enjoy a variety of events from open mic night to art meetups and so much more!  If you are interested in hosting an event a Jarrod's, please email us with the details.  To view the details of an event, long press on the event of interest and then press the 'Open Link' option.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" systemColor="systemBackgroundColor"/>
@@ -733,7 +733,7 @@
                                                 <string key="userLabel">Jarrod's is the place to be when it comes to events.  You can enjoy a variety of events from open mic night to art meetups and so much more!  If you are interested in hosting an event a Jarrod's, please email us with the details.  To view the details of an event, long press on the event of interest and then press the 'Open Link' option.</string>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gkj-OM-ZxU">
-                                                <rect key="frame" x="98" y="414.5" width="189" height="30"/>
+                                                <rect key="frame" x="98" y="394.5" width="189" height="30"/>
                                                 <color key="backgroundColor" red="0.72549019609999998" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="2XO-Dk-i9X"/>
@@ -754,7 +754,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="67" id="Uz5-fp-JQL">
-                                        <rect key="frame" x="55" y="617.5" width="304.5" height="99.5"/>
+                                        <rect key="frame" x="55" y="597.5" width="304.5" height="99.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2bv-Bt-VHD">
@@ -856,7 +856,7 @@
                                         <viewLayoutGuide key="safeArea" id="v9y-1u-Ukq"/>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2tr-uX-ppC">
-                                        <rect key="frame" x="120" y="741" width="175" height="39"/>
+                                        <rect key="frame" x="120" y="721" width="175" height="39"/>
                                         <color key="backgroundColor" red="0.72549019607843135" green="0.0039215686274509803" blue="0.0039215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="oqc-dw-ksI"/>
@@ -1331,13 +1331,39 @@
                                     <segue destination="Mz1-jW-jwT" kind="show" identifier="MenuSegue" id="Lql-8N-6Y6"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="UnassignedCellIdentifier" textLabel="tiv-AB-87j" imageView="t4Q-DP-Xio" rowHeight="80" style="IBUITableViewCellStyleDefault" id="YBv-TS-5ju" userLabel="UnassignCell">
+                                <rect key="frame" x="0.0" y="255" width="414" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YBv-TS-5ju" id="V30-7c-vXc">
+                                    <rect key="frame" x="0.0" y="0.0" width="383.5" height="80"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tiv-AB-87j">
+                                            <rect key="frame" x="95.5" y="0.0" width="280" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="Bags_of_Coffee" id="t4Q-DP-Xio">
+                                            <rect key="frame" x="20" y="0.0" width="60.5" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </imageView>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="Mz1-jW-jwT" kind="show" identifier="UnassignedSegue" id="95U-hx-UeZ"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="RHy-cr-wAW" id="w3b-OP-QYV"/>
                             <outlet property="delegate" destination="RHy-cr-wAW" id="Wpa-KA-YKz"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Menu" id="ZCc-tb-Aam"/>
+                    <navigationItem key="navigationItem" title="Menu" id="ZCc-tb-Aam">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="k6P-10-749"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rbX-t0-Jsp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1516,6 +1542,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="95U-hx-UeZ"/>
         <segue reference="cV6-0p-QdG"/>
         <segue reference="FGk-T1-35A"/>
     </inferredMetricsTieBreakers>

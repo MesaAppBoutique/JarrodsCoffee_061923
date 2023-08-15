@@ -10,8 +10,9 @@ import Firebase
 
 class MenuItemsTableVC: UITableViewController {
     //category name from CategoryViewController
-    var category: String!
-    var showItems: [MenuItem]!
+    var showName: String = ""
+    var showItems: [MenuItem] = []
+    var unassignedItems: [MenuItem] = []
     //array of menuItems
     //var menuItems = [MenuItem]()
     
@@ -33,9 +34,11 @@ class MenuItemsTableVC: UITableViewController {
 //            }
 //        }
         
+        //fetch data and update views
+        
         
         // Table title is capitalized category name
-        title = category.capitalized
+        title = showName.capitalized
                 
 //        // Load the menu for a given category
 //        MenuController.shared.fetchMenuItems(categoryName: category) { (menuItems) in
@@ -48,9 +51,9 @@ class MenuItemsTableVC: UITableViewController {
 //        }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        updateUI(with: showItems)
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        //updateUI(with: showItems)
+//    }
     
     /// Set the property and update the interface
     func updateUI(with menuItems: [MenuItem]) {
@@ -84,23 +87,23 @@ class MenuItemsTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // reuse the menu list prototype cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCellIdentifier", for: indexPath)
+        //self.fitImage(in: cell)
 
         // configure the cell with menu list data
-        configure(cell: cell, forItemAt: indexPath)
-
-        return cell
-    }
-    
-    func configure(cell: UITableViewCell, forItemAt indexPath: IndexPath) {
-        // get the needed menu item for corresponding table row
-        var menuItem = showItems[indexPath.row]
+        let menuItem = showItems[indexPath.row]
         
         // the left label of the cell should display the name of the item
         cell.textLabel?.text = menuItem.name
+        
         DispatchQueue.main.async  {
-            cell.imageView?.image = MenuData.shared.assignImage(path: menuItem.imageURL)
+            cell.imageView?.image = AppData.shared.assignImage(withKey: menuItem.imageURL)
+            self.fitImage(in: cell)
+
         }
+        
+        return cell
     }
+    
     
     // adjust the cell height to make images look better
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -160,6 +163,7 @@ class MenuItemsTableVC: UITableViewController {
             menuItemDetailViewController.menuItem = showItems[index]
         }
     }
-
+    
+    
 }
 

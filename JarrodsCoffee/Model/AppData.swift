@@ -10,10 +10,10 @@ import UIKit
 import Firebase
 import FirebaseStorage
 
-class MenuData {
+class AppData {
     
     /// Used to share MenuController across all view controllers in the app
-    static let shared = MenuData()
+    static let shared = AppData()
     var downloadedImages = [MenuImage]()
     var downloadedMenu = [MenuItem]()
     var selectedImage = UIImage(named: "Image")!
@@ -55,7 +55,7 @@ class MenuData {
                     // Some error occured
                 } else if querySnapshot!.documents.count == 0 {
                     //none exist with that name, let's make a new one!
-                    db.collection("menuItems").addDocument(data: ["category":category, "imageURL": imageURL, "name":name, "price":price, "size": size])
+                    db.collection("menuItems").addDocument(data: ["category": category, "imageURL": imageURL, "name":name, "price":price, "size": size])
                 } else {
                     // lets update the first record with the same name
                     let document = querySnapshot!.documents.first
@@ -67,7 +67,7 @@ class MenuData {
         
         
         //Do we need this HERE?
-        MenuData.shared.downloadImagesFromCloud()
+        AppData.shared.downloadImagesFromCloud()
 
     }
     
@@ -99,7 +99,7 @@ class MenuData {
         
         
         //Do we need this HERE?
-        MenuData.shared.downloadImagesFromCloud()
+        AppData.shared.downloadImagesFromCloud()
 
     }
     
@@ -167,9 +167,9 @@ class MenuData {
     }
     
     /// Associate the image that is downloaded based on the url path that is stored for each menuImage
-    func assignImage(path: String) -> UIImage {
+    func assignImage(withKey: String) -> UIImage {
         // Of the menuImages we have downloaded from Firestore data, return if any match the url for this menu item.
-        if let menuImage = MenuData.shared.downloadedImages.first (where: { $0.key == path } ) {
+        if let menuImage = AppData.shared.downloadedImages.first (where: { $0.key == withKey } ) {
             return menuImage.image
             
         } else {
@@ -189,16 +189,17 @@ class MenuData {
             if error == nil {
                 
                 if let snapshot = snapshot {
-                    MenuItem.allItems = snapshot.documents.map { item in
+                    MenuItem.shared.allItems = snapshot.documents.map { item in
                         
-                        print("First item is \(item["imageURL"] ?? "")")
-                        
+                        print("First item ID is \(item.documentID )")
+                        print("Category ID is \(String(describing: item["category"]) )")
+
                         let imageURL = item["imageURL"] as? String ?? ""
-                        var tempImage = assignImage(path: imageURL)
+                        var tempImage = assignImage(withKey: imageURL)
 
                                                 
                         return MenuItem(id: item.documentID,
-                                        category: item["category"] as? String ?? "",
+                                        categoryId: item["category"] as? String ?? "",
                                         imageURL: item["imageURL"] as? String ?? "",
                                         image: tempImage,
                                         name: item["name"] as? String ?? "",
@@ -206,7 +207,7 @@ class MenuData {
                                         size: item["size"] as? [String] ?? [""])
                     }
                 }
-                completion(MenuItem.allItems)
+                completion(MenuItem.shared.allItems)
             } else {
                 print("error fetching!")
             }
@@ -224,11 +225,11 @@ class MenuData {
             if error == nil {
                 
                 if let snapshot = snapshot {
-                    MenuItem.categories = snapshot.documents.map { item in
+                    MenuItem.shared.categories = snapshot.documents.map { item in
                         
                         print("First item is \(item["imageURL"] ?? "")")
                         let imageURL =  item["imageURL"] as? String ?? ""
-                        let tempImage = assignImage(path: imageURL)
+                        let tempImage = assignImage(withKey: imageURL)
 
                                                 
                         return MenuCategory(id: item.documentID,
@@ -237,21 +238,44 @@ class MenuData {
                                             image: tempImage)
                     }
                 }
-                completion(MenuItem.categories)
+                completion(MenuItem.shared.categories)
             } else {
                 print("error fetching!")
             }
         }
     }
     
-    func menuFiltered(by category: String, fromItems menuItems: [MenuItem]) -> [MenuItem] {
-        return menuItems.filter({ $0.category == category })
+    func repairBrokenCategories () {
+        print("TODO: If an item has a category that can not be loaded in the categories database, then set that item's category as unassigned and create an unassigned category to the shared.categories array so it can be selected still")
+        //FIXME:  Add in some extra logic to find any categories that are named in the Item, but that don't exist in the Category database.
+        //If an item has a category that can not be loaded in the categories database, then set that item's category as "unassigned" and create an "unassigned" category to the shared.categories array so it can be selected still.
+        
+        
     }
     
-    func removeReference(to category:String) {
-        for (index, item) in MenuItem.allItems.enumerated() {
-            if item.category == category {
-                MenuItem.allItems[index].category = "Undefined Category"
+    func menuFiltered(by categoryId: String, fromItems menuItems: [MenuItem]) -> [MenuItem] {
+        let foundItems = menuItems.filter({
+            $0.categoryId.uppercased() == categoryId.uppercased()
+            
+        })
+        
+//        let notFoundItems = menuItems.filter({
+//            $0.categoryId.uppercased() != categoryId.uppercased()
+//        })
+//
+//        var unassignedItems = notFoundItems.map{ (item) -> MenuItem in
+//            var _item = item
+//            _item.categoryId = "unassigned category"
+//            return _item
+//        }
+        
+        return foundItems //+ unassignedItems
+    }
+    
+    func removeReference(to categoryId:String) {
+        for (index, item) in MenuItem.shared.allItems.enumerated() {
+            if item.categoryId.uppercased() == categoryId.uppercased() { //I am not sure why the stored property's character case does not at all match.  So let's just compare upper cased versions.
+                MenuItem.shared.allItems[index].categoryId = "Undefined Category"
             }
         }
         persist()
@@ -260,5 +284,98 @@ class MenuData {
     func persist() {
         print("PERSIST ADD CODE")
     }
+    
+    
+    func fetchMenuData(completion: @escaping ([MenuItem]) -> Void) {
+        let db = Firestore.firestore()
+        
+        db.collection("menuItems").getDocuments { [self] (snapshot, error) in
+            // Handle error
+            
+            var menuItems: [MenuItem] = []
+            
+            if error == nil {
+                
+                if let snapshot = snapshot {
+                    MenuItem.shared.allItems = snapshot.documents.map { item in
+                        
+                        print("First item ID is \(item.documentID )")
+                        print("Category ID is \(String(describing: item["category"]) )")
+                        
+                        let imageURL = item["imageURL"] as? String ?? ""
+                        var tempImage = assignImage(withKey: imageURL)
+                        
+                        
+                        return MenuItem(id: item.documentID,
+                                        categoryId: item["category"] as? String ?? "",
+                                        imageURL: item["imageURL"] as? String ?? "",
+                                        image: tempImage,
+                                        name: item["name"] as? String ?? "",
+                                        price: item["price"] as? [String] ?? ["unknown"],
+                                        size: item["size"] as? [String] ?? [""])
+                    }
+                }
+                //                completion(MenuItem.shared.allItems)
+                
+                completion(menuItems)
+            }
+        }
+        
+        
+        // Asynchronously fetch and display image data
+        //    func fetchAndDisplayImages(for menuItems: [MenuItem]) {
+        //        for menuItem in menuItems {
+        //            if let imageUrl = menuItem.imageUrl {
+        //                // Use URLSession or a library like SDWebImage to download the image
+        //                // Update UIImageView with the downloaded image
+        //            }
+        //        }
+        //    }
+    }
+
+    
+    
+    func fetchCategoryData(completion: @escaping ([MenuCategory]) -> Void) {
+        let db = Firestore.firestore()
+        
+        db.collection("categories").getDocuments { [self] (snapshot, error) in
+            // Handle error
+            
+            var categories: [MenuCategory] = []
+            
+            if error == nil {
+                
+                if let snapshot = snapshot {
+                    categories = snapshot.documents.map { item in
+                        
+                        print("First item ID is \(item.documentID )")
+                        
+                        let imageURL = item["imageURL"] as? String ?? ""
+                        let tempImage = assignImage(withKey: imageURL)
+                        
+                        return MenuCategory(id: item.documentID,
+                                            name: item["name"] as? String ?? "",
+                                            imageURL: imageURL,
+                                            image: tempImage)
+                    }
+                }
+                //                completion(MenuItem.shared.allItems)
+                print("Categories found number \(categories.count)")
+                completion(categories)
+            }
+        }
+        
+        
+        // Asynchronously fetch and display image data
+        //    func fetchAndDisplayImages(for menuItems: [MenuItem]) {
+        //        for menuItem in menuItems {
+        //            if let imageUrl = menuItem.imageUrl {
+        //                // Use URLSession or a library like SDWebImage to download the image
+        //                // Update UIImageView with the downloaded image
+        //            }
+        //        }
+        //    }
+    }
+
 }
 

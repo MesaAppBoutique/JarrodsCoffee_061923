@@ -6,162 +6,121 @@
 //  Modified by David Levy on 8/7/23.
 
 import UIKit
+import SwiftUI
 
 class MenuCategoriesTableVC: UITableViewController {
-    /// Names of the menu categories
     
-    /// Array of menu items to be fetched from data
-    var menuItems = [MenuItem]()
+    var categories = [MenuCategory]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        MenuData.shared.downloadImagesFromCloud()
-
-//        menuItems = MenuItem.allItems
-//         //Load the menu for all categories
-//        //MenuController.shared.fetchMenuItems() { (menuItems) in
-//            //if let menuItems = menuItems {
-//                for item in MenuItem.allItems {
-//                    let category = item.category
-//                    // add category only if it was not added before
-//                    if !self.categories.contains(category) {
-//                        self.categories.append(category)
-//                    }
-//                //}
-//                // remember the list of items
-//                //self.menuItems = menuItems
-//
-//                // update the table with categories
-//                self.updateUI(with: self.categories)
-//            }
-//        //}
+        AppData.shared.fetchCategoryData { fetched in
+            self.categories = fetched
+            self.updateUI(with: fetched)
+        }
+        
+        
     }
-    
-//    // Update categories
-//    func updateUI(with categories: [String]) {
-//        DispatchQueue.main.async {
-//            self.categories = categories
-//            self.tableView.reloadData()
-//        }
-//    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
-    // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MenuItem.categories.count
+        return categories.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCellIdentifier", for: indexPath)
 
-        configure(cell: cell, forItemAt: indexPath)
+        let category = categories[indexPath.row]
+        cell.textLabel?.text = category.name
 
+        DispatchQueue.main.async {
+            cell.imageView?.image = AppData.shared.assignImage(withKey: category.imageURL)
+            self.fitImage(in: cell)
+        }
+        
         return cell
     }
     
-    // Configure category cells
-    func configure(cell: UITableViewCell, forItemAt indexPath: IndexPath) {
-        let category = MenuItem.categories[indexPath.row]
-        
-        cell.textLabel?.text = category.name.capitalized
-        
-        guard let menuItem = menuItems.first(where: { item in
-            return item.category == category.name
-        }) else { return }
-        
-        // fetch the image from assets
-        //FIXME: Replace default image
-            
-            DispatchQueue.main.async {
-                guard let currentIndexPath = self.tableView.indexPath(for: cell) else { return }
-                
-                // check if the cell was not yet recycled
-                guard currentIndexPath == indexPath else { return }
-                
-                let menuCategory = MenuCategory.shared.loadCategory(withId: menuItem.category)
-                
-                // set the thumbnail image
-                cell.imageView?.image = menuCategory.image
-
-                // fit the image to the cell
-                self.fitImage(in: cell)
-            }
-    }
     
-    // adjust the cell height to make images look better
+    func updateUI(with categories: [MenuCategory]) {
+        DispatchQueue.main.async {
+            self.categories = categories
+            self.tableView.reloadData()
+        }
+    }
+  
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
 
-    /*
-    // Override to support conditional editing of the table view.
+    
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let renameAction = UITableViewRowAction(style: .normal, title: "Rename") { action, indexPath in
+            
+            //Present a text field
+            
+            //Udpate data
+            
+            //Refresh view
+            
+            //Push changes to cloud
+
+            print("UPDATE CAT NAME!")
+            
+            
         }
+        
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { action, indexPath in
+            
+            
+            //Delete category locally
+            
+            //Refresh view
+            
+            //Delete category from cloud
+
+            print("DELETE CAT NAME!")
+            
+            
+        }
+        return [ deleteAction, renameAction]
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    // MARK: - Navigation
-
-    //pass the name of the chosen category before showing the category menu
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // make sure the segue is from category to menu table view controllers
-//        if segue.identifier == "MenuSegue" {
-//            let menuTableViewController = segue.destination as! MenuTableViewController
-//            let index = tableView.indexPathForSelectedRow!.row
-//
-//            let filteredMenuItems = MenuController.shared.menuFiltered(by: categories[index], fromItems: MenuItem.allItems)
-//            menuTableViewController.showItems = filteredMenuItems
-//            menuTableViewController.category = categories[index]
-//        }
+   
+        
+        
         if segue.identifier == "MenuSegue" {
+            if let menuVC = segue.destination as?
+                MenuItemsTableVC {
+                let index = tableView.indexPathForSelectedRow!.row
+                let category = categories[index]
+                let filteredMenuItems = AppData.shared.menuFiltered(by: category.id, fromItems: MenuItem.shared.allItems)
+                menuVC.showItems = filteredMenuItems
+                menuVC.showName =  category.name
+            }
+        }
+        
+        if segue.identifier == "UnassignedSegue" {
  
             if let menuVC = segue.destination as?
                 MenuItemsTableVC {
-                
                 let index = tableView.indexPathForSelectedRow!.row
-                
-                let filteredMenuItems = MenuData.shared.menuFiltered(by: MenuItem.categories[index].name, fromItems: MenuItem.allItems)
+                let filteredMenuItems = AppData.shared.menuFiltered(by: MenuItem.shared.categories[index].id, fromItems: MenuItem.shared.allItems)
                 menuVC.showItems = filteredMenuItems
-                menuVC.category = MenuItem.categories[index].name
+                menuVC.showName = MenuItem.shared.categories[index].name
             }
         }
     }
+ 
 }
 

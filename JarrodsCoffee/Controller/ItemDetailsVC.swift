@@ -85,7 +85,7 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         addToOrderButton2.layer.cornerRadius = 5
         
         DispatchQueue.main.async {
-            self.imageView.image = MenuData.shared.assignImage(path: self.menuItem.imageURL)
+            self.imageView.image = AppData.shared.assignImage(withKey: self.menuItem.imageURL)
         }
     }
     

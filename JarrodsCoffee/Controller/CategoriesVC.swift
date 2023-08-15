@@ -31,7 +31,7 @@ class CategoriesVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return MenuItem.categories.count
+        return MenuItem.shared.categories.count
     }
 
   
@@ -40,7 +40,7 @@ class CategoriesVC: UITableViewController {
 
         // Configure the cell...
         
-        let categoryId = MenuItem.categories[indexPath.row].id
+        let categoryId = MenuItem.shared.categories[indexPath.row].id
         let category = MenuCategory.shared.loadCategory(withId: categoryId)
         cell.textLabel?.text = category.name
         cell.detailTextLabel?.text = category.imageURL
@@ -63,11 +63,11 @@ class CategoriesVC: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            let category = MenuItem.categories[indexPath.row].name
+            let category = MenuItem.shared.categories[indexPath.row].name
             
-            MenuItem.categories.remove(at: indexPath.row)
+            MenuItem.shared.categories.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            MenuData.shared.removeReference(to: category)
+            AppData.shared.removeReference(to: category)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -75,7 +75,7 @@ class CategoriesVC: UITableViewController {
    
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        categoryId = MenuItem.categories[indexPath.row].id
+        categoryId = MenuItem.shared.categories[indexPath.row].id
     }
     
     /// Passes MenuItem to MenuItemDetailViewController before the segue

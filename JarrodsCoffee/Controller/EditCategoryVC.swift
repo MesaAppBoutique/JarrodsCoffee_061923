@@ -19,7 +19,7 @@ class EditCategoryVC: UIViewController {
     @IBOutlet weak var imageOutlet: UIImageView!
     @IBAction func saveCategoryAction(_ sender: Any) {
         
-        MenuData.shared.addCategory(name: categoryOutlet.text ?? "", imageURL: imageURL, image: categoryImage)
+        AppData.shared.addCategory(name: categoryOutlet.text ?? "", imageURL: imageURL, image: categoryImage)
         
 
         self.dismiss(animated: true)
@@ -37,9 +37,9 @@ class EditCategoryVC: UIViewController {
         categoryOutlet.text = categoryName
         imageOutlet.image = categoryImage
         
-        DispatchQueue.main.async {
-            self.imageOutlet.image = MenuData.shared.assignImage(path: self.categoryName)
-        }
+//        DispatchQueue.main.async {
+//            self.imageOutlet.image = Data.shared.assignImage(withKey: self.categoryName)
+//        }
         
     }
     

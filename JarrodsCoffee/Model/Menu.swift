@@ -26,14 +26,14 @@ struct MenuCategory {
         //create a menu category for this uid
         
         //Can we find an image for this category with the name of x?
-//        let foundImage = MenuControl.shared.assignImage(path: name )
+        let foundImage = AppData.shared.assignImage(withKey: id)
         let category = MenuCategory(id: id, name: "name", imageURL: "url", image: UIImage(named: "Iced_Tea")!)
         return category
     }
    
     func loadCategories() {
         //just the cateogry uid strings
-        MenuItem.categories = []
+        MenuItem.shared.categories = []
         // Add to list of categories
 //         let itemsWithUniqueCategories = MenuItem.allItems.unique{$0.category}
 //         for each in itemsWithUniqueCategories { //ew.  But it at least adds all unique categories
@@ -44,7 +44,7 @@ struct MenuCategory {
 //         }
         
         //bringing in an array of category objects
-        MenuData.shared.fetchCategories { categories in
+        AppData.shared.fetchCategories { categories in
             print("Categories have been fetched.")
         }
         
@@ -62,23 +62,23 @@ struct MenuImage {
 
 // MARK: - MenuItem
 struct MenuItem {
-    
-    static var allItems: [MenuItem] = []
+    static var shared = MenuItem()
+    var allItems: [MenuItem] = []
 //    static var categoryIds: [String] = []
-    static var categories: [MenuCategory] = []
-    static var displayItems: [MenuItem] = []
+    var categories: [MenuCategory] = []
+    var displayItems: [MenuItem] = []
 
-    var id: String //  UID
-    var category: String // category of menu item like beverage, snack, etc.
-    var imageURL: String // url of the image to show
+    var id: String = ""//  UID
+    var categoryId: String = "" // category of menu item like beverage, snack, etc.
+    var imageURL: String = ""// url of the image to show
     var image: UIImage = UIImage(named: "Iced_Tea")!
-    var name: String //  Displayed to User
-    var price: [String] // Cooresponding cost for small medium or large
-    var size: [String] //  Small medium large, for example
+    var name: String = ""//  Displayed to User
+    var price: [String] = []// Cooresponding cost for small medium or large
+    var size: [String] = [] //  Small medium large, for example
     
     mutating func loadImage() -> MenuImage {
         // Configure menuImage
-            for thisImage in MenuData.shared.downloadedImages {
+            for thisImage in AppData.shared.downloadedImages {
                 if thisImage.key == imageURL {
                             return thisImage
                         }

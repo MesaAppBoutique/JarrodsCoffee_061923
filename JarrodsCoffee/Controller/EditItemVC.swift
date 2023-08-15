@@ -32,7 +32,7 @@ class EditItemVC: UIViewController {
     @IBOutlet weak var price3Outlet: UITextField!
     @IBOutlet weak var imageOutlet: UIImageView!
     @IBAction func saveItemAction(_ sender: Any) {
-        MenuData.shared.addMenuItem(name: nameOutlet.text ?? "", size: [size1Outlet.text ?? "", size2Outlet.text ?? "", size3Outlet.text ?? ""], price: [price1Outlet.text ?? "", price2Outlet.text ?? "", price3Outlet.text ?? ""], category: MenuItem.categories[picker.selectedRow(inComponent: 0)].name , image: imageOutlet.image)
+        AppData.shared.addMenuItem(name: nameOutlet.text ?? "", size: [size1Outlet.text ?? "", size2Outlet.text ?? "", size3Outlet.text ?? ""], price: [price1Outlet.text ?? "", price2Outlet.text ?? "", price3Outlet.text ?? ""], category: MenuItem.shared.categories[picker.selectedRow(inComponent: 0)].id, image: imageOutlet.image)
         self.dismiss(animated: true)
     }
     @IBAction func cancelAction(_ sender: Any) {
@@ -79,7 +79,7 @@ class EditItemVC: UIViewController {
 
         
         DispatchQueue.main.async {
-            self.imageOutlet.image = MenuData.shared.assignImage(path: self.menuItem?.imageURL ?? "Image")
+            self.imageOutlet.image = AppData.shared.assignImage(withKey: self.menuItem?.imageURL ?? "Image")
         }
     }
 }
@@ -110,10 +110,10 @@ extension EditItemVC: UIPickerViewDelegate, UIPickerViewDataSource {
           return 1
        }
        func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-          return MenuItem.categories.count
+           return MenuItem.shared.categories.count
        }
        func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-          return MenuItem.categories[row].name
+           return MenuItem.shared.categories[row].name
        }
     
 }
