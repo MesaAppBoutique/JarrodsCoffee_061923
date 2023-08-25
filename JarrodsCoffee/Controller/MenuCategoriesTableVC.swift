@@ -11,7 +11,8 @@ import SwiftUI
 class MenuCategoriesTableVC: UITableViewController {
     
     var categories = [MenuCategory]()
-    
+    @IBOutlet weak var addCatButton: UIBarButtonItem!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,21 +20,21 @@ class MenuCategoriesTableVC: UITableViewController {
             self.categories = fetched
             self.updateUI(with: fetched)
         }
-        //Enable nav bar
+        //Enable nav bar is okay here
         self.navigationController?.isNavigationBarHidden = false
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        //if the admin is logged in then show the edit and add button
+        // adjusting the nav bar items in viewWillAppear or viewDidAppear or it wont trigger since the bar hasn't been rendered until after viewDidLoad
+        
         if AppData.shared.isAdminLoggedIn {
-            self.editCatButton.isHidden = false
+            self.navigationItem.rightBarButtonItems = [self.addCatButton, self.editButtonItem]
         } else {
-            self.editCatButton.isHidden = true
+            self.navigationItem.rightBarButtonItems = []
         }
     }
-
-    @IBOutlet weak var editCatButton: UIBarButtonItem!
-
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -71,45 +72,41 @@ class MenuCategoriesTableVC: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        //The ViewDidLoad is where we are checking to see if the admin is logged in, not here.
         return true
     }
 
     
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let renameAction = UITableViewRowAction(style: .normal, title: "Rename") { action, indexPath in
-            
-            //Present a text field
-            
-            //Udpate data
-            
-            //Refresh view
-            
-            //Push changes to cloud
-
-            print("UPDATE CAT NAME!")
-            
-            
-        }
-        
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { action, indexPath in
-            
-            
-            //Delete category locally
-            
-            //Refresh view
-            
-            //Delete category from cloud
-
-            print("DELETE CAT NAME!")
-            
-            
-        }
-        return [ deleteAction, renameAction]
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
+
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        print("WE LIKE TO MOVEIT MOVEIT!")
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayContextMenu configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
+        print("CONTEXT")
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteOption = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
+            print("BALETED!")
+        }
+        let modifyOption = UIContextualAction(style: .normal, title: "Modify") {  (contextualAction, view, boolValue) in
+            print("MOFIDICO!")
+        }
+        let swipeActions = UISwipeActionsConfiguration(actions: [deleteOption, modifyOption])
+
+        return swipeActions
+    }
+    
+
+       
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
    
-        
         
         if segue.identifier == "MenuSegue" {
             if let menuVC = segue.destination as?

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 struct MenuCategory {
-    var id: String = ""
+    var id: String = UUID().uuidString
     var name: String = ""
     var imageURL: String = ""
     var image: UIImage = UIImage(named: "Image")!

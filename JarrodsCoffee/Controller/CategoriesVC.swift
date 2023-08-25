@@ -10,9 +10,7 @@ import UIKit
 class CategoriesVC: UITableViewController {
 
     var categories: [MenuCategory] = []
-    
-    var selectedCategoryId: String?
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,8 +33,6 @@ class CategoriesVC: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-  
-    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "catcell", for: indexPath)
@@ -53,12 +49,23 @@ class CategoriesVC: UITableViewController {
     }
   
 
-   
-    // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-  
+   
+    // Override to support rearranging the table view.
+    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+
+    }
+   
+
+   
+    // Override to support conditional rearranging of the table view.
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the item to be re-orderable.
+        return true
+    }
+    
 
  
     // Override to support editing the table view.
@@ -78,26 +85,12 @@ class CategoriesVC: UITableViewController {
     }
    
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedCategoryId = categories[indexPath.row].id
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        
+        let destinationVC = EditCategoryVC()
+        destinationVC.category = self.categories[indexPath.row]
+       // destinationVC.performSegue(withIdentifier: "EditCatSegue", sender: self)
+        
     }
-    
-    /// Passes MenuItem to MenuItemDetailViewController before the segue
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // checks this segue is from MenuTableViewController to MenuItemDetailViewController
-        if segue.identifier == "EditCatSegue" {
-            // we can safely downcast to MenuItemDetailViewController
-            let edit = segue.destination as! EditCategoryVC
-            
-            
-            let category = MenuCategory.shared.loadCategory(withId: selectedCategoryId ?? UUID().uuidString)
-            // selected cell's row is the index for array of menuItems
-//            let index = tableView.indexPathForSelectedRow!.row
-            
-            // pass selected menuItem to destination MenuItemDetailViewController
-            edit.categoryId = category.id
-            edit.categoryName = category.name
-           // edit.categoryOutlet.text = category.name
-        }
-    }
+
 }

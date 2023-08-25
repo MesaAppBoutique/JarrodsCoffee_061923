@@ -10,17 +10,13 @@ import UIKit
 
 class EditCategoryVC: UIViewController {
     
-    var categoryId: String = ""
-    var categoryName: String = ""
-    var imageURL: String = ""
-    var categoryImage: UIImage = UIImage(named: "Image")!
+    var category = MenuCategory()
 
     @IBOutlet weak var categoryOutlet: UITextField!
     @IBOutlet weak var imageOutlet: UIImageView!
     @IBAction func saveCategoryAction(_ sender: Any) {
         
-        AppData.shared.addCategory(name: categoryOutlet.text ?? "", imageURL: imageURL, image: categoryImage)
-        
+        AppData.shared.addCategory(name: categoryOutlet.text ?? "", imageURL: category.imageURL, image: category.image)
 
         self.dismiss(animated: true)
     }
@@ -33,12 +29,14 @@ class EditCategoryVC: UIViewController {
         present(vc, animated: true)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        categoryOutlet.text = categoryName
-        imageOutlet.image = categoryImage
-        //Enable nav bar
+    
+    override func viewDidAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.categoryOutlet.text = self.category.name
+            self.imageOutlet.image = self.category.image
+        }
+            //Enable nav bar
         self.navigationController?.isNavigationBarHidden = false
-//        DispatchQueue.main.async {
 //            self.imageOutlet.image = Data.shared.assignImage(withKey: self.categoryName)
 //        }
         

@@ -16,7 +16,7 @@
 		C40460A62A7446330056BC57 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C40460A52A7446330056BC57 /* FirebaseStorage */; };
 		C41E8E1C2A6EEF010012DBA6 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C41E8E1B2A6EEF010012DBA6 /* FirebaseFirestore */; };
 		C41E8E1E2A6F19560012DBA6 /* EditItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E8E1D2A6F19560012DBA6 /* EditItemVC.swift */; };
-		C454F7C42A82F4AF004068C2 /* EditCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C454F7C32A82F4AF004068C2 /* EditCategoryVC.swift */; };
+		C454F7C42A82F4AF004068C2 /* EditCategoryVC-DeleteMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C454F7C32A82F4AF004068C2 /* EditCategoryVC-DeleteMe.swift */; };
 		C454F7C62A830419004068C2 /* CategoriesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C454F7C52A830419004068C2 /* CategoriesVC.swift */; };
 		C46D647A2A61F86B0032341B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C46D64792A61F86A0032341B /* GoogleService-Info.plist */; };
 		C46D64832A61FADC0032341B /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C46D64822A61FADC0032341B /* FirebaseFirestoreSwift */; };
@@ -43,7 +43,7 @@
 		A6162AF0280F3811009B7F39 /* MenuItemsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemsTableVC.swift; sourceTree = "<group>"; };
 		A6A79461268137F000D97421 /* ContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactVC.swift; sourceTree = "<group>"; };
 		C41E8E1D2A6F19560012DBA6 /* EditItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemVC.swift; sourceTree = "<group>"; };
-		C454F7C32A82F4AF004068C2 /* EditCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryVC.swift; sourceTree = "<group>"; };
+		C454F7C32A82F4AF004068C2 /* EditCategoryVC-DeleteMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditCategoryVC-DeleteMe.swift"; sourceTree = "<group>"; };
 		C454F7C52A830419004068C2 /* CategoriesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesVC.swift; sourceTree = "<group>"; };
 		C46D64792A61F86A0032341B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C46D64842A61FEBF0032341B /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 				D3B8820D263A1F4B00BC294C /* AppDelegate.swift */,
 				C454F7C52A830419004068C2 /* CategoriesVC.swift */,
 				A6A79461268137F000D97421 /* ContactVC.swift */,
-				C454F7C32A82F4AF004068C2 /* EditCategoryVC.swift */,
+				C454F7C32A82F4AF004068C2 /* EditCategoryVC-DeleteMe.swift */,
 				C41E8E1D2A6F19560012DBA6 /* EditItemVC.swift */,
 				E4DE036F2A3CEE7700F0F099 /* EventsBrowserVC.swift */,
 				E4DE03712A409B0000F0F099 /* EventsVC.swift */,
@@ -247,7 +247,7 @@
 			files = (
 				E4DE03702A3CEE7700F0F099 /* EventsBrowserVC.swift in Sources */,
 				D3B88212263A1F4B00BC294C /* HomeVC.swift in Sources */,
-				C454F7C42A82F4AF004068C2 /* EditCategoryVC.swift in Sources */,
+				C454F7C42A82F4AF004068C2 /* EditCategoryVC-DeleteMe.swift in Sources */,
 				C48538712A858E240035F520 /* Array.swift in Sources */,
 				C454F7C62A830419004068C2 /* CategoriesVC.swift in Sources */,
 				C4D4C4D82A97D1D800B7FA91 /* TODO.swift in Sources */,

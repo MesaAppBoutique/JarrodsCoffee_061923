@@ -19,7 +19,8 @@ class MenuItemsTableVC: UITableViewController {
     //we need to listen for changes to the Firestore database
     //let db = Firestore.firestore()
     //let listener: ListenerRegistration? = nil
-    
+    @IBOutlet weak var addItemButton: UIBarButtonItem!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         //MenuController.shared.downloadImagesFromCloud()
@@ -54,15 +55,15 @@ class MenuItemsTableVC: UITableViewController {
     
 
     override func viewWillAppear(_ animated: Bool) {
-            if AppData.shared.isAdminLoggedIn {
-                self.addItemButton.isHidden = false
-            } else {
-                self.addItemButton.isHidden = true
-            }
+        //if the admin is logged in then show the edit and add button
+        // adjusting the nav bar items in viewWillAppear or viewDidAppear or it wont trigger since the bar hasn't been rendered until after viewDidLoad
+        
+        if AppData.shared.isAdminLoggedIn {
+            self.navigationItem.rightBarButtonItems = [self.addItemButton, self.editButtonItem]
+        } else {
+            self.navigationItem.rightBarButtonItems = []
+        }
     }
-
-    @IBOutlet weak var addItemButton: UIBarButtonItem!
-
     
     /// Set the property and update the interface
     func updateUI(with menuItems: [MenuItem]) {
@@ -121,41 +122,37 @@ class MenuItemsTableVC: UITableViewController {
     
 
 
-    /*
-    // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
+        //The ViewDidLoad is where we are checking to see if the admin is logged in, not here.
         return true
     }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
+    
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
         return true
     }
-    */
 
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        print("WE LIKE TO MOVEIT MOVEIT!")
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayContextMenu configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
+        print("CONTEXT")
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteOption = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
+            print("BALETED!")
+        }
+        let modifyOption = UIContextualAction(style: .normal, title: "Modify") {  (contextualAction, view, boolValue) in
+            print("MOFIDICO!")
+        }
+        let swipeActions = UISwipeActionsConfiguration(actions: [deleteOption, modifyOption])
+
+        return swipeActions
+    }
+    
     // MARK: - Navigation
 
     /// Passes MenuItem to MenuItemDetailViewController before the segue
