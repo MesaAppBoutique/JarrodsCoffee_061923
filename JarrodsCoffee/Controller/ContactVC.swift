@@ -12,6 +12,8 @@ class ContactVC: UIViewController, MFMailComposeViewControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Enable nav bar
+        self.navigationController?.isNavigationBarHidden = false
 
     }
     @IBAction func closeAction(_ sender: Any) {

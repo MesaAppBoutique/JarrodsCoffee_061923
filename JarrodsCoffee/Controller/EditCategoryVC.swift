@@ -36,7 +36,8 @@ class EditCategoryVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         categoryOutlet.text = categoryName
         imageOutlet.image = categoryImage
-        
+        //Enable nav bar
+        self.navigationController?.isNavigationBarHidden = false
 //        DispatchQueue.main.async {
 //            self.imageOutlet.image = Data.shared.assignImage(withKey: self.categoryName)
 //        }

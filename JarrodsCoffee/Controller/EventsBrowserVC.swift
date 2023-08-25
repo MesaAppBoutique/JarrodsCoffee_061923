@@ -24,7 +24,8 @@ class EventsBrowserVC: UIViewController, WKUIDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //Enable nav bar
+        self.navigationController?.isNavigationBarHidden = false
         let myURL = URL(string:"https://www.eventbrite.com/o/jarrods-coffee-amp-art-gallery-51428969283#events")
         let myRequest = URLRequest(url: myURL!)
         webView.load(myRequest)

@@ -20,6 +20,8 @@ class CategoriesVC: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
          self.navigationItem.rightBarButtonItem = self.editButtonItem
+        //Enable nav bar
+        self.navigationController?.isNavigationBarHidden = false
     }
 
     // MARK: - Table view data source

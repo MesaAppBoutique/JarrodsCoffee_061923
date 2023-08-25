@@ -16,7 +16,8 @@ class EventsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        //Enable nav bar
+        self.navigationController?.isNavigationBarHidden = false
         // Do any additional setup after loading the view.
     }
     

@@ -50,6 +50,8 @@ class MapVC: UIViewController,
         mapView.addAnnotation(jarrodAnnotation)
         mapView.showsUserLocation = true
         showJarrodLocation()
+        //Enable nav bar
+        self.navigationController?.isNavigationBarHidden = false
     }
 
     

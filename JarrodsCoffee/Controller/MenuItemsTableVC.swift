@@ -36,7 +36,8 @@ class MenuItemsTableVC: UITableViewController {
         
         //fetch data and update views
         
-        
+        //Enable nav bar
+        self.navigationController?.isNavigationBarHidden = false
         // Table title is capitalized category name
         title = showName.capitalized
                 

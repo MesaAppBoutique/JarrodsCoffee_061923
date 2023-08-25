@@ -19,8 +19,10 @@ class AppData {
     var selectedImage = UIImage(named: "Image")!
     /// Base URL
     let baseURL = URL(string: "https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json")!
-    
-    
+    var isAdminLoggedIn = false
+    let adminPassword = "7146"
+    let adminLoginText = "Employee Access"
+    let adminLogoutText = "Log out"
 //    /// Execute GET request for categories
 //    func fetchCategories(completion: @escaping ([String]?) -> Void) {
 //

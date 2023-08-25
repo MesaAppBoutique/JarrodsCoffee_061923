@@ -19,10 +19,22 @@ class MenuCategoriesTableVC: UITableViewController {
             self.categories = fetched
             self.updateUI(with: fetched)
         }
-        
+        //Enable nav bar
+        self.navigationController?.isNavigationBarHidden = false
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if AppData.shared.isAdminLoggedIn {
+            self.addItemButton.isHidden = false
+        } else {
+            self.addItemButton.isHidden = true
+        }
+    }
 
+    @IBOutlet weak var addItemButton: UIBarButtonItem!
+
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

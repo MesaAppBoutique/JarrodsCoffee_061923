@@ -29,7 +29,8 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var optionButton: UIButton!
-    
+    @IBOutlet weak var editItemButton: UIBarButtonItem!
+
     @IBOutlet weak var addToOrderButton1: UIButton!
     @IBOutlet weak var addToOrderButton2: UIButton!
     
@@ -58,7 +59,18 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         updateUI()
         populateOptionModelArray()
         // setup the delegate
+        //Enable nav bar
+        self.navigationController?.isNavigationBarHidden = false
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if AppData.shared.isAdminLoggedIn {
+            self.editItemButton.isHidden = false
+        } else {
+            self.editItemButton.isHidden = true
+        }
+    }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -146,7 +158,7 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     /// Passes MenuItem to MenuItemDetailViewController before the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // checks this segue is from MenuTableViewController to MenuItemDetailViewController
-        if segue.identifier == "EditDetailSegue" {
+        if segue.identifier == "editItem" {
             // we can safely downcast to MenuItemDetailViewController
             let editCtrl = segue.destination as! EditItemVC
             
