@@ -26,13 +26,13 @@ class MenuCategoriesTableVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         if AppData.shared.isAdminLoggedIn {
-            self.addItemButton.isHidden = false
+            self.editCatButton.isHidden = false
         } else {
-            self.addItemButton.isHidden = true
+            self.editCatButton.isHidden = true
         }
     }
 
-    @IBOutlet weak var addItemButton: UIBarButtonItem!
+    @IBOutlet weak var editCatButton: UIBarButtonItem!
 
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -132,6 +132,15 @@ class MenuCategoriesTableVC: UITableViewController {
                 menuVC.showName = MenuItem.shared.categories[index].name
             }
         }
+        
+        if segue.identifier == "EditCategories" {
+            if let catVC = segue.destination as?
+                CategoriesVC {
+                //pre-load existing categories
+                catVC.categories = categories
+            }
+        }
+        
     }
  
 }

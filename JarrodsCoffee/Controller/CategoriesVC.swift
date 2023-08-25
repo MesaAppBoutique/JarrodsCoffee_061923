@@ -9,8 +9,9 @@ import UIKit
 
 class CategoriesVC: UITableViewController {
 
+    var categories: [MenuCategory] = []
     
-    var categoryId: String?
+    var selectedCategoryId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,27 +27,27 @@ class CategoriesVC: UITableViewController {
 
     // MARK: - Table view data source
 
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("count of cat is \(categories.count)")
+        return categories.count
+    }
+
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return MenuItem.shared.categories.count
-    }
-
   
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "catcell", for: indexPath)
 
         // Configure the cell...
         
-        let categoryId = MenuItem.shared.categories[indexPath.row].id
-        let category = MenuCategory.shared.loadCategory(withId: categoryId)
+        let category = categories[indexPath.row]
         cell.textLabel?.text = category.name
         cell.detailTextLabel?.text = category.imageURL
         cell.imageView?.image = category.image
+        
         
         return cell
     }
@@ -55,7 +56,6 @@ class CategoriesVC: UITableViewController {
    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
   
@@ -65,11 +65,13 @@ class CategoriesVC: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            let category = MenuItem.shared.categories[indexPath.row].name
-            
-            MenuItem.shared.categories.remove(at: indexPath.row)
+            let category = categories[indexPath.row].name
+            categories.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            //REMOVE CATEGORY FROM CLOUD DATA
             AppData.shared.removeReference(to: category)
+            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -77,7 +79,7 @@ class CategoriesVC: UITableViewController {
    
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        categoryId = MenuItem.shared.categories[indexPath.row].id
+        selectedCategoryId = categories[indexPath.row].id
     }
     
     /// Passes MenuItem to MenuItemDetailViewController before the segue
@@ -88,7 +90,7 @@ class CategoriesVC: UITableViewController {
             let edit = segue.destination as! EditCategoryVC
             
             
-            let category = MenuCategory.shared.loadCategory(withId: categoryId ?? UUID().uuidString)
+            let category = MenuCategory.shared.loadCategory(withId: selectedCategoryId ?? UUID().uuidString)
             // selected cell's row is the index for array of menuItems
 //            let index = tableView.indexPathForSelectedRow!.row
             
@@ -98,21 +100,4 @@ class CategoriesVC: UITableViewController {
            // edit.categoryOutlet.text = category.name
         }
     }
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-   
-
 }

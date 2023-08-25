@@ -451,7 +451,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TRf-eD-7hG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3418.840579710145" y="-1373.4375"/>
+            <point key="canvasLocation" x="-2532" y="698"/>
         </scene>
         <!--Add Menu Item-->
         <scene sceneID="dv8-sT-EfQ">
@@ -465,7 +465,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="876"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="lxx-SV-0vb">
-                                        <rect key="frame" x="20" y="-72" width="374" height="681"/>
+                                        <rect key="frame" x="20" y="-72" width="374" height="636"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="JBB-7l-g23">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
@@ -632,17 +632,6 @@
                                                     </pickerView>
                                                 </subviews>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nvv-iE-ZUS" userLabel="Add/Edit Categories">
-                                                <rect key="frame" x="0.0" y="636" width="176" height="45"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="45" id="c1l-fl-foe"/>
-                                                </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title="Add/Edit Categories"/>
-                                                <connections>
-                                                    <segue destination="OfT-Bc-bO6" kind="show" id="dE9-Xt-CjJ"/>
-                                                </connections>
-                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="fV5-gY-CYt" firstAttribute="height" secondItem="V2R-Mi-w8t" secondAttribute="height" id="2gV-rO-Lfv"/>
@@ -653,7 +642,6 @@
                                             <constraint firstItem="LcH-jj-nIH" firstAttribute="height" secondItem="V2R-Mi-w8t" secondAttribute="height" id="a5c-EN-kUP"/>
                                             <constraint firstItem="JBB-7l-g23" firstAttribute="leading" secondItem="lxx-SV-0vb" secondAttribute="leading" id="bjH-gN-eNP"/>
                                             <constraint firstItem="SeH-VX-Zhk" firstAttribute="leading" secondItem="lxx-SV-0vb" secondAttribute="leading" id="dVB-Mm-tBb"/>
-                                            <constraint firstItem="Nvv-iE-ZUS" firstAttribute="height" secondItem="V2R-Mi-w8t" secondAttribute="height" id="yys-fV-38a"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
@@ -691,7 +679,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ISa-Uu-7Oe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="224.63768115942031" y="-994.41964285714278"/>
+            <point key="canvasLocation" x="-1691" y="698"/>
         </scene>
         <!--CategoriesVC-->
         <scene sceneID="SSX-4M-qJI">
@@ -702,12 +690,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="CPi-dm-7lH">
-                                <rect key="frame" x="0.0" y="50" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="catcell" textLabel="Hf6-ig-rPd" style="IBUITableViewCellStyleDefault" id="CPi-dm-7lH">
+                                <rect key="frame" x="0.0" y="50" width="414" height="67.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CPi-dm-7lH" id="tK0-GJ-gK4">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="67.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hf6-ig-rPd">
+                                            <rect key="frame" x="20" y="0.0" width="374" height="67.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </tableViewCellContentView>
                                 <connections>
                                     <segue destination="aE9-8X-zpw" kind="show" identifier="EditCatSegue" id="wcD-k1-JIU"/>
@@ -723,7 +721,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GPz-Qu-a8k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1825" y="38"/>
+            <point key="canvasLocation" x="-3381" y="698"/>
         </scene>
         <!--Events-->
         <scene sceneID="xeC-cu-OFg">
@@ -1048,7 +1046,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yC9-IK-0j1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1119" y="-919"/>
+            <point key="canvasLocation" x="-1348" y="-919"/>
         </scene>
         <!--Contact Us-->
         <scene sceneID="DJF-eq-Pam">
@@ -1403,14 +1401,14 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Menu" id="ZCc-tb-Aam">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="k6P-10-749">
+                        <barButtonItem key="rightBarButtonItem" title="Edit Categories" id="k6P-10-749">
                             <connections>
-                                <segue destination="9H7-J4-dKa" kind="show" identifier="addItem" id="2H9-30-HtK"/>
+                                <segue destination="OfT-Bc-bO6" kind="show" identifier="EditCategories" id="aMm-aO-sdL"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addItemButton" destination="k6P-10-749" id="yaW-rM-aVX"/>
+                        <outlet property="editCatButton" destination="k6P-10-749" id="yaW-rM-aVX"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rbX-t0-Jsp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1458,11 +1456,20 @@
                             <outlet property="delegate" destination="Mz1-jW-jwT" id="oSj-I1-SZn"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="zTz-I1-xy5"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="zTz-I1-xy5">
+                        <barButtonItem key="rightBarButtonItem" title="Add Item" id="afx-R3-EHK">
+                            <connections>
+                                <segue destination="9H7-J4-dKa" kind="show" id="Oe0-6w-xDg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="addItemButton" destination="afx-R3-EHK" id="K5U-et-7G9"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bcW-ro-3wg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3442" y="-147"/>
+            <point key="canvasLocation" x="-3381" y="-147"/>
         </scene>
         <!--Item DetailsVC-->
         <scene sceneID="fQu-Lj-NGJ">
@@ -1553,7 +1560,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="b8B-8S-6HA">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="vVo-3p-OpW">
+                        <barButtonItem key="rightBarButtonItem" title="Edit Item" id="vVo-3p-OpW">
                             <connections>
                                 <segue destination="9H7-J4-dKa" kind="show" identifier="editItem" id="0lJ-Ga-Kxo"/>
                             </connections>
@@ -1570,7 +1577,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A4o-F9-BXQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2359" y="-147"/>
+            <point key="canvasLocation" x="-2216" y="-147"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ept-ab-u2n">

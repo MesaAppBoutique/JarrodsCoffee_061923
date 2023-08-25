@@ -52,9 +52,17 @@ class MenuItemsTableVC: UITableViewController {
 //        }
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        //updateUI(with: showItems)
-//    }
+
+    override func viewWillAppear(_ animated: Bool) {
+            if AppData.shared.isAdminLoggedIn {
+                self.addItemButton.isHidden = false
+            } else {
+                self.addItemButton.isHidden = true
+            }
+    }
+
+    @IBOutlet weak var addItemButton: UIBarButtonItem!
+
     
     /// Set the property and update the interface
     func updateUI(with menuItems: [MenuItem]) {

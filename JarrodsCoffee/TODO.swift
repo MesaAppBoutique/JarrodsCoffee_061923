@@ -7,9 +7,8 @@
 
 
 // V1.0
-// - Owner's View
-// ---- Create a temp login for admin
-// ---- Hide admin buttons if not temp logged in
+// - Loading categories doesn't happen until you back out and return to item view
+// - Remove cancel and save item buttons. Do we change Back to Save and Exit and Cancel?
 // - Ensure all cloud images are loading properly for items and categories
 // - Assign items without categories to Unassigned category
 // - Add Category button (not working)

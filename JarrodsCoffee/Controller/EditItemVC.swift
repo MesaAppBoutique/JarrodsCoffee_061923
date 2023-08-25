@@ -52,8 +52,7 @@ class EditItemVC: UIViewController {
         picker.delegate = self as UIPickerViewDelegate
         picker.dataSource = self as UIPickerViewDataSource
         picker.center = self.view.center
-        //Enable nav bar
-        self.navigationController?.isNavigationBarHidden = false
+        
         DispatchQueue.main.async {
             MenuCategory.shared.loadCategories()
         }
