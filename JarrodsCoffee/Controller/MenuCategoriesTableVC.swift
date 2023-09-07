@@ -73,12 +73,20 @@ class MenuCategoriesTableVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         //The ViewDidLoad is where we are checking to see if the admin is logged in, not here.
-        return true
+        if AppData.shared.isAdminLoggedIn {
+           return true
+        } else {
+            return false
+        }
     }
 
     
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return true
+        if AppData.shared.isAdminLoggedIn {
+           return true
+        } else {
+            return false
+        }
     }
 
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -94,8 +102,19 @@ class MenuCategoriesTableVC: UITableViewController {
         let deleteOption = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
             print("BALETED!")
         }
-        let modifyOption = UIContextualAction(style: .normal, title: "Modify") {  (contextualAction, view, boolValue) in
-            print("MOFIDICO!")
+        
+        //This lets the owner edit the categories if logged in
+        let modifyOption = UIContextualAction(style: .normal, title: "Modify") {  (contextualAction, view, success) in
+
+            AppData.shared.selectedCategory = self.categories[indexPath.row]
+            //Janky but this way we're not passing data around in strange ways
+
+            OperationQueue.main.addOperation {
+               let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+               let newViewController = storyBoard.instantiateViewController(withIdentifier: "EditCategory") as! EditCategoryVC
+               self.present(newViewController, animated: true, completion: nil)
+                success(true)
+            }
         }
         let swipeActions = UISwipeActionsConfiguration(actions: [deleteOption, modifyOption])
 
@@ -130,13 +149,12 @@ class MenuCategoriesTableVC: UITableViewController {
             }
         }
         
-        if segue.identifier == "EditCategories" {
-            if let catVC = segue.destination as?
-                CategoriesVC {
-                //pre-load existing categories
-                catVC.categories = categories
-            }
+        if segue.identifier == "FromMenuToAddCategory" {
+            //If they are going to add a new category
+            //Create an empty selectedCategory before the view dismisses
+            AppData.shared.selectedCategory = MenuCategory(id:UUID().uuidString)
         }
+    
         
     }
  

@@ -370,13 +370,13 @@
         <!--Edit CategoryVC-->
         <scene sceneID="kDg-xn-Jef">
             <objects>
-                <viewController modalTransitionStyle="flipHorizontal" id="aE9-8X-zpw" customClass="EditCategoryVC" customModule="JarrodsCoffee" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditCategory" modalTransitionStyle="flipHorizontal" id="aE9-8X-zpw" customClass="EditCategoryVC" customModule="JarrodsCoffee" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KKI-dJ-gQK">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="enn-kw-r3P">
-                                <rect key="frame" x="20" y="112" width="374" height="450"/>
+                                <rect key="frame" x="20" y="20" width="374" height="450"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Hpo-TV-IEx">
                                         <rect key="frame" x="0.0" y="0.0" width="273.5" height="50"/>
@@ -445,8 +445,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="FS5-1V-6KD"/>
                     <connections>
-                        <outlet property="categoryOutlet" destination="1MU-dA-1qd" id="LtV-bl-pFJ"/>
                         <outlet property="imageOutlet" destination="QgP-9I-WlU" id="t3f-px-ooz"/>
+                        <outlet property="textField" destination="1MU-dA-1qd" id="H15-Ok-EQf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TRf-eD-7hG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -465,7 +465,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="876"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="lxx-SV-0vb">
-                                        <rect key="frame" x="20" y="-72" width="374" height="636"/>
+                                        <rect key="frame" x="20" y="-72" width="374" height="730"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="JBB-7l-g23">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
@@ -621,10 +621,10 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="eah-bH-PVb">
-                                                <rect key="frame" x="0.0" y="420" width="320" height="216"/>
+                                                <rect key="frame" x="0.0" y="420" width="320" height="310"/>
                                                 <subviews>
                                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vuq-rr-LRi">
-                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="310"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="category"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="150" id="bWe-uf-bTc"/>
@@ -690,7 +690,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="jkB-02-kSO">
-                                <rect key="frame" x="-0.5" y="97" width="414.5" height="760"/>
+                                <rect key="frame" x="0.0" y="97" width="414.5" height="760"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nAW-QU-ocB">
                                         <rect key="frame" x="13.5" y="0.0" width="388" height="125"/>
@@ -1348,9 +1348,6 @@
                                         </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="Mz1-jW-jwT" kind="show" identifier="UnassignedSegue" id="95U-hx-UeZ"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -1361,7 +1358,9 @@
                     <navigationItem key="navigationItem" title="Menu" id="ZCc-tb-Aam">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="xdC-tL-nFX">
                             <connections>
-                                <segue destination="aE9-8X-zpw" kind="show" identifier="FromMenuToAddCategory" id="QsO-Nj-NbB"/>
+                                <segue destination="aE9-8X-zpw" kind="popoverPresentation" identifier="FromMenuToAddCategory" popoverAnchorBarButtonItem="xdC-tL-nFX" id="QsO-Nj-NbB">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1444,16 +1443,16 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="RFF-2z-a0G">
-                                <rect key="frame" x="20" y="312" width="374" height="211"/>
+                                <rect key="frame" x="20" y="312" width="374" height="530"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Title Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="x05-7Z-AFv">
-                                        <rect key="frame" x="96.5" y="0.0" width="181" height="40"/>
+                                        <rect key="frame" x="96.5" y="0.0" width="181" height="120"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZxU-Lm-F6g" userLabel="Option Button">
-                                        <rect key="frame" x="96.5" y="57" width="181" height="40"/>
+                                        <rect key="frame" x="96.5" y="137" width="181" height="119.5"/>
                                         <color key="backgroundColor" red="0.72549019609999998" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Iby-uV-dAO"/>
@@ -1467,7 +1466,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmN-Ab-Tjx" userLabel="Add To Order Button">
-                                        <rect key="frame" x="96.5" y="114" width="181" height="40"/>
+                                        <rect key="frame" x="96.5" y="273.5" width="181" height="120"/>
                                         <color key="backgroundColor" red="0.72549019609999998" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="j1u-hp-GyK"/>
@@ -1481,7 +1480,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pAw-Wl-tWq" userLabel="Add To Order Button">
-                                        <rect key="frame" x="96.5" y="171" width="181" height="40"/>
+                                        <rect key="frame" x="96.5" y="410.5" width="181" height="119.5"/>
                                         <color key="backgroundColor" red="0.72549019609999998" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="kHP-8W-cwd"/>
@@ -1557,7 +1556,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="95U-hx-UeZ"/>
         <segue reference="6C0-Lo-Qxi"/>
         <segue reference="Oe0-6w-xDg"/>
     </inferredMetricsTieBreakers>

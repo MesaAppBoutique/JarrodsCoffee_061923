@@ -6,7 +6,13 @@
 //
 
 
+// - Worked on Editing Categories from 3pm-4pm
+
 // V1.0
+// - Modify categories
+// - Modify items
+// - Add delete category button
+// - Disable swipe for customers
 // - Loading item's categories doesn't happen until you back out and return to item view
 // - Change item nav bar buttons to Cancel or Save item.
 // - Ensure all cloud images are loading properly for items and categories

@@ -10,13 +10,13 @@ import UIKit
 
 class EditCategoryVC: UIViewController {
     
-    var category = MenuCategory()
+    var category: MenuCategory?
 
-    @IBOutlet weak var categoryOutlet: UITextField!
-    @IBOutlet weak var imageOutlet: UIImageView!
+    @IBOutlet weak var textField: UITextField?
+    @IBOutlet weak var imageOutlet: UIImageView?
     @IBAction func saveCategoryAction(_ sender: Any) {
         
-        AppData.shared.addCategory(name: categoryOutlet.text ?? "", imageURL: category.imageURL, image: category.image)
+        AppData.shared.addCategory(name: textField?.text ?? "", imageURL: category?.imageURL ?? "", image: category?.image)
 
         self.dismiss(animated: true)
     }
@@ -30,16 +30,26 @@ class EditCategoryVC: UIViewController {
     }
     
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //setupTextField()
+        category = AppData.shared.selectedCategory
+        print("Loaded category page and the category is \(String(describing: category?.name))")
+    }
+    
+//    func setupTextField() {
+//        textField.delegate = self
+//        textField.becomeFirstResponder()
+//        textField.keyboardType = UIKeyboardType.default
+//        textField.returnKeyType = UIReturnKeyType.done
+//
+//    }
+    
     override func viewDidAppear(_ animated: Bool) {
-        DispatchQueue.main.async {
-            self.categoryOutlet.text = self.category.name
-            self.imageOutlet.image = self.category.image
-        }
+        self.textField?.text = category?.name
+        self.imageOutlet?.image = self.category?.image
             //Enable nav bar
         self.navigationController?.isNavigationBarHidden = false
-//            self.imageOutlet.image = Data.shared.assignImage(withKey: self.categoryName)
-//        }
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -55,7 +65,7 @@ extension EditCategoryVC: UIImagePickerControllerDelegate, UINavigationControlle
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         //get photo
         if let image = info[UIImagePickerController.InfoKey(rawValue:   "UIImagePickerControllerEditedImage")] as? UIImage {
-            imageOutlet.image = image
+            imageOutlet?.image = image
             picker.dismiss(animated: true)
         }
     }

@@ -17,6 +17,7 @@ class AppData {
     var downloadedImages = [MenuImage]()
     var downloadedMenu = [MenuItem]()
     var selectedImage = UIImage(named: "Image")!
+    var selectedCategory = MenuCategory()
     /// Base URL
     let baseURL = URL(string: "https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json")!
     var isAdminLoggedIn = false
