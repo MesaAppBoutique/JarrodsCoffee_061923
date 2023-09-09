@@ -9,8 +9,11 @@
 // - Worked on Editing Categories from 3pm-4pm
 
 // V1.0
+// - Check update image is still working.
+// - New items are having issues saving after clicking the plus sign from the Items table view
+// - Update view when Firestore Database changes //https://www.youtube.com/watch?v=R3Wp1PWh70c
+// - Seems like we are fetching more images than needed!
 // - Modify categories
-// - Modify items
 // - Add delete category button
 // - Disable swipe for customers
 // - Loading item's categories doesn't happen until you back out and return to item view

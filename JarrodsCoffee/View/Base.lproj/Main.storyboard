@@ -465,7 +465,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="876"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="lxx-SV-0vb">
-                                        <rect key="frame" x="20" y="-72" width="374" height="730"/>
+                                        <rect key="frame" x="20" y="-72" width="374" height="636"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="JBB-7l-g23">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
@@ -621,10 +621,10 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="eah-bH-PVb">
-                                                <rect key="frame" x="0.0" y="420" width="320" height="310"/>
+                                                <rect key="frame" x="0.0" y="420" width="320" height="216"/>
                                                 <subviews>
                                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vuq-rr-LRi">
-                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="310"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="category"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="150" id="bWe-uf-bTc"/>
@@ -1403,9 +1403,6 @@
                                         </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="0NB-1J-YaD" kind="show" identifier="MenuDetailSegue" id="y1w-oe-UeD"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -1416,12 +1413,13 @@
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="zTz-I1-xy5">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="afx-R3-EHK">
                             <connections>
-                                <segue destination="9H7-J4-dKa" kind="show" id="Oe0-6w-xDg"/>
+                                <segue destination="9H7-J4-dKa" kind="show" identifier="addItem" id="Oe0-6w-xDg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addItemButton" destination="afx-R3-EHK" id="K5U-et-7G9"/>
+                        <segue destination="0NB-1J-YaD" kind="show" identifier="showDetails" id="4Uu-Ph-dPm"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bcW-ro-3wg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1443,16 +1441,16 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="RFF-2z-a0G">
-                                <rect key="frame" x="20" y="312" width="374" height="530"/>
+                                <rect key="frame" x="20" y="312" width="374" height="211"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Title Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="x05-7Z-AFv">
-                                        <rect key="frame" x="96.5" y="0.0" width="181" height="120"/>
+                                        <rect key="frame" x="96.5" y="0.0" width="181" height="40"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZxU-Lm-F6g" userLabel="Option Button">
-                                        <rect key="frame" x="96.5" y="137" width="181" height="119.5"/>
+                                        <rect key="frame" x="96.5" y="57" width="181" height="40"/>
                                         <color key="backgroundColor" red="0.72549019609999998" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Iby-uV-dAO"/>
@@ -1466,7 +1464,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmN-Ab-Tjx" userLabel="Add To Order Button">
-                                        <rect key="frame" x="96.5" y="273.5" width="181" height="120"/>
+                                        <rect key="frame" x="96.5" y="114" width="181" height="40"/>
                                         <color key="backgroundColor" red="0.72549019609999998" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="j1u-hp-GyK"/>
@@ -1480,7 +1478,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pAw-Wl-tWq" userLabel="Add To Order Button">
-                                        <rect key="frame" x="96.5" y="410.5" width="181" height="119.5"/>
+                                        <rect key="frame" x="96.5" y="171" width="181" height="40"/>
                                         <color key="backgroundColor" red="0.72549019609999998" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="kHP-8W-cwd"/>
@@ -1519,7 +1517,9 @@
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="b8B-8S-6HA">
                         <barButtonItem key="rightBarButtonItem" title="Edit Item" id="vVo-3p-OpW">
                             <connections>
-                                <segue destination="9H7-J4-dKa" kind="show" identifier="editItem" id="0lJ-Ga-Kxo"/>
+                                <segue destination="9H7-J4-dKa" kind="popoverPresentation" identifier="editItem" popoverAnchorBarButtonItem="vVo-3p-OpW" id="0lJ-Ga-Kxo">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

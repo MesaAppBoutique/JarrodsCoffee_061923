@@ -14,9 +14,13 @@ class AppData {
     
     /// Used to share MenuController across all view controllers in the app
     static let shared = AppData()
+    let db = Firestore.firestore() //init firestore
+
     var downloadedImages = [MenuImage]()
     var downloadedMenu = [MenuItem]()
-    var selectedImage = UIImage(named: "Image")!
+    var selectedImage = AppData.defaultImage
+    static var defaultImage = UIImage(named: "Image")!
+    static var defaultItem = MenuItem(id: UUID().uuidString, categoryId: "Unassigned", imageURL: "", image: AppData.defaultImage, name: "", price: ["","",""], size: ["","",""])
     var selectedCategory = MenuCategory()
     /// Base URL
     let baseURL = URL(string: "https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json")!
@@ -45,40 +49,94 @@ class AppData {
 //        task.resume()
 //    }
     
-    
-    func addMenuItem(name: String, size: [String], price: [String], category: String, image: UIImage?) {
+    //TODO: Will update but not yet create a new item.
+    //TODO: Test image persists still
+    func updateMenuItem(id: String, name: String, size: [String], price: [String], category: String, image: UIImage?) {
+                
         
-        let db = Firestore.firestore() //init firestore
-        let imageURL = uploadImage(image)
         
-        db.collection("menuItems")
-            .whereField("name", isEqualTo: name)
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    // Some error occured
-                } else if querySnapshot!.documents.count == 0 {
-                    //none exist with that name, let's make a new one!
-                    db.collection("menuItems").addDocument(data: ["category": category, "imageURL": imageURL, "name":name, "price":price, "size": size])
-                } else {
-                    // lets update the first record with the same name
-                    let document = querySnapshot!.documents.first
-                    document?.reference.updateData(["category":category, "imageURL": imageURL, "name":name, "price":price, "size": size])
-                }
+        //TODO:  If the item gets deleted via Firestore dashboard, and then attempted to be updated via the app, this could crash.
+        let docRef = db.collection("menuItems").document(id)
+                
+        docRef.updateData(["name": name, "category": category, "size": size, "price": price]) { error in
+            if let error = error  {
+                print("error updating name")
+            } else {
+                print("successfully updated!")
+                //TODO: Move this later?
+                let imageURL = self.uploadImage(image)
             }
+        }
+        
+        
+        //CREATES NEW ITEM BUT WON'T UPDATE
+//        db.collection("menuItems")
+//            .whereField("uid", isEqualTo: id) //FIXME: NOT WORKING YET!
+//            .getDocuments() { (querySnapshot, err) in
+//                if let err = err {
+//                    // Some error occured
+//                } else if querySnapshot!.documents.count == 0 {
+//                    print("didn't find it, let's make a new item")
+//                    self.db.collection("menuItems").addDocument(data: ["category": category, "imageURL": imageURL, "name":name, "price":price, "size": size])
+//                } else {
+//                    print("lets update the first record with the same id")
+//                    let document = querySnapshot!.documents.first
+//                    document?.reference.updateData(["category":category, "imageURL": imageURL, "name":name, "price":price, "size": size])
+//                }
+//            }
         
         // Upload that data
         
         
         //Do we need this HERE?
-        AppData.shared.downloadImagesFromCloud()
+        //FIXME:
+        //AppData.shared.downloadImagesFromCloud()
 
     }
     
     
+    func newMenuItem(id: String, name: String, size: [String], price: [String], category: String, image: UIImage?) {
+                
+        let docRef = db.collection("menuItems")
+                
+        
+        docRef.addDocument(data: ["name": name, "category": category, "size": size, "price": price]) { error in
+            if let error = error  {
+                print("error adding new menu item")
+            } else {
+                print("successfully added item!")
+                //TODO: Move this later?
+                let imageURL = self.uploadImage(image)
+            }
+        }
+        
+        
+//        db.collection("menuItems")
+//            .whereField("uid", isEqualTo: id) //FIXME: NOT WORKING YET!
+//            .getDocuments() { (querySnapshot, err) in
+//                if let err = err {
+//                    // Some error occured
+//                } else if querySnapshot!.documents.count == 0 {
+//                    print("didn't find it, let's make a new item")
+//                    self.db.collection("menuItems").addDocument(data: ["category": category, "imageURL": imageURL, "name":name, "price":price, "size": size])
+//                } else {
+//                    print("lets update the first record with the same id")
+//                    let document = querySnapshot!.documents.first
+//                    document?.reference.updateData(["category":category, "imageURL": imageURL, "name":name, "price":price, "size": size])
+//                }
+//            }
+        
+        // Upload that data
+        
+        
+        //Do we need this HERE?
+        //FIXME:
+        //AppData.shared.downloadImagesFromCloud()
+
+    }
+    
     func addCategory(name: String, imageURL: String, image: UIImage?) {
-        
-        let db = Firestore.firestore() //init firestore
-        
+                
         db.collection("categories")
             .whereField("name", isEqualTo: name)
             .getDocuments() { (querySnapshot, err) in
@@ -87,7 +145,7 @@ class AppData {
                 } else if querySnapshot!.documents.count == 0 {
                     //none exist with that name, let's make a new one!
                     let newURL = self.uploadImage(image)
-                    db.collection("categories").addDocument(data: ["imageURL": newURL, "name": name])
+                    self.db.collection("categories").addDocument(data: ["imageURL": newURL, "name": name])
 
                 } else {
                     // lets update the first record with the same name
@@ -101,8 +159,8 @@ class AppData {
         // Upload that data
         
         
-        //Do we need this HERE?
-        AppData.shared.downloadImagesFromCloud()
+//FIXME:
+//        AppData.shared.downloadImagesFromCloud()
 
     }
     
@@ -122,9 +180,8 @@ class AppData {
         // upload the data
         let uploadTask = fileRef.putData(imageData!, metadata: nil) { metadata, error in
             if error == nil && metadata != nil {
-                let db = Firestore.firestore()
                 // if the data uploaded, then also store the file path
-                db.collection("images").document().setData(["url":path])
+                self.db.collection("images").document().setData(["url":path])
                 DispatchQueue.main.async {
                     if let image = image {
                         print("Before saving to downloadedImages after upload the image is \(image)")
@@ -137,8 +194,9 @@ class AppData {
         return path
     }
     
+    
+    //This function downloads all images, not just the ones needed.  I think there's probably a better way to handle this call, on demand.  
     func downloadImagesFromCloud() {
-        let db = Firestore.firestore()
         
         //clear images
         downloadedImages = []
@@ -156,7 +214,7 @@ class AppData {
                         if error == nil && data != nil {
                             if let imageFromData = UIImage(data: data!) {
                                 DispatchQueue.main.async {
-                                    print("Before saving to downloadedImages after download the snapshot doc is \(imageFromData)")
+                                    //print("Before saving to downloadedImages after download the snapshot doc is \(imageFromData)")
                                     let menuImage = MenuImage(key: path, image: imageFromData)
                                     self.downloadedImages.append(menuImage)
                                     print("image count is \(self.downloadedImages.count)")
@@ -177,7 +235,7 @@ class AppData {
             
         } else {
             //If none match then just return the default image.
-            return UIImage(named: "Image")!
+            return AppData.defaultImage
         }
     }
     
@@ -186,13 +244,12 @@ class AppData {
         
         print("Loading menu items from Firestore cloud data.")
         
-        let db = Firestore.firestore() //init firestore
         
         db.collection("menuItems").addSnapshotListener { [self] snapshot, error in
             if error == nil {
                 
                 if let snapshot = snapshot {
-                    MenuItem.shared.allItems = snapshot.documents.map { item in
+                    MenuItem.allItems = snapshot.documents.map { item in
                         
                         print("First item ID is \(item.documentID )")
                         print("Category ID is \(String(describing: item["category"]) )")
@@ -210,7 +267,7 @@ class AppData {
                                         size: item["size"] as? [String] ?? [""])
                     }
                 }
-                completion(MenuItem.shared.allItems)
+                completion(MenuItem.allItems)
             } else {
                 print("error fetching!")
             }
@@ -221,14 +278,12 @@ class AppData {
     func fetchCategories(categoryId: String = "", completion: @escaping([MenuCategory]?) -> Void) {
         
         print("Loading categories from Firestore cloud data.")
-        
-        let db = Firestore.firestore() //init firestore
-        
+                
         db.collection("categories").addSnapshotListener { [self] snapshot, error in
             if error == nil {
                 
                 if let snapshot = snapshot {
-                    MenuItem.shared.categories = snapshot.documents.map { item in
+                    MenuItem.categories = snapshot.documents.map { item in
                         
                         print("First item is \(item["imageURL"] ?? "")")
                         let imageURL =  item["imageURL"] as? String ?? ""
@@ -241,7 +296,7 @@ class AppData {
                                             image: tempImage)
                     }
                 }
-                completion(MenuItem.shared.categories)
+                completion(MenuItem.categories)
             } else {
                 print("error fetching!")
             }
@@ -276,9 +331,9 @@ class AppData {
     }
     
     func removeReference(to categoryId:String) {
-        for (index, item) in MenuItem.shared.allItems.enumerated() {
+        for (index, item) in MenuItem.allItems.enumerated() {
             if item.categoryId.uppercased() == categoryId.uppercased() { //I am not sure why the stored property's character case does not at all match.  So let's just compare upper cased versions.
-                MenuItem.shared.allItems[index].categoryId = "Undefined Category"
+                MenuItem.allItems[index].categoryId = "Undefined Category"
             }
         }
         persist()
@@ -290,7 +345,6 @@ class AppData {
     
     
     func fetchMenuData(completion: @escaping ([MenuItem]) -> Void) {
-        let db = Firestore.firestore()
         
         db.collection("menuItems").getDocuments { [self] (snapshot, error) in
             // Handle error
@@ -300,7 +354,7 @@ class AppData {
             if error == nil {
                 
                 if let snapshot = snapshot {
-                    MenuItem.shared.allItems = snapshot.documents.map { item in
+                    MenuItem.allItems = snapshot.documents.map { item in
                         
                         print("First item ID is \(item.documentID )")
                         print("Category ID is \(String(describing: item["category"]) )")
@@ -339,7 +393,6 @@ class AppData {
     
     
     func fetchCategoryData(completion: @escaping ([MenuCategory]) -> Void) {
-        let db = Firestore.firestore()
         
         db.collection("categories").getDocuments { [self] (snapshot, error) in
             // Handle error

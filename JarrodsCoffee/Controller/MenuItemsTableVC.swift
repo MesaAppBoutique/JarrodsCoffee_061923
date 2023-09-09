@@ -141,6 +141,15 @@ class MenuItemsTableVC: UITableViewController {
     }
     
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+        tableView.deselectRow(at: indexPath, animated: true)
+
+          performSegue(withIdentifier: "showDetails", sender: indexPath)
+        
+    }
+    
+    
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteOption = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
             print("BALETED!")
@@ -155,21 +164,15 @@ class MenuItemsTableVC: UITableViewController {
     
     // MARK: - Navigation
 
-    /// Passes MenuItem to MenuItemDetailViewController before the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // checks this segue is from MenuTableViewController to MenuItemDetailViewController
-        if segue.identifier == "MenuDetailSegue" {
-            // we can safely downcast to MenuItemDetailViewController
-            let menuItemDetailViewController = segue.destination as! ItemDetailsVC
-            
-            // selected cell's row is the index for array of menuItems
-            let index = tableView.indexPathForSelectedRow!.row
-            
-            // pass selected menuItem to destination MenuItemDetailViewController
-            menuItemDetailViewController.menuItem = showItems[index]
+        if segue.identifier == "showDetails" {
+            let editItemVC = segue.destination as! ItemDetailsVC
+            if let indexPath = sender as? IndexPath {
+                editItemVC.menuItem = showItems[indexPath.row]
+            }
         }
     }
-    
+
     
 }
 

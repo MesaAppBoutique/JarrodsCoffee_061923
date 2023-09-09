@@ -14,7 +14,7 @@ class DropdownCell: UITableViewCell {
 class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MenuItem selected from MenuTableViewController
-    var menuItem: MenuItem!
+    var menuItem: MenuItem = AppData.defaultItem
     
     let transparentView = UIView()
     
@@ -69,6 +69,8 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         } else {
             self.editItemButton.isHidden = true
         }
+        
+        print("The current ID of this item is \(menuItem.id)")
     }
 
     
@@ -96,9 +98,14 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         addToOrderButton1.layer.cornerRadius = 5
         addToOrderButton2.layer.cornerRadius = 5
         
+               
+        
         DispatchQueue.main.async {
+            
             self.imageView.image = AppData.shared.assignImage(withKey: self.menuItem.imageURL)
         }
+        
+        
     }
     
     func populateOptionModelArray(){
@@ -143,6 +150,13 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     @IBAction func editButton (_ sender: Any) {
         print("EDIT!")
+        
+        //AppData.shared.selectedCategory
+        
+        
+        
+        
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -162,6 +176,7 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
             // we can safely downcast to MenuItemDetailViewController
             let editCtrl = segue.destination as! EditItemVC
             
+            print("PREPARE! \(menuItem.id):\(menuItem.name)")
             // selected cell's row is the index for array of menuItems
 //            let index = tableView.indexPathForSelectedRow!.row
             

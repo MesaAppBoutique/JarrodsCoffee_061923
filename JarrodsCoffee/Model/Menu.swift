@@ -13,7 +13,7 @@ struct MenuCategory {
     var id: String = UUID().uuidString
     var name: String = ""
     var imageURL: String = ""
-    var image: UIImage = UIImage(named: "Image")!
+    var image: UIImage = AppData.defaultImage
     
     static let shared = MenuCategory()
     
@@ -33,7 +33,7 @@ struct MenuCategory {
    
     func loadCategories() {
         //just the cateogry uid strings
-        MenuItem.shared.categories = []
+        MenuItem.categories = []
         // Add to list of categories
 //         let itemsWithUniqueCategories = MenuItem.allItems.unique{$0.category}
 //         for each in itemsWithUniqueCategories { //ew.  But it at least adds all unique categories
@@ -63,10 +63,10 @@ struct MenuImage {
 // MARK: - MenuItem
 struct MenuItem {
     static var shared = MenuItem()
-    var allItems: [MenuItem] = []
+    static var allItems: [MenuItem] = []
 //    static var categoryIds: [String] = []
-    var categories: [MenuCategory] = []
-    var displayItems: [MenuItem] = []
+    static var categories: [MenuCategory] = []
+    static var displayItems: [MenuItem] = []
 
     var id: String = ""//  UID
     var categoryId: String = "" // category of menu item like beverage, snack, etc.
