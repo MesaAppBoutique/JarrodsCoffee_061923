@@ -52,6 +52,7 @@ class MenuCategoriesTableVC: UITableViewController {
 
         DispatchQueue.main.async {
             cell.imageView?.image = AppData.shared.assignImage(withKey: category.imageURL)
+            cell.setNeedsLayout() // adding this fixes the image resizing when clicked
             self.fitImage(in: cell)
         }
         
@@ -122,6 +123,9 @@ class MenuCategoriesTableVC: UITableViewController {
     }
     
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
        
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -458,14 +458,14 @@
             <objects>
                 <viewController title="Add Menu Item" modalTransitionStyle="flipHorizontal" modalPresentationStyle="fullScreen" id="9H7-J4-dKa" customClass="EditItemVC" customModule="JarrodsCoffee" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IHT-Oc-nXk">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nPx-1s-PET">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="876"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="lxx-SV-0vb">
-                                        <rect key="frame" x="20" y="-72" width="374" height="636"/>
+                                        <rect key="frame" x="20" y="20" width="374" height="636"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="JBB-7l-g23">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
@@ -887,7 +887,7 @@
                             <constraint firstItem="jkB-02-kSO" firstAttribute="top" secondItem="0a7-eq-my8" secondAttribute="top" constant="5" id="lyk-y8-RXO"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="97k-fK-bDd"/>
+                    <navigationItem key="navigationItem" title="Events" id="97k-fK-bDd"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NUW-zI-svd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -914,7 +914,7 @@
                         <viewLayoutGuide key="safeArea" id="7U4-GM-iZC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="CxJ-Tl-MJb"/>
+                    <navigationItem key="navigationItem" title="Events" id="CxJ-Tl-MJb"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cd4-I7-GxE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -997,7 +997,7 @@
                             <constraint firstItem="g7H-a8-EHx" firstAttribute="top" secondItem="fow-c3-EN1" secondAttribute="top" id="wuC-S4-cn6"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="RF4-Ks-wzZ"/>
+                    <navigationItem key="navigationItem" title="Map" id="RF4-Ks-wzZ"/>
                     <connections>
                         <outlet property="mapView" destination="8L1-4v-Jzu" id="1pa-J5-usK"/>
                     </connections>
@@ -1277,7 +1277,7 @@
                             <constraint firstItem="kW3-hQ-UZ9" firstAttribute="trailing" secondItem="UF4-m0-B7P" secondAttribute="trailing" id="edn-Vs-g76"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Ojc-TT-Onz"/>
+                    <navigationItem key="navigationItem" title="Contact Us" id="Ojc-TT-Onz"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c3X-jg-YNH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1372,7 +1372,7 @@
             </objects>
             <point key="canvasLocation" x="-3855" y="-935"/>
         </scene>
-        <!--Menu Items TableVC-->
+        <!--Category-->
         <scene sceneID="WHY-GP-qN8">
             <objects>
                 <tableViewController id="Mz1-jW-jwT" customClass="MenuItemsTableVC" customModule="JarrodsCoffee" customModuleProvider="target" sceneMemberID="viewController">
@@ -1410,7 +1410,7 @@
                             <outlet property="delegate" destination="Mz1-jW-jwT" id="oSj-I1-SZn"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="zTz-I1-xy5">
+                    <navigationItem key="navigationItem" title="Category" largeTitleDisplayMode="never" id="zTz-I1-xy5">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="afx-R3-EHK">
                             <connections>
                                 <segue destination="9H7-J4-dKa" kind="show" identifier="addItem" id="Oe0-6w-xDg"/>
@@ -1426,7 +1426,7 @@
             </objects>
             <point key="canvasLocation" x="-3381" y="-147"/>
         </scene>
-        <!--Item DetailsVC-->
+        <!--Item-->
         <scene sceneID="fQu-Lj-NGJ">
             <objects>
                 <viewController id="0NB-1J-YaD" customClass="ItemDetailsVC" customModule="JarrodsCoffee" customModuleProvider="target" sceneMemberID="viewController">
@@ -1514,7 +1514,7 @@
                             <constraint firstItem="hcN-s4-mdC" firstAttribute="trailing" secondItem="RFF-2z-a0G" secondAttribute="trailing" id="ayu-Vl-Jpi"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="b8B-8S-6HA">
+                    <navigationItem key="navigationItem" title="Item" largeTitleDisplayMode="never" id="b8B-8S-6HA">
                         <barButtonItem key="rightBarButtonItem" title="Edit Item" id="vVo-3p-OpW">
                             <connections>
                                 <segue destination="9H7-J4-dKa" kind="popoverPresentation" identifier="editItem" popoverAnchorBarButtonItem="vVo-3p-OpW" id="0lJ-Ga-Kxo">
@@ -1557,8 +1557,9 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="6C0-Lo-Qxi"/>
-        <segue reference="Oe0-6w-xDg"/>
+        <segue reference="0lJ-Ga-Kxo"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
     <resources>
         <image name="Bags_of_Coffee" width="828" height="1102"/>
         <image name="Jarrods 3" width="1587" height="519"/>

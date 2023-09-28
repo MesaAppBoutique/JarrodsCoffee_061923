@@ -6,9 +6,15 @@
 //
 
 
-// - Worked on Editing Categories from 3pm-4pm
-
 // V1.0
+// - Added Nav titles for pages
+// - Changed Nav link color to white
+// - Fixed the way Item Images start as a square and then resize when touched
+// - Added deselect to cells so they don't remain selected when returning
+// - Make menu Nav title white
+// - Make meny Nav back button red
+
+
 // - Check update image is still working.
 // - New items are having issues saving after clicking the plus sign from the Items table view
 // - Update view when Firestore Database changes //https://www.youtube.com/watch?v=R3Wp1PWh70c
@@ -36,6 +42,7 @@
 
 
 // Future Version
+// - Adapt to dark mode more gracefully
 // - Before 12/12/23 Fix the Firestore Database Rules so that:
 // ---- Authenticated users can Create, Read, Update, Delete
 // ---- Random Users can only Read

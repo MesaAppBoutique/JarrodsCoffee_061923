@@ -107,6 +107,7 @@ class MenuItemsTableVC: UITableViewController {
         
         DispatchQueue.main.async  {
             cell.imageView?.image = AppData.shared.assignImage(withKey: menuItem.imageURL)
+            cell.setNeedsLayout() // adding this fixes the image resizing when clicked
             self.fitImage(in: cell)
 
         }
