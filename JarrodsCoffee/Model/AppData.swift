@@ -255,7 +255,7 @@ class AppData {
                         print("Category ID is \(String(describing: item["category"]) )")
 
                         let imageURL = item["imageURL"] as? String ?? ""
-                        var tempImage = assignImage(withKey: imageURL)
+                        let tempImage = assignImage(withKey: imageURL)
 
                                                 
                         return MenuItem(id: item.documentID,

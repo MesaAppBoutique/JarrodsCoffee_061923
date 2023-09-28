@@ -97,18 +97,19 @@ class MenuItemsTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // reuse the menu list prototype cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCellIdentifier", for: indexPath)
-        //self.fitImage(in: cell)
 
         // configure the cell with menu list data
         let menuItem = showItems[indexPath.row]
         
         // the left label of the cell should display the name of the item
         cell.textLabel?.text = menuItem.name
-        
+
         DispatchQueue.main.async  {
-            cell.imageView?.image = AppData.shared.assignImage(withKey: menuItem.imageURL)
+            //cell.imageView?.image = AppData.shared.assignImage(withKey: menuItem.imageURL)
+            cell.imageView?.image = menuItem.image
+            //cell.imageView?.image = AppData.shared.assignImage(withKey: menuItem.imageURL)
             cell.setNeedsLayout() // adding this fixes the image resizing when clicked
-            self.fitImage(in: cell)
+            //self.fitImage(in: cell)
 
         }
         

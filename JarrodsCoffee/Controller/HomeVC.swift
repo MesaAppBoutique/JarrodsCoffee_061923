@@ -19,7 +19,7 @@ class HomeVC: UIViewController {
             
             //Using a shared Singleton pattern to fetch items
             AppData.shared.fetchMenuItems { (menuItems) in
-                //print("items have been fetched!")
+                print("All items have been fetched!")
             }
         }
     }

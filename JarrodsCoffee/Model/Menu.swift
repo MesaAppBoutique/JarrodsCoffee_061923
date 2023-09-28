@@ -18,7 +18,7 @@ struct MenuCategory {
     static let shared = MenuCategory()
     
     func loadCategory(withId id: String) -> MenuCategory {
-
+        
         //Look for category in cloud data
         
         //Look for image in downloaded images
@@ -30,18 +30,18 @@ struct MenuCategory {
         let category = MenuCategory(id: id, name: "name", imageURL: "url", image: UIImage(named: "Iced_Tea")!)
         return category
     }
-   
+    
     func loadCategories() {
         //just the cateogry uid strings
         MenuItem.categories = []
         // Add to list of categories
-//         let itemsWithUniqueCategories = MenuItem.allItems.unique{$0.category}
-//         for each in itemsWithUniqueCategories { //ew.  But it at least adds all unique categories
-//
-//             let newCategory = MenuCategory(
-//
-//             MenuItem.categories.append(each)
-//         }
+        //         let itemsWithUniqueCategories = MenuItem.allItems.unique{$0.category}
+        //         for each in itemsWithUniqueCategories { //ew.  But it at least adds all unique categories
+        //
+        //             let newCategory = MenuCategory(
+        //
+        //             MenuItem.categories.append(each)
+        //         }
         
         //bringing in an array of category objects
         AppData.shared.fetchCategories { categories in
@@ -50,7 +50,7 @@ struct MenuCategory {
         
         
         
-    
+        
     }
     
 }
@@ -64,10 +64,10 @@ struct MenuImage {
 struct MenuItem {
     static var shared = MenuItem()
     static var allItems: [MenuItem] = []
-//    static var categoryIds: [String] = []
+    //    static var categoryIds: [String] = []
     static var categories: [MenuCategory] = []
     static var displayItems: [MenuItem] = []
-
+    
     var id: String = ""//  UID
     var categoryId: String = "" // category of menu item like beverage, snack, etc.
     var imageURL: String = ""// url of the image to show
@@ -78,11 +78,11 @@ struct MenuItem {
     
     mutating func loadImage() -> MenuImage {
         // Configure menuImage
-            for thisImage in AppData.shared.downloadedImages {
-                if thisImage.key == imageURL {
-                            return thisImage
-                        }
-                }
+        for thisImage in AppData.shared.downloadedImages {
+            if thisImage.key == imageURL {
+                return thisImage
+            }
+        }
         return MenuImage(key: "imageURL", image: UIImage(named: "Iced_Tea")!)
     }
     
@@ -96,10 +96,10 @@ struct MenuItem {
 struct OptionModel {
     var sizeOption = [String]()
     var priceOption = [String]()
-
-        init(sizeOption: [String] = [String](), priceOption: [String] = [String]()) {
-            self.sizeOption = sizeOption
-            self.priceOption = priceOption
+    
+    init(sizeOption: [String] = [String](), priceOption: [String] = [String]()) {
+        self.sizeOption = sizeOption
+        self.priceOption = priceOption
     }
 }
 

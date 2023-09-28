@@ -7,27 +7,19 @@
 
 
 // V1.0
-// - Added Nav titles for pages
-// - Changed Nav link color to white
-// - Fixed the way Item Images start as a square and then resize when touched
-// - Added deselect to cells so they don't remain selected when returning
-// - Make menu Nav title white
-// - Make meny Nav back button red
+// - Improved design on edit item page along with appropriate dismiss after persist.
 
+// - Enable re-ordering of categories
+// - Enable re-ordering of items
 
 // - Check update image is still working.
 // - New items are having issues saving after clicking the plus sign from the Items table view
 // - Update view when Firestore Database changes //https://www.youtube.com/watch?v=R3Wp1PWh70c
 // - Seems like we are fetching more images than needed!
-// - Modify categories
-// - Add delete category button
 // - Disable swipe for customers
 // - Loading item's categories doesn't happen until you back out and return to item view
 // - Change item nav bar buttons to Cancel or Save item.
-// - Ensure all cloud images are loading properly for items and categories
 // - Assign items without categories to Unassigned category
-// - Add Category button (not working)
-// - Edit/Delete Category option (not working)
 // - Design improvements
 // ---- Item detail page
 // ---- Edit Item page

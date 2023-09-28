@@ -29,12 +29,17 @@ class EditItemVC: UIViewController, UITextFieldDelegate {
     
     @IBAction func saveItemAction(_ sender: Any) {
         AppData.shared.updateMenuItem(id: self.menuItem?.id ?? "", name: nameOutlet.text ?? "", size: [size1Outlet.text ?? "", size2Outlet.text ?? "", size3Outlet.text ?? ""], price: [price1Outlet.text ?? "", price2Outlet.text ?? "", price3Outlet.text ?? ""], category: MenuItem.categories[picker.selectedRow(inComponent: 0)].id, image: imageOutlet.image)
-        self.dismiss(animated: true)
-    }
-    @IBAction func cancelAction(_ sender: Any) {
-        self.dismiss(animated: true)
+        
+        //TODO: Refresh previous screen now before popping?
+        
+        self.navigationController?.popViewController(animated: true)
 
     }
+//    @IBAction func cancelAction(_ sender: Any) {
+//        self.dismiss(animated: true)
+//        self.navigationController?.popViewController(animated: true)
+//
+//    }
     
     @IBAction func editImageAction(_ sender: Any) {
         let vc = UIImagePickerController()
@@ -83,7 +88,7 @@ class EditItemVC: UIViewController, UITextFieldDelegate {
             }
             
             
-            print("\(changes.count) change happened!")
+            print("\(changes.count) changes happened!")
                         
             DispatchQueue.main.async {
                 self?.nameOutlet.text = name
