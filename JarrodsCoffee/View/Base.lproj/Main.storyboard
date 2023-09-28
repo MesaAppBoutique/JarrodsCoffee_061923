@@ -1407,7 +1407,7 @@
             </objects>
             <point key="canvasLocation" x="-3381" y="-147"/>
         </scene>
-        <!--Item-->
+        <!--Item DetailsVC-->
         <scene sceneID="fQu-Lj-NGJ">
             <objects>
                 <viewController id="0NB-1J-YaD" customClass="ItemDetailsVC" customModule="JarrodsCoffee" customModuleProvider="target" sceneMemberID="viewController">
@@ -1415,14 +1415,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bags_of_coffee" translatesAutoresizingMaskIntoConstraints="NO" id="hcN-s4-mdC">
-                                <rect key="frame" x="20" y="112" width="374" height="200"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bags_of_coffee" translatesAutoresizingMaskIntoConstraints="NO" id="hcN-s4-mdC">
+                                <rect key="frame" x="20" y="112" width="374" height="320"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="pK8-zt-E3a"/>
+                                    <constraint firstAttribute="height" priority="999" constant="200" id="pK8-zt-E3a"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="RFF-2z-a0G">
-                                <rect key="frame" x="20" y="312" width="374" height="211"/>
+                                <rect key="frame" x="20" y="432" width="374" height="211"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Title Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="x05-7Z-AFv">
                                         <rect key="frame" x="96.5" y="0.0" width="181" height="40"/>
@@ -1490,12 +1490,12 @@
                             <constraint firstItem="hcN-s4-mdC" firstAttribute="leading" secondItem="RFF-2z-a0G" secondAttribute="leading" id="1Fa-RQ-3XV"/>
                             <constraint firstItem="hcN-s4-mdC" firstAttribute="top" secondItem="igd-gn-zkF" secondAttribute="top" constant="20" id="23H-0V-l9R"/>
                             <constraint firstItem="RFF-2z-a0G" firstAttribute="leading" secondItem="igd-gn-zkF" secondAttribute="leading" constant="20" id="BWF-LY-zEV"/>
-                            <constraint firstItem="igd-gn-zkF" firstAttribute="bottom" secondItem="RFF-2z-a0G" secondAttribute="bottom" constant="20" id="Wni-oc-xMS"/>
+                            <constraint firstItem="igd-gn-zkF" firstAttribute="bottom" secondItem="RFF-2z-a0G" secondAttribute="bottom" priority="999" constant="20" id="Wni-oc-xMS"/>
                             <constraint firstItem="igd-gn-zkF" firstAttribute="trailing" secondItem="RFF-2z-a0G" secondAttribute="trailing" constant="20" id="XWA-W5-8QF"/>
                             <constraint firstItem="hcN-s4-mdC" firstAttribute="trailing" secondItem="RFF-2z-a0G" secondAttribute="trailing" id="ayu-Vl-Jpi"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Item" largeTitleDisplayMode="never" id="b8B-8S-6HA">
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="b8B-8S-6HA">
                         <barButtonItem key="rightBarButtonItem" title="Edit Item" id="vVo-3p-OpW">
                             <connections>
                                 <segue destination="9H7-J4-dKa" kind="show" identifier="editItem" id="0lJ-Ga-Kxo"/>
@@ -1536,7 +1536,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="6C0-Lo-Qxi"/>
-        <segue reference="Oe0-6w-xDg"/>
+        <segue reference="0lJ-Ga-Kxo"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
     <resources>

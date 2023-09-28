@@ -126,7 +126,11 @@ class MenuItemsTableVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         //The ViewDidLoad is where we are checking to see if the admin is logged in, not here.
-        return true
+        if AppData.shared.isAdminLoggedIn {
+           return true
+        } else {
+            return false
+        }
     }
 
     

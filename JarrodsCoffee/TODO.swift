@@ -7,12 +7,14 @@
 
 
 // V1.0
-// - Make it more obvious you are in Store Owner Edit Mode.
 
+// - Permission denied when attempting to edit image
 // - Enable re-ordering of categories
 // - Enable re-ordering of items
+// - Animation to enter Edit Item is funky
+// - Categories not showing until re-entry of Item Edit screen
+// - Images not loading properly
 
-// - Check update image is still working.
 // - New items are having issues saving after clicking the plus sign from the Items table view
 // - Update view when Firestore Database changes //https://www.youtube.com/watch?v=R3Wp1PWh70c
 // - Seems like we are fetching more images than needed!
