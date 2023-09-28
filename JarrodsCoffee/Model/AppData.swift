@@ -28,6 +28,8 @@ class AppData {
     let adminPassword = "7146"
     let adminLoginText = "Employee Access"
     let adminLogoutText = "Log out"
+    
+    
 //    /// Execute GET request for categories
 //    func fetchCategories(completion: @escaping ([String]?) -> Void) {
 //

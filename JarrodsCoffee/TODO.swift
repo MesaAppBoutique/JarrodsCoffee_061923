@@ -7,7 +7,7 @@
 
 
 // V1.0
-// - Improved design on edit item page along with appropriate dismiss after persist.
+// - Make it more obvious you are in Store Owner Edit Mode.
 
 // - Enable re-ordering of categories
 // - Enable re-ordering of items

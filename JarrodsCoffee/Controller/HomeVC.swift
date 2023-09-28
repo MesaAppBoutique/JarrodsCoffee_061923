@@ -25,12 +25,9 @@ class HomeVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        if AppData.shared.isAdminLoggedIn {
-            self.adminButton.setTitle(AppData.shared.adminLogoutText, for: .normal)
-        } else {
-            self.adminButton.setTitle(AppData.shared.adminLoginText, for: .normal)
-        }
+
+        updateUI()
+  
         //Don't need the nav bar here... but do need it on the other screens
         self.navigationController?.isNavigationBarHidden = true
         
@@ -52,13 +49,27 @@ class HomeVC: UIViewController {
             AppData.shared.isAdminLoggedIn = true
             self.adminButton.setTitle(AppData.shared.adminLoginText, for: .normal)
             AppData.shared.isAdminLoggedIn = false
-            
-        //They aren't logged in. Let's see if they know the password before loggin them in.
+            updateUI()
+        //They aren't logged in. Let's see if they know the password before logging them in.
         } else {
             generateLoginAlert()
         }
     }
     
+    func updateUI() {
+        if AppData.shared.isAdminLoggedIn {
+            //If store admin IS logged in...
+            self.adminButton.setTitle(AppData.shared.adminLogoutText, for: .normal)
+            self.view.layer.borderWidth = 10
+            self.view.layer.borderColor = UIColor.red.cgColor
+            
+        } else {
+            //If store admin NOT logged in...
+            self.adminButton.setTitle(AppData.shared.adminLoginText, for: .normal)
+            self.view.layer.borderWidth = 10
+            self.view.layer.borderColor = UIColor.clear.cgColor
+        }
+    }
     
     func generateLoginAlert () {
         //TODO: Eventually use official FireAuth here
@@ -75,6 +86,7 @@ class HomeVC: UIViewController {
             if self.passwordIsCorrect(guess: textField.text ?? "") {
                 //they got the password right, let's enable admin mode and set the button text to log out
                 AppData.shared.isAdminLoggedIn = true
+                self.updateUI()
                 self.adminButton.setTitle(AppData.shared.adminLogoutText, for: .normal)
             } else {
                 //Let's tell them they guessed incorrectly
