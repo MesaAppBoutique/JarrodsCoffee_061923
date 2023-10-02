@@ -137,7 +137,7 @@ class MenuCategoriesTableVC: UITableViewController {
                 let index = tableView.indexPathForSelectedRow!.row
                 let category = categories[index]
                 let filteredMenuItems = AppData.shared.menuFiltered(by: category.id, fromItems: MenuItem.allItems)
-                menuVC.showItems = filteredMenuItems
+                AppData.shared.showItems = filteredMenuItems
                 menuVC.showName =  category.name
             }
         }
@@ -148,7 +148,7 @@ class MenuCategoriesTableVC: UITableViewController {
                 MenuItemsTableVC {
                 let index = tableView.indexPathForSelectedRow!.row
                 let filteredMenuItems = AppData.shared.menuFiltered(by: MenuItem.categories[index].id, fromItems: MenuItem.allItems)
-                menuVC.showItems = filteredMenuItems
+                AppData.shared.showItems = filteredMenuItems
                 menuVC.showName = MenuItem.categories[index].name
             }
         }

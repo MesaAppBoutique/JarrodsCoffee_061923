@@ -14,7 +14,6 @@ class DropdownCell: UITableViewCell {
 class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MenuItem selected from MenuTableViewController
-    var menuItem: MenuItem = AppData.defaultItem
     
     let transparentView = UIView()
     
@@ -55,22 +54,22 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(DropdownCell.self, forCellReuseIdentifier: "Cell")
-        // update the screen with menuItem values
-        updateUI()
+        //listenForChanges()
+        updateDesign()
+
         populateOptionModelArray()
-        // setup the delegate
-        //Enable nav bar
         self.navigationController?.isNavigationBarHidden = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        updateItem(item: AppData.shared.showItems[AppData.shared.selectedItemIndex])
+
         if AppData.shared.isAdminLoggedIn {
             self.editItemButton.isHidden = false
         } else {
             self.editItemButton.isHidden = true
         }
-        
-        print("The current ID of this item is \(menuItem.id)")
     }
 
     
@@ -90,26 +89,14 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     var optionModelArray: [OptionModel] = [OptionModel]()
     
     // update the screen with menuItem values
-    func updateUI() {
-        titleLabel.text = menuItem.name
-        
+    func updateDesign() {
         optionButton.layer.cornerRadius = 5
-        
         addToOrderButton1.layer.cornerRadius = 5
         addToOrderButton2.layer.cornerRadius = 5
-        
-               
-        
-        DispatchQueue.main.async {
-            
-            self.imageView.image = AppData.shared.assignImage(withKey: self.menuItem.imageURL)
-        }
-        
-        
     }
     
     func populateOptionModelArray(){
-        let optionModel = OptionModel(sizeOption: menuItem.size, priceOption: menuItem.price)
+        let optionModel = OptionModel(sizeOption: AppData.shared.showItems[AppData.shared.selectedItemIndex].size, priceOption: AppData.shared.showItems[AppData.shared.selectedItemIndex].price)
         self.optionModelArray.append(optionModel)
     }
     
@@ -142,7 +129,7 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     @IBAction func optionButton(_ sender: Any) {
-        dataSource = menuItem.size
+        dataSource = AppData.shared.showItems[AppData.shared.selectedItemIndex].size
         populateOptionModelArray()
         selectedButton = optionButton
         addTransparentView(frames: optionButton.frame)
@@ -164,26 +151,55 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedButton.setTitle(String(format: "%.2f", menuItem.price[indexPath.row]), for: .normal)
+        selectedButton.setTitle(String(format: "%.2f", AppData.shared.showItems[AppData.shared.selectedItemIndex].price[indexPath.row]), for: .normal)
         removeTransparentView()
     }
     
     
-    /// Passes MenuItem to MenuItemDetailViewController before the segue
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // checks this segue is from MenuTableViewController to MenuItemDetailViewController
-        if segue.identifier == "editItem" {
-            // we can safely downcast to MenuItemDetailViewController
-            let editCtrl = segue.destination as! EditItemVC
+    func listenForChanges() {
+        let collectionRef = AppData.shared.db.collection("menuItems")
+        collectionRef.addSnapshotListener { [weak self] snapshot, error in
             
-            print("PREPARE! \(menuItem.id):\(menuItem.name)")
-            // selected cell's row is the index for array of menuItems
-//            let index = tableView.indexPathForSelectedRow!.row
+            guard let changes = snapshot?.documentChanges(includeMetadataChanges: false), error == nil else { return }
             
-            // pass selected menuItem to destination MenuItemDetailViewController
-            editCtrl.menuItem = menuItem
+            guard let data = snapshot?.documentChanges.first?.document.data(with: .none) else { return }
+            
+            let item = AppData.shared.itemFrom(data: data)
+  
+            guard let item = item else { return }
+            
+            self?.updateItem(item: item)
+            
+            print("\(changes.count) changes happened in ItemDetailsVC!")
         }
     }
+    
+    func updateItem (item:MenuItem) {
+        DispatchQueue.main.async {
+            
+            
+            self.titleLabel.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].name
+            
+            self.imageView.image = AppData.shared.showItems[AppData.shared.selectedItemIndex].image
+            
+        }
+    }
+    
+    /// Passes MenuItem to MenuItemDetailViewController before the segue
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        // checks this segue is from MenuTableViewController to MenuItemDetailViewController
+//        if segue.identifier == "editItem" {
+//            // we can safely downcast to MenuItemDetailViewController
+//            let editCtrl = segue.destination as! EditItemVC
+//
+//            print("PREPARE! \(menuItem.id):\(menuItem.name)")
+//            // selected cell's row is the index for array of menuItems
+//            let index = tableView.indexPathForSelectedRow!.row
+//
+//            // pass selected menuItem to destination MenuItemDetailViewController
+//            AppData.shared.selectedItem = menuItem
+//        }
+//    }
 }
 
     /*

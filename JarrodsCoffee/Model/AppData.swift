@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import Firebase
 import FirebaseStorage
+import SwiftUI
 
 class AppData {
     
@@ -18,7 +19,10 @@ class AppData {
 
     var downloadedImages = [MenuImage]()
     var downloadedMenu = [MenuItem]()
+    var showItems: [MenuItem] = []
+
     var selectedImage = AppData.defaultImage
+    var selectedItemIndex = 0
     static var defaultImage = UIImage(named: "Image")!
     static var defaultItem = MenuItem(id: UUID().uuidString, categoryId: "Unassigned", imageURL: "", image: AppData.defaultImage, name: "", price: ["","",""], size: ["","",""])
     var selectedCategory = MenuCategory()
@@ -55,6 +59,13 @@ class AppData {
     //TODO: Test image persists still
     func updateMenuItem(id: String, name: String, size: [String], price: [String], category: String, image: UIImage?) {
                 
+        AppData.shared.showItems[AppData.shared.selectedItemIndex] = showItems[AppData.shared.selectedItemIndex]
+        
+        AppData.shared.showItems[AppData.shared.selectedItemIndex].id = id
+        AppData.shared.showItems[AppData.shared.selectedItemIndex].name = name
+        AppData.shared.showItems[AppData.shared.selectedItemIndex].size = size
+        AppData.shared.showItems[AppData.shared.selectedItemIndex].price = price
+        AppData.shared.showItems[AppData.shared.selectedItemIndex].image = image ?? AppData.defaultImage
         
         
         //TODO:  If the item gets deleted via Firestore dashboard, and then attempted to be updated via the app, this could crash.
@@ -62,11 +73,12 @@ class AppData {
                 
         docRef.updateData(["name": name, "category": category, "size": size, "price": price]) { error in
             if let error = error  {
-                print("error updating name")
+                print("\(error) \n error updating")
             } else {
                 print("successfully updated!")
-                //TODO: Move this later?
                 let imageURL = self.uploadImage(image)
+                AppData.shared.showItems[AppData.shared.selectedItemIndex].imageURL = imageURL
+                docRef.updateData(["imageURL": imageURL])
             }
         }
         
@@ -98,20 +110,40 @@ class AppData {
     
     
     func newMenuItem(id: String, name: String, size: [String], price: [String], category: String, image: UIImage?) {
-                
-        let docRef = db.collection("menuItems")
-                
         
-        docRef.addDocument(data: ["name": name, "category": category, "size": size, "price": price]) { error in
+        AppData.shared.showItems[AppData.shared.selectedItemIndex].id = id
+        AppData.shared.showItems[AppData.shared.selectedItemIndex].name = name
+        AppData.shared.showItems[AppData.shared.selectedItemIndex].size = size
+        AppData.shared.showItems[AppData.shared.selectedItemIndex].price = price
+        AppData.shared.showItems[AppData.shared.selectedItemIndex].image = image ?? AppData.defaultImage
+        
+        let docRef = db.collection("menuItems").document(id)
+                
+        docRef.updateData(["name": name, "category": category, "size": size, "price": price]) { error in
             if let error = error  {
-                print("error adding new menu item")
+                print("error updating name")
             } else {
-                print("successfully added item!")
-                //TODO: Move this later?
+                print("successfully updated!")
                 let imageURL = self.uploadImage(image)
+                docRef.updateData(["imageURL": imageURL])
             }
         }
         
+        //old way
+//        let docRef = db.collection("menuItems")
+//
+//
+//        docRef.addDocument(data: ["name": name, "category": category, "size": size, "price": price]) { error in
+//            if let error = error  {
+//                print("error adding new menu item")
+//            } else {
+//                print("successfully added item!")
+//                let imageURL = self.uploadImage(image)
+//                docRef.updateData(["imageURL": imageURL])
+//
+//            }
+//        }
+//
         
 //        db.collection("menuItems")
 //            .whereField("uid", isEqualTo: id) //FIXME: NOT WORKING YET!
@@ -153,7 +185,6 @@ class AppData {
                     // lets update the first record with the same name
                     let document = querySnapshot!.documents.first
                     let newURL = self.uploadImage(image)
-
                     document?.reference.updateData(["imageURL": newURL, "name": name])
                 }
             }
@@ -435,5 +466,27 @@ class AppData {
         //    }
     }
 
+    
+    func itemFrom(data: [String:Any]) -> MenuItem? {
+        
+        guard let id = data["id"] as? String else {
+            return nil
+        }
+
+        let imageURL = data["imageURL"] as? String ?? ""
+        let tempImage = AppData.shared.assignImage(withKey: imageURL)
+        
+        
+        let item = MenuItem(id: id,
+                        categoryId: data["category"] as? String ?? "",
+                        imageURL: data["imageURL"] as? String ?? "",
+                        image: tempImage,
+                        name: data["name"] as? String ?? "",
+                        price: data["price"] as? [String] ?? ["unknown"],
+                        size: data["size"] as? [String] ?? [""])
+        
+        return item
+    }
+    
 }
 

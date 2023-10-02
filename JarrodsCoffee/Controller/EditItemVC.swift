@@ -15,7 +15,6 @@ import UIKit
 
 class EditItemVC: UIViewController, UITextFieldDelegate {
     
-    var menuItem: MenuItem?
     
     @IBOutlet weak var picker: UIPickerView!
     @IBOutlet weak var nameOutlet: UITextField!
@@ -28,18 +27,10 @@ class EditItemVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var imageOutlet: UIImageView!
     
     @IBAction func saveItemAction(_ sender: Any) {
-        AppData.shared.updateMenuItem(id: self.menuItem?.id ?? "", name: nameOutlet.text ?? "", size: [size1Outlet.text ?? "", size2Outlet.text ?? "", size3Outlet.text ?? ""], price: [price1Outlet.text ?? "", price2Outlet.text ?? "", price3Outlet.text ?? ""], category: MenuItem.categories[picker.selectedRow(inComponent: 0)].id, image: imageOutlet.image)
         
-        //TODO: Refresh previous screen now before popping?
-        
+        AppData.shared.updateMenuItem(id: AppData.shared.showItems[AppData.shared.selectedItemIndex].id, name: nameOutlet.text ?? "", size: [size1Outlet.text ?? "", size2Outlet.text ?? "", size3Outlet.text ?? ""], price: [price1Outlet.text ?? "", price2Outlet.text ?? "", price3Outlet.text ?? ""], category: MenuItem.categories[picker.selectedRow(inComponent: 0)].id, image: imageOutlet.image)
         self.navigationController?.popViewController(animated: true)
-
     }
-//    @IBAction func cancelAction(_ sender: Any) {
-//        self.dismiss(animated: true)
-//        self.navigationController?.popViewController(animated: true)
-//
-//    }
     
     @IBAction func editImageAction(_ sender: Any) {
         let vc = UIImagePickerController()
@@ -50,9 +41,6 @@ class EditItemVC: UIViewController, UITextFieldDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        if menuItem == nil {
-            menuItem = AppData.defaultItem //janky
-        }
         picker.delegate = self as UIPickerViewDelegate
         picker.dataSource = self as UIPickerViewDataSource
         picker.center = self.view.center
@@ -61,11 +49,11 @@ class EditItemVC: UIViewController, UITextFieldDelegate {
             MenuCategory.shared.loadCategories()
         }
 
-        listenForChanges()
+        //listenForChanges()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        fillFields()
+        updateItem(item: AppData.shared.showItems[AppData.shared.selectedItemIndex])
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -75,40 +63,31 @@ class EditItemVC: UIViewController, UITextFieldDelegate {
     func listenForChanges() {
         let collectionRef = AppData.shared.db.collection("menuItems")
         collectionRef.addSnapshotListener { [weak self] snapshot, error in
-            guard let changes = snapshot?.documentChanges(includeMetadataChanges: false), error == nil else {
-                return
-            }
             
-            guard let data = snapshot?.documentChanges.first?.document.data(with: .none) else {
-                return
-            }
+            guard let changes = snapshot?.documentChanges(includeMetadataChanges: false), error == nil else { return }
             
-            guard let name = data["name"] as? String else {
-                return
-            }
+            guard let data = snapshot?.documentChanges.first?.document.data(with: .none) else { return }
             
+            let item = AppData.shared.itemFrom(data: data)
+  
+            guard let item = item else { return }
             
-            print("\(changes.count) changes happened!")
-                        
-            DispatchQueue.main.async {
-                self?.nameOutlet.text = name
-            }
+            self?.updateItem(item: item)
+            
+            print("\(changes.count) changes happened in EditItemVC!")
         }
     }
     
-    func fillFields () {
-        nameOutlet.text = menuItem?.name
-        
-        size1Outlet.text = menuItem?.size[0]
-        price1Outlet.text = menuItem?.price[0]
-        size2Outlet.text = menuItem?.size[1]
-        price2Outlet.text = menuItem?.price[1]
-        size3Outlet.text = menuItem?.size[2]
-        price3Outlet.text = menuItem?.price[2]
-
-        
+    func updateItem (item:MenuItem) {
         DispatchQueue.main.async {
-            self.imageOutlet.image = AppData.shared.assignImage(withKey: self.menuItem?.imageURL ?? "Image")
+            self.nameOutlet.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].name
+            self.size1Outlet.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].size[0]
+            self.price1Outlet.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].price[0]
+            self.size2Outlet.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].size[1]
+            self.price2Outlet.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].price[1]
+            self.size3Outlet.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].size[2]
+            self.price3Outlet.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].price[2]
+            self.imageOutlet.image = AppData.shared.assignImage(withKey: AppData.shared.showItems[AppData.shared.selectedItemIndex].imageURL)
         }
     }
 }
