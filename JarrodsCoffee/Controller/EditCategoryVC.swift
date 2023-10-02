@@ -11,6 +11,7 @@ import UIKit
 class EditCategoryVC: UIViewController {
     
     var category: MenuCategory?
+    var catIndex: Int?
 
     @IBOutlet weak var textField: UITextField?
     @IBOutlet weak var imageOutlet: UIImageView?
@@ -33,17 +34,9 @@ class EditCategoryVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //setupTextField()
-        category = AppData.shared.selectedCategory
+        category = AppData.shared.categories[AppData.shared.selectedCatIndex]
         print("Loaded category page and the category is \(String(describing: category?.name))")
     }
-    
-//    func setupTextField() {
-//        textField.delegate = self
-//        textField.becomeFirstResponder()
-//        textField.keyboardType = UIKeyboardType.default
-//        textField.returnKeyType = UIReturnKeyType.done
-//
-//    }
     
     override func viewDidAppear(_ animated: Bool) {
         self.textField?.text = category?.name
@@ -57,7 +50,6 @@ class EditCategoryVC: UIViewController {
     }
     
 }
-
 
 // Required for the photo picker
 extension EditCategoryVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -74,6 +66,4 @@ extension EditCategoryVC: UIImagePickerControllerDelegate, UINavigationControlle
         picker.dismiss(animated: true)
     }
     
-    
- 
 }

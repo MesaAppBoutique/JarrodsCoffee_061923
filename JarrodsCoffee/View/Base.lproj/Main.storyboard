@@ -671,7 +671,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="jkB-02-kSO">
-                                <rect key="frame" x="0.0" y="97" width="414.5" height="760"/>
+                                <rect key="frame" x="-0.5" y="97" width="414.5" height="760"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nAW-QU-ocB">
                                         <rect key="frame" x="13.5" y="0.0" width="388" height="125"/>
@@ -1394,7 +1394,7 @@
                     <navigationItem key="navigationItem" title="Category" largeTitleDisplayMode="never" id="zTz-I1-xy5">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="afx-R3-EHK">
                             <connections>
-                                <segue destination="9H7-J4-dKa" kind="show" identifier="addItem" id="Oe0-6w-xDg"/>
+                                <action selector="addItemAction:" destination="Mz1-jW-jwT" id="bfL-uU-wvR"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1536,7 +1536,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="6C0-Lo-Qxi"/>
-        <segue reference="0lJ-Ga-Kxo"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
     <resources>

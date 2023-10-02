@@ -10,14 +10,13 @@ import SwiftUI
 
 class MenuCategoriesTableVC: UITableViewController {
     
-    var categories = [MenuCategory]()
     @IBOutlet weak var addCatButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         AppData.shared.fetchCategoryData { fetched in
-            self.categories = fetched
+            AppData.shared.categories = fetched
             self.updateUI(with: fetched)
         }
         //Enable nav bar is okay here
@@ -27,8 +26,6 @@ class MenuCategoriesTableVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         //if the admin is logged in then show the edit and add button
-        // adjusting the nav bar items in viewWillAppear or viewDidAppear or it wont trigger since the bar hasn't been rendered until after viewDidLoad
-        
         if AppData.shared.isAdminLoggedIn {
             self.navigationItem.rightBarButtonItems = [self.addCatButton, self.editButtonItem]
         } else {
@@ -41,13 +38,13 @@ class MenuCategoriesTableVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return AppData.shared.categories.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCellIdentifier", for: indexPath)
 
-        let category = categories[indexPath.row]
+        let category = AppData.shared.categories[indexPath.row]
         cell.textLabel?.text = category.name
 
         DispatchQueue.main.async {
@@ -62,7 +59,7 @@ class MenuCategoriesTableVC: UITableViewController {
     
     func updateUI(with categories: [MenuCategory]) {
         DispatchQueue.main.async {
-            self.categories = categories
+            AppData.shared.categories = categories
             self.tableView.reloadData()
         }
     }
@@ -73,7 +70,6 @@ class MenuCategoriesTableVC: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        //The ViewDidLoad is where we are checking to see if the admin is logged in, not here.
         if AppData.shared.isAdminLoggedIn {
            return true
         } else {
@@ -91,24 +87,26 @@ class MenuCategoriesTableVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        //TODO: Implement Move
         print("WE LIKE TO MOVEIT MOVEIT!")
     }
     
     override func tableView(_ tableView: UITableView, willDisplayContextMenu configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
+        // needed?
         print("CONTEXT")
     }
     
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteOption = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
+        //TODO: Implement deleted
             print("BALETED!")
         }
         
         //This lets the owner edit the categories if logged in
         let modifyOption = UIContextualAction(style: .normal, title: "Modify") {  (contextualAction, view, success) in
 
-            AppData.shared.selectedCategory = self.categories[indexPath.row]
-            //Janky but this way we're not passing data around in strange ways
+            AppData.shared.selectedCatIndex = indexPath.row
 
             OperationQueue.main.addOperation {
                let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -135,9 +133,9 @@ class MenuCategoriesTableVC: UITableViewController {
             if let menuVC = segue.destination as?
                 MenuItemsTableVC {
                 let index = tableView.indexPathForSelectedRow!.row
-                let category = categories[index]
-                let filteredMenuItems = AppData.shared.menuFiltered(by: category.id, fromItems: MenuItem.allItems)
-                AppData.shared.showItems = filteredMenuItems
+                let category = AppData.shared.categories[index]
+                let filteredMenuItems = AppData.shared.menuFiltered(by: category.id, fromItems: AppData.shared.menuItems)
+                AppData.shared.shownItems = filteredMenuItems
                 menuVC.showName =  category.name
             }
         }
@@ -147,16 +145,18 @@ class MenuCategoriesTableVC: UITableViewController {
             if let menuVC = segue.destination as?
                 MenuItemsTableVC {
                 let index = tableView.indexPathForSelectedRow!.row
-                let filteredMenuItems = AppData.shared.menuFiltered(by: MenuItem.categories[index].id, fromItems: MenuItem.allItems)
-                AppData.shared.showItems = filteredMenuItems
-                menuVC.showName = MenuItem.categories[index].name
+                let filteredMenuItems = AppData.shared.menuFiltered(by: AppData.shared.categories[index].id, fromItems: AppData.shared.menuItems)
+                AppData.shared.shownItems = filteredMenuItems
+                menuVC.showName = AppData.shared.categories[index].name
             }
         }
         
         if segue.identifier == "FromMenuToAddCategory" {
             //If they are going to add a new category
             //Create an empty selectedCategory before the view dismisses
-            AppData.shared.selectedCategory = MenuCategory(id:UUID().uuidString)
+            AppData.shared.categories.append(MenuCategory(id:UUID().uuidString))
+            //Assign the index of the newly created category
+            AppData.shared.selectedCatIndex = AppData.shared.categories.count - 1
         }
     
         

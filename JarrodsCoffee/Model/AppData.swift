@@ -19,13 +19,15 @@ class AppData {
 
     var downloadedImages = [MenuImage]()
     var downloadedMenu = [MenuItem]()
-    var showItems: [MenuItem] = []
+    var menuItems: [MenuItem] = []
+    var shownItems: [MenuItem] = []
+    var categories: [MenuCategory] = []
 
-    var selectedImage = AppData.defaultImage
     var selectedItemIndex = 0
+    var selectedCatIndex = 0
+
     static var defaultImage = UIImage(named: "Image")!
     static var defaultItem = MenuItem(id: UUID().uuidString, categoryId: "Unassigned", imageURL: "", image: AppData.defaultImage, name: "", price: ["","",""], size: ["","",""])
-    var selectedCategory = MenuCategory()
     /// Base URL
     let baseURL = URL(string: "https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json")!
     var isAdminLoggedIn = false
@@ -59,25 +61,34 @@ class AppData {
     //TODO: Test image persists still
     func updateMenuItem(id: String, name: String, size: [String], price: [String], category: String, image: UIImage?) {
                 
-        AppData.shared.showItems[AppData.shared.selectedItemIndex] = showItems[AppData.shared.selectedItemIndex]
+        AppData.shared.shownItems[AppData.shared.selectedItemIndex] = shownItems[AppData.shared.selectedItemIndex]
         
-        AppData.shared.showItems[AppData.shared.selectedItemIndex].id = id
-        AppData.shared.showItems[AppData.shared.selectedItemIndex].name = name
-        AppData.shared.showItems[AppData.shared.selectedItemIndex].size = size
-        AppData.shared.showItems[AppData.shared.selectedItemIndex].price = price
-        AppData.shared.showItems[AppData.shared.selectedItemIndex].image = image ?? AppData.defaultImage
+        AppData.shared.shownItems[AppData.shared.selectedItemIndex].id = id
+        AppData.shared.shownItems[AppData.shared.selectedItemIndex].name = name
+        AppData.shared.shownItems[AppData.shared.selectedItemIndex].size = size
+        AppData.shared.shownItems[AppData.shared.selectedItemIndex].price = price
+        AppData.shared.shownItems[AppData.shared.selectedItemIndex].image = image ?? AppData.defaultImage
         
         
-        //TODO:  If the item gets deleted via Firestore dashboard, and then attempted to be updated via the app, this could crash.
+        //TODO:  If the item gets deleted via Firestore dashboard, and then attempted to be updated via the app, this could error out.
+        
+        //TODO: Need to build in to create new docRef if one doesn't exist.
+        
         let docRef = db.collection("menuItems").document(id)
                 
         docRef.updateData(["name": name, "category": category, "size": size, "price": price]) { error in
             if let error = error  {
-                print("\(error) \n error updating")
+                print("\(error) \n error updating, let's try and make a new document")
+                
+                //TODO:  This seems a little jank.  Might work on moving it to check if exists prior to performing update.  Then if exists, update, if not addDoc.
+                //There was a problem, we should create a new item here?
+                self.db.collection("menuItems").addDocument(data: ["category": category, "imageURL": AppData.defaultItem.imageURL, "name": name, "price":price, "size": size])
+
+                
             } else {
                 print("successfully updated!")
                 let imageURL = self.uploadImage(image)
-                AppData.shared.showItems[AppData.shared.selectedItemIndex].imageURL = imageURL
+                AppData.shared.shownItems[AppData.shared.selectedItemIndex].imageURL = imageURL
                 docRef.updateData(["imageURL": imageURL])
             }
         }
@@ -109,25 +120,22 @@ class AppData {
     }
     
     
-    func newMenuItem(id: String, name: String, size: [String], price: [String], category: String, image: UIImage?) {
-        
-        AppData.shared.showItems[AppData.shared.selectedItemIndex].id = id
-        AppData.shared.showItems[AppData.shared.selectedItemIndex].name = name
-        AppData.shared.showItems[AppData.shared.selectedItemIndex].size = size
-        AppData.shared.showItems[AppData.shared.selectedItemIndex].price = price
-        AppData.shared.showItems[AppData.shared.selectedItemIndex].image = image ?? AppData.defaultImage
-        
-        let docRef = db.collection("menuItems").document(id)
+   // func newMenuItem(categoryIndex: Int) {
                 
-        docRef.updateData(["name": name, "category": category, "size": size, "price": price]) { error in
-            if let error = error  {
-                print("error updating name")
-            } else {
-                print("successfully updated!")
-                let imageURL = self.uploadImage(image)
-                docRef.updateData(["imageURL": imageURL])
-            }
-        }
+        //let docRef = db.collection("menuItems").document(UUID().uuidString)
+        
+//        selectedCatIndex = categoryIndex
+//        //let catString = categories[categoryIndex]
+//
+//
+//        shownItems.insert(AppData.defaultItem, at: 0)
+        
+        
+//        docRef.setData(["name": AppData.defaultItem.name, "category": catString, "size": AppData.defaultItem.size, "price": AppData.defaultItem.price]) { error in
+//            if let error = error  {
+//                print("\(error) \n -> error updating name")
+//            }
+//        }
         
         //old way
 //        let docRef = db.collection("menuItems")
@@ -167,7 +175,7 @@ class AppData {
         //FIXME:
         //AppData.shared.downloadImagesFromCloud()
 
-    }
+   // }
     
     func addCategory(name: String, imageURL: String, image: UIImage?) {
                 
@@ -282,7 +290,7 @@ class AppData {
             if error == nil {
                 
                 if let snapshot = snapshot {
-                    MenuItem.allItems = snapshot.documents.map { item in
+                    AppData.shared.menuItems = snapshot.documents.map { item in
                         
                         print("First item ID is \(item.documentID )")
                         print("Category ID is \(String(describing: item["category"]) )")
@@ -300,7 +308,7 @@ class AppData {
                                         size: item["size"] as? [String] ?? [""])
                     }
                 }
-                completion(MenuItem.allItems)
+                completion(AppData.shared.menuItems)
             } else {
                 print("error fetching!")
             }
@@ -316,7 +324,7 @@ class AppData {
             if error == nil {
                 
                 if let snapshot = snapshot {
-                    MenuItem.categories = snapshot.documents.map { item in
+                    AppData.shared.categories = snapshot.documents.map { item in
                         
                         print("First item is \(item["imageURL"] ?? "")")
                         let imageURL =  item["imageURL"] as? String ?? ""
@@ -329,7 +337,7 @@ class AppData {
                                             image: tempImage)
                     }
                 }
-                completion(MenuItem.categories)
+                completion(AppData.shared.categories)
             } else {
                 print("error fetching!")
             }
@@ -364,9 +372,9 @@ class AppData {
     }
     
     func removeReference(to categoryId:String) {
-        for (index, item) in MenuItem.allItems.enumerated() {
+        for (index, item) in AppData.shared.menuItems.enumerated() {
             if item.categoryId.uppercased() == categoryId.uppercased() { //I am not sure why the stored property's character case does not at all match.  So let's just compare upper cased versions.
-                MenuItem.allItems[index].categoryId = "Undefined Category"
+                AppData.shared.menuItems[index].categoryId = "Undefined Category"
             }
         }
         persist()
@@ -387,7 +395,7 @@ class AppData {
             if error == nil {
                 
                 if let snapshot = snapshot {
-                    MenuItem.allItems = snapshot.documents.map { item in
+                    AppData.shared.menuItems = snapshot.documents.map { item in
                         
                         print("First item ID is \(item.documentID )")
                         print("Category ID is \(String(describing: item["category"]) )")

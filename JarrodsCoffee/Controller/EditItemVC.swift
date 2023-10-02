@@ -4,10 +4,8 @@
 //
 //  Created by David Levy on 7/24/23.
 //
-
 // Photo picker tutorial
 // https://www.youtube.com/watch?v=yggOGEzueFk
-
 // Upload images to Firebase Storage
 // https://www.youtube.com/watch?v=YgjYVbg1oiA
 
@@ -28,7 +26,7 @@ class EditItemVC: UIViewController, UITextFieldDelegate {
     
     @IBAction func saveItemAction(_ sender: Any) {
         
-        AppData.shared.updateMenuItem(id: AppData.shared.showItems[AppData.shared.selectedItemIndex].id, name: nameOutlet.text ?? "", size: [size1Outlet.text ?? "", size2Outlet.text ?? "", size3Outlet.text ?? ""], price: [price1Outlet.text ?? "", price2Outlet.text ?? "", price3Outlet.text ?? ""], category: MenuItem.categories[picker.selectedRow(inComponent: 0)].id, image: imageOutlet.image)
+        AppData.shared.updateMenuItem(id: AppData.shared.shownItems[AppData.shared.selectedItemIndex].id, name: nameOutlet.text ?? "", size: [size1Outlet.text ?? "", size2Outlet.text ?? "", size3Outlet.text ?? ""], price: [price1Outlet.text ?? "", price2Outlet.text ?? "", price3Outlet.text ?? ""], category: AppData.shared.categories[picker.selectedRow(inComponent: 0)].id, image: imageOutlet.image)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -53,7 +51,7 @@ class EditItemVC: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        updateItem(item: AppData.shared.showItems[AppData.shared.selectedItemIndex])
+        updateItem(item: AppData.shared.shownItems[AppData.shared.selectedItemIndex])
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -80,15 +78,19 @@ class EditItemVC: UIViewController, UITextFieldDelegate {
     
     func updateItem (item:MenuItem) {
         DispatchQueue.main.async {
-            self.nameOutlet.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].name
-            self.size1Outlet.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].size[0]
-            self.price1Outlet.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].price[0]
-            self.size2Outlet.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].size[1]
-            self.price2Outlet.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].price[1]
-            self.size3Outlet.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].size[2]
-            self.price3Outlet.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].price[2]
-            self.imageOutlet.image = AppData.shared.assignImage(withKey: AppData.shared.showItems[AppData.shared.selectedItemIndex].imageURL)
+            self.nameOutlet.text = AppData.shared.shownItems[AppData.shared.selectedItemIndex].name
+            self.size1Outlet.text = AppData.shared.shownItems[AppData.shared.selectedItemIndex].size[0]
+            self.price1Outlet.text = AppData.shared.shownItems[AppData.shared.selectedItemIndex].price[0]
+            self.size2Outlet.text = AppData.shared.shownItems[AppData.shared.selectedItemIndex].size[1]
+            self.price2Outlet.text = AppData.shared.shownItems[AppData.shared.selectedItemIndex].price[1]
+            self.size3Outlet.text = AppData.shared.shownItems[AppData.shared.selectedItemIndex].size[2]
+            self.price3Outlet.text = AppData.shared.shownItems[AppData.shared.selectedItemIndex].price[2]
+            self.imageOutlet.image = AppData.shared.assignImage(withKey: AppData.shared.shownItems[AppData.shared.selectedItemIndex].imageURL)
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
     }
 }
 
@@ -112,16 +114,16 @@ extension EditItemVC: UIImagePickerControllerDelegate, UINavigationControllerDel
 
 
 extension EditItemVC: UIPickerViewDelegate, UIPickerViewDataSource {
-    
 
        func numberOfComponents(in pickerView: UIPickerView) -> Int {
           return 1
        }
        func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-           return MenuItem.categories.count
+           return AppData.shared.categories.count
        }
        func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-           return MenuItem.categories[row].name
+           return AppData.shared.categories[row].name
        }
     
+
 }

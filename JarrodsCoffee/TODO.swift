@@ -4,11 +4,12 @@
 
 // V1.0
 // -***** Category Images not saving/loading properly
-// -***** Images that are not resized will show very wide on the table view.
+// -***** Search app for TODO items.
+// -***** When selecting item to edit the category it doesn't switch the picker to the right cat
+// -***** Images not resized show very wide on the menu items view
 // -***** Get official menu and enter data and images
 // -*** Assign items without categories to Unassigned category
 // -*** New items are having issues saving after clicking the plus sign for a new item from the Items table view
-// -** Loading item's details doesn't happen until you back out and return to item view
 // -** Categories not showing until re-entry of Item Edit screen
 // -** Might be fetching more images than are needed!
 // -** Move Home image, hours of operation, phone number, location, headline, menu titles to Cloud data

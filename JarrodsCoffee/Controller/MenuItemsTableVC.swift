@@ -11,7 +11,6 @@ import Firebase
 class MenuItemsTableVC: UITableViewController {
     //category name from CategoryViewController
     var showName: String = ""
-    var unassignedItems: [MenuItem] = []
     //array of menuItems
     //var menuItems = [MenuItem]()
     
@@ -69,6 +68,14 @@ class MenuItemsTableVC: UITableViewController {
         updateUI()
     }
     
+    @IBAction func addItemAction(_ sender: Any) {
+        //TODO: Add animation when adding items
+        let newItem = AppData.defaultItem
+        AppData.shared.shownItems.insert(newItem, at: 0)
+        tableView.reloadData()
+        
+    }
+    
     /// Set the property and update the interface
     func updateUI() {
         // have to go back to main queue from background queue where network requests are executed
@@ -92,7 +99,7 @@ class MenuItemsTableVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // the number of cells is equal to the size of menu items array
-        return AppData.shared.showItems.count
+        return AppData.shared.shownItems.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -100,7 +107,7 @@ class MenuItemsTableVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCellIdentifier", for: indexPath)
 
         // configure the cell with menu list data
-        let menuItem = AppData.shared.showItems[indexPath.row]
+        let menuItem = AppData.shared.shownItems[indexPath.row]
         
         // the left label of the cell should display the name of the item
         cell.textLabel?.text = menuItem.name
@@ -153,7 +160,7 @@ class MenuItemsTableVC: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
 
         AppData.shared.selectedItemIndex = indexPath.row
-        AppData.shared.showItems[AppData.shared.selectedItemIndex].image = AppData.shared.assignImage(withKey: AppData.shared.showItems[AppData.shared.selectedItemIndex].imageURL)
+        AppData.shared.shownItems[AppData.shared.selectedItemIndex].image = AppData.shared.assignImage(withKey: AppData.shared.shownItems[AppData.shared.selectedItemIndex].imageURL)
 
         performSegue(withIdentifier: "showDetails", sender: indexPath)
         
@@ -175,14 +182,17 @@ class MenuItemsTableVC: UITableViewController {
     // MARK: - Navigation
 
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "showDetails" {
-//            let editItemVC = segue.destination as! ItemDetailsVC
-//            if let indexPath = sender as? IndexPath {
-//                editItemVC.menuItem = showItems[indexPath.row]
-//            }
-//        }
+//
+////        if segue.identifier == "addItem" {
+////            let editItemVC = segue.destination as! EditItemVC
+////
+////            //Create an empty selectedCategory before the view dismisses
+////            AppData.shared.shownItems.append(AppData.defaultItem)
+////            //Assign the index of the newly created category
+////            AppData.shared.selectedItemIndex = AppData.shared.shownItems.count - 1
+////        }
 //    }
-
+    
     
 }
 

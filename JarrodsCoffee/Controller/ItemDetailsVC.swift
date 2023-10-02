@@ -14,22 +14,14 @@ class DropdownCell: UITableViewCell {
 class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MenuItem selected from MenuTableViewController
-    
     let transparentView = UIView()
-    
     let tableView = UITableView()
-    
     var selectedButton = UIButton()
-    
     var dataSource = [String]()
-    
     @IBOutlet weak var titleLabel: UILabel!
-    
     @IBOutlet weak var imageView: UIImageView!
-    
     @IBOutlet weak var optionButton: UIButton!
     @IBOutlet weak var editItemButton: UIBarButtonItem!
-
     @IBOutlet weak var addToOrderButton1: UIButton!
     @IBOutlet weak var addToOrderButton2: UIButton!
     
@@ -54,17 +46,14 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(DropdownCell.self, forCellReuseIdentifier: "Cell")
-        //listenForChanges()
+        //listenForChanges() //needed?
         updateDesign()
-
         populateOptionModelArray()
         self.navigationController?.isNavigationBarHidden = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        updateItem(item: AppData.shared.showItems[AppData.shared.selectedItemIndex])
-
+        updateItem(item: AppData.shared.shownItems[AppData.shared.selectedItemIndex])
         if AppData.shared.isAdminLoggedIn {
             self.editItemButton.isHidden = false
         } else {
@@ -74,15 +63,12 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return self.optionModelArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        
         cell.textLabel?.text =  self.dataSource[indexPath.row]
-        
         return cell
     }
     
@@ -96,7 +82,7 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     func populateOptionModelArray(){
-        let optionModel = OptionModel(sizeOption: AppData.shared.showItems[AppData.shared.selectedItemIndex].size, priceOption: AppData.shared.showItems[AppData.shared.selectedItemIndex].price)
+        let optionModel = OptionModel(sizeOption: AppData.shared.shownItems[AppData.shared.selectedItemIndex].size, priceOption: AppData.shared.shownItems[AppData.shared.selectedItemIndex].price)
         self.optionModelArray.append(optionModel)
     }
     
@@ -129,21 +115,10 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     @IBAction func optionButton(_ sender: Any) {
-        dataSource = AppData.shared.showItems[AppData.shared.selectedItemIndex].size
+        dataSource = AppData.shared.shownItems[AppData.shared.selectedItemIndex].size
         populateOptionModelArray()
         selectedButton = optionButton
         addTransparentView(frames: optionButton.frame)
-    }
-    
-    @IBAction func editButton (_ sender: Any) {
-        print("EDIT!")
-        
-        //AppData.shared.selectedCategory
-        
-        
-        
-        
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -151,7 +126,7 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedButton.setTitle(String(format: "%.2f", AppData.shared.showItems[AppData.shared.selectedItemIndex].price[indexPath.row]), for: .normal)
+        selectedButton.setTitle(String(format: "%.2f", AppData.shared.shownItems[AppData.shared.selectedItemIndex].price[indexPath.row]), for: .normal)
         removeTransparentView()
     }
     
@@ -159,55 +134,23 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     func listenForChanges() {
         let collectionRef = AppData.shared.db.collection("menuItems")
         collectionRef.addSnapshotListener { [weak self] snapshot, error in
-            
             guard let changes = snapshot?.documentChanges(includeMetadataChanges: false), error == nil else { return }
-            
             guard let data = snapshot?.documentChanges.first?.document.data(with: .none) else { return }
             
             let item = AppData.shared.itemFrom(data: data)
-  
+            
             guard let item = item else { return }
             
             self?.updateItem(item: item)
-            
             print("\(changes.count) changes happened in ItemDetailsVC!")
         }
     }
     
     func updateItem (item:MenuItem) {
         DispatchQueue.main.async {
-            
-            
-            self.titleLabel.text = AppData.shared.showItems[AppData.shared.selectedItemIndex].name
-            
-            self.imageView.image = AppData.shared.showItems[AppData.shared.selectedItemIndex].image
-            
+            self.titleLabel.text = AppData.shared.shownItems[AppData.shared.selectedItemIndex].name
+            self.imageView.image = AppData.shared.shownItems[AppData.shared.selectedItemIndex].image
         }
     }
-    
-    /// Passes MenuItem to MenuItemDetailViewController before the segue
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        // checks this segue is from MenuTableViewController to MenuItemDetailViewController
-//        if segue.identifier == "editItem" {
-//            // we can safely downcast to MenuItemDetailViewController
-//            let editCtrl = segue.destination as! EditItemVC
-//
-//            print("PREPARE! \(menuItem.id):\(menuItem.name)")
-//            // selected cell's row is the index for array of menuItems
-//            let index = tableView.indexPathForSelectedRow!.row
-//
-//            // pass selected menuItem to destination MenuItemDetailViewController
-//            AppData.shared.selectedItem = menuItem
-//        }
-//    }
 }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
