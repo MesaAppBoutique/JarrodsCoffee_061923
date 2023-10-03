@@ -5,16 +5,16 @@
 // V1.0
 // -***** Category Images not saving/loading properly
 // -***** Search app for TODO items.
+// -***** Check that images are being deleted properly.
 // -***** When selecting item to edit the category it doesn't switch the picker to the right cat
-// -***** Images not resized show very wide on the menu items view
-// -***** Get official menu and enter data and images
+// -***** Images that are not resized will show very wide on the menu items view
+// -***** Get official coffee house menu and enter data and images
 // -*** Assign items without categories to Unassigned category
-// -*** New items are having issues saving after clicking the plus sign for a new item from the Items table view
-// -** Categories not showing until re-entry of Item Edit screen
 // -** Might be fetching more images than are needed!
 // -** Move Home image, hours of operation, phone number, location, headline, menu titles to Cloud data
 // -** Move Events page description, and events listing to cloud data
 // -* Enable re-ordering of categories
+// -* Enable deletion of categories
 // -* Enable re-ordering of items
 
 // - Test integrations:
@@ -25,6 +25,7 @@
 /////////////---
 
 // Future Version
+// - Write code to clear out images that have no app associations.
 // - Animation to enter Edit Item is funky
 // - Update view when Firestore Database remotely changes //https://www.youtube.com/watch?v=R3Wp1PWh70c
 // - Adapt to dark mode more gracefully
