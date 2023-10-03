@@ -169,7 +169,30 @@ class MenuItemsTableVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteOption = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
-            print("BALETED!")
+            AppData.shared.selectedItemIndex = indexPath.row
+            let item = AppData.shared.shownItems[AppData.shared.selectedItemIndex]
+            
+            //TODO: add spinner
+            //TODO: make this function similar to the delete item one below.
+            AppData.shared.deleteImage(item.image)
+
+            //TODO: add spinner
+            AppData.shared.delete(item: item, index: indexPath.row) { err in
+                if let error = err {
+                    print("Error deleting item")
+                    //TODO: remove spinner
+                    tableView.reloadData()
+                } else {
+                    print("Successfully deleted item")
+                    //TODO: remove spinner
+                    //TODO: Add some nicer animation in the future here                     tableView.deleteRows(at: [indexPath], with: .top)
+
+                    tableView.reloadData()
+                    
+                }
+            }
+            
+            
         }
         let modifyOption = UIContextualAction(style: .normal, title: "Modify") {  (contextualAction, view, boolValue) in
             print("MOFIDICO!")

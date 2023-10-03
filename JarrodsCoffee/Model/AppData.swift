@@ -94,6 +94,12 @@ class AppData {
         }
         
         
+
+        
+        
+        
+        
+        
         //CREATES NEW ITEM BUT WON'T UPDATE
 //        db.collection("menuItems")
 //            .whereField("uid", isEqualTo: id) //FIXME: NOT WORKING YET!
@@ -117,6 +123,27 @@ class AppData {
         //FIXME:
         //AppData.shared.downloadImagesFromCloud()
 
+    }
+    
+    
+    
+    func delete(item: MenuItem, index: Int, completion: @escaping (Error?) -> Void) {
+        
+        shownItems.remove(at: index)
+        
+        // Reference to the document you want to delete
+        let documentReference = db.collection("menuItems").document(item.id)
+         
+         // Delete the document
+         documentReference.delete { error in
+             if let error = error {
+                 print("Error deleting document: \(error)")
+                 completion(error)
+             } else {
+                 print("Document successfully deleted.")
+                 completion(nil)
+             }
+         }
     }
     
     
@@ -233,6 +260,31 @@ class AppData {
             }
         }
         return path
+    }
+    
+    
+    func deleteImage(_ image: UIImage?) {
+        // a string to reference the new image path
+        let path = "images/\(UUID().uuidString).jpg"
+        // check we have an image or bail
+        guard image != nil else  { return }
+        // create a reference to the storage container path
+        let storageRef = Storage.storage().reference()
+        // compress the image into data
+        let imageData = image!.jpegData(compressionQuality: 0.8)
+        // check that we have data
+        guard imageData != nil else  { return } //TODO: Make Error String
+        // create a reference to the file path
+        let fileRef = storageRef.child(path)
+        // upload the data
+        fileRef.delete() { error in
+            if let error = error {
+                print("ERROR")
+            } else {
+                print("Deleted image")
+            }
+        }
+                
     }
     
     
