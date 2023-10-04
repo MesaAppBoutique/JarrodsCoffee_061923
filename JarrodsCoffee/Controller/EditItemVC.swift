@@ -23,10 +23,12 @@ class EditItemVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var size3Outlet: UITextField!
     @IBOutlet weak var price3Outlet: UITextField!
     @IBOutlet weak var imageOutlet: UIImageView!
-    
+        
     @IBAction func saveItemAction(_ sender: Any) {
         
-        AppData.shared.updateMenuItem(id: AppData.shared.shownItems[AppData.shared.selectedItemIndex].id, name: nameOutlet.text ?? "", size: [size1Outlet.text ?? "", size2Outlet.text ?? "", size3Outlet.text ?? ""], price: [price1Outlet.text ?? "", price2Outlet.text ?? "", price3Outlet.text ?? ""], category: AppData.shared.categories[picker.selectedRow(inComponent: 0)].id, image: imageOutlet.image)
+        //First we need to delete the old image if there is a new one.
+        
+        AppData.shared.updateMenuItem(id: AppData.shared.shownItems[AppData.shared.selectedItemIndex].id, name: nameOutlet.text ?? "", size: [size1Outlet.text ?? "", size2Outlet.text ?? "", size3Outlet.text ?? ""], price: [price1Outlet.text ?? "", price2Outlet.text ?? "", price3Outlet.text ?? ""], category: AppData.shared.categories[picker.selectedRow(inComponent: 0)].id, image: imageOutlet.image, imageURL: AppData.shared.shownItems[AppData.shared.selectedItemIndex].imageURL)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -85,7 +87,10 @@ class EditItemVC: UIViewController, UITextFieldDelegate {
             self.price2Outlet.text = AppData.shared.shownItems[AppData.shared.selectedItemIndex].price[1]
             self.size3Outlet.text = AppData.shared.shownItems[AppData.shared.selectedItemIndex].size[2]
             self.price3Outlet.text = AppData.shared.shownItems[AppData.shared.selectedItemIndex].price[2]
-            self.imageOutlet.image = AppData.shared.assignImage(withKey: AppData.shared.shownItems[AppData.shared.selectedItemIndex].imageURL)
+            
+            
+            AppData.shared.loadImageFromStorage(imagePath: AppData.shared.shownItems[AppData.shared.selectedItemIndex].imageURL, imageView: self.imageOutlet!)
+            //self.imageOutlet.image = AppData.shared.downloadImage(for: AppData.shared.shownItems[AppData.shared.selectedItemIndex].imageURL)
         }
     }
     
@@ -100,9 +105,33 @@ extension EditItemVC: UIImagePickerControllerDelegate, UINavigationControllerDel
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         //get photo
+        
+//        if oldImage != nil {
+//            oldImage = MenuImage(url: AppData.shared.shownItems[AppData.shared.selectedItemIndex].imageURL, image: self.imageOutlet.image ?? UIImage(named: "Image")!)
+//            print("Storing old image for later deletion if needed.")
+//        }
+        
         if let image = info[UIImagePickerController.InfoKey(rawValue:   "UIImagePickerControllerEditedImage")] as? UIImage {
-            imageOutlet.image = image
+            self.imageOutlet.image = image
             picker.dismiss(animated: true)
+
+            //delete old image
+            DispatchQueue.main.async {
+                
+            AppData.shared.deleteImage(item: AppData.shared.shownItems[AppData.shared.selectedItemIndex]) { err in
+                if let error = err {
+                    print("Error deleting IMAGE")
+
+                    //assign new image to view
+                    
+                } else {
+                    print("Success deleting IMAGE")
+
+                    //assign new image to view
+                }
+            }
+        }
+
         }
     }
     

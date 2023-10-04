@@ -26,7 +26,6 @@ struct MenuCategory {
         //create a menu category for this uid
         
         //Can we find an image for this category with the name of x?
-        let foundImage = AppData.shared.assignImage(withKey: id)
         let category = MenuCategory(id: id, name: "name", imageURL: "url", image: UIImage(named: "Iced_Tea")!)
         return category
     }
@@ -56,7 +55,7 @@ struct MenuCategory {
 }
 
 struct MenuImage {
-    var key: String
+    var url: String
     var image: UIImage
 }
 
@@ -67,21 +66,24 @@ struct MenuItem {
     var id: String = ""//  UID
     var categoryId: String = "" // category of menu item like beverage, snack, etc.
     var imageURL: String = ""// url of the image to show
-    var image: UIImage = UIImage(named: "Iced_Tea")!
+    //var image: UIImage = UIImage(named: "Iced_Tea")!
     var name: String = ""//  Displayed to User
     var price: [String] = []// Cooresponding cost for small medium or large
     var size: [String] = [] //  Small medium large, for example
     
-    mutating func loadImage() -> MenuImage {
-        // Configure menuImage
-        for thisImage in AppData.shared.downloadedImages {
-            if thisImage.key == imageURL {
-                return thisImage
-            }
-        }
-        return MenuImage(key: "imageURL", image: UIImage(named: "Iced_Tea")!)
-    }
-    
+//    mutating func loadImage() -> MenuImage {
+//        // Configure menuImage
+////        for thisImage in AppData.shared.downloadedImages {
+////            if thisImage.url == imageURL {
+////                return thisImage
+////            }
+////        }
+//
+//
+//        //needed?
+//        return MenuImage(url: imageURL, image: image)
+//    }
+//
     
 }
 

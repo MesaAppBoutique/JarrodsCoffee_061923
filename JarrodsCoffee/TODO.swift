@@ -3,9 +3,12 @@
 //  Created by David Levy on 8/24/23.
 
 // V1.0
+// 12:30p
+// Category Images aren't loading
+// The new image isn't shown on details page after saving new image
+
 // -***** Category Images not saving/loading properly
 // -***** Search app for TODO items.
-// -***** Check that images are being deleted properly.
 // -***** When selecting item to edit the category it doesn't switch the picker to the right cat
 // -***** Images that are not resized will show very wide on the menu items view
 // -***** Get official coffee house menu and enter data and images

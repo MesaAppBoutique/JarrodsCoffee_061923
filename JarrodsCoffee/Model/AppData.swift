@@ -17,7 +17,7 @@ class AppData {
     static let shared = AppData()
     let db = Firestore.firestore() //init firestore
 
-    var downloadedImages = [MenuImage]()
+    private var downloadedImages = [MenuImage]()
     var downloadedMenu = [MenuItem]()
     var menuItems: [MenuItem] = []
     var shownItems: [MenuItem] = []
@@ -27,7 +27,7 @@ class AppData {
     var selectedCatIndex = 0
 
     static var defaultImage = UIImage(named: "Image")!
-    static var defaultItem = MenuItem(id: UUID().uuidString, categoryId: "Unassigned", imageURL: "", image: AppData.defaultImage, name: "", price: ["","",""], size: ["","",""])
+    static var defaultItem = MenuItem(id: UUID().uuidString, categoryId: "Unassigned", imageURL: "", name: "", price: ["","",""], size: ["","",""])
     /// Base URL
     let baseURL = URL(string: "https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json")!
     var isAdminLoggedIn = false
@@ -59,7 +59,7 @@ class AppData {
     
     //TODO: Will update but not yet create a new item.
     //TODO: Test image persists still
-    func updateMenuItem(id: String, name: String, size: [String], price: [String], category: String, image: UIImage?) {
+    func updateMenuItem(id: String, name: String, size: [String], price: [String], category: String, image: UIImage?, imageURL: String) {
                 
         AppData.shared.shownItems[AppData.shared.selectedItemIndex] = shownItems[AppData.shared.selectedItemIndex]
         
@@ -67,7 +67,7 @@ class AppData {
         AppData.shared.shownItems[AppData.shared.selectedItemIndex].name = name
         AppData.shared.shownItems[AppData.shared.selectedItemIndex].size = size
         AppData.shared.shownItems[AppData.shared.selectedItemIndex].price = price
-        AppData.shared.shownItems[AppData.shared.selectedItemIndex].image = image ?? AppData.defaultImage
+        AppData.shared.shownItems[AppData.shared.selectedItemIndex].imageURL = imageURL
         
         
         //TODO:  If the item gets deleted via Firestore dashboard, and then attempted to be updated via the app, this could error out.
@@ -145,64 +145,27 @@ class AppData {
              }
          }
     }
-    
-    
-   // func newMenuItem(categoryIndex: Int) {
-                
-        //let docRef = db.collection("menuItems").document(UUID().uuidString)
-        
-//        selectedCatIndex = categoryIndex
-//        //let catString = categories[categoryIndex]
-//
-//
-//        shownItems.insert(AppData.defaultItem, at: 0)
-        
-        
-//        docRef.setData(["name": AppData.defaultItem.name, "category": catString, "size": AppData.defaultItem.size, "price": AppData.defaultItem.price]) { error in
-//            if let error = error  {
-//                print("\(error) \n -> error updating name")
-//            }
-//        }
-        
-        //old way
-//        let docRef = db.collection("menuItems")
-//
-//
-//        docRef.addDocument(data: ["name": name, "category": category, "size": size, "price": price]) { error in
-//            if let error = error  {
-//                print("error adding new menu item")
-//            } else {
-//                print("successfully added item!")
-//                let imageURL = self.uploadImage(image)
-//                docRef.updateData(["imageURL": imageURL])
-//
-//            }
-//        }
-//
-        
-//        db.collection("menuItems")
-//            .whereField("uid", isEqualTo: id) //FIXME: NOT WORKING YET!
-//            .getDocuments() { (querySnapshot, err) in
-//                if let err = err {
-//                    // Some error occured
-//                } else if querySnapshot!.documents.count == 0 {
-//                    print("didn't find it, let's make a new item")
-//                    self.db.collection("menuItems").addDocument(data: ["category": category, "imageURL": imageURL, "name":name, "price":price, "size": size])
-//                } else {
-//                    print("lets update the first record with the same id")
-//                    let document = querySnapshot!.documents.first
-//                    document?.reference.updateData(["category":category, "imageURL": imageURL, "name":name, "price":price, "size": size])
-//                }
-//            }
-        
-        // Upload that data
-        
-        
-        //Do we need this HERE?
-        //FIXME:
-        //AppData.shared.downloadImagesFromCloud()
 
-   // }
+    /// Delete the associated image from the Firebase Storage
+    func deleteImage(item: MenuItem, completion: @escaping (Error?) -> Void) {
+        
+        let storageRef = Storage.storage().reference()
+        
+        let fileRef = storageRef.child(item.imageURL)
+        
+        fileRef.delete { error in
+            if error == nil {
+                print("image file deleted")
+                DispatchQueue.main.async {
+                    self.downloadedImages.removeAll { img in
+                        img.url == item.imageURL
+                    }
+
+                }
+            }
+        }
+    }
+    
     
     func addCategory(name: String, imageURL: String, image: UIImage?) {
                 
@@ -228,7 +191,7 @@ class AppData {
         
         
 //FIXME:
-//        AppData.shared.downloadImagesFromCloud()
+       //AppData.shared.downloadImagesFromCloud()
 
     }
     
@@ -248,13 +211,12 @@ class AppData {
         // upload the data
         let uploadTask = fileRef.putData(imageData!, metadata: nil) { metadata, error in
             if error == nil && metadata != nil {
-                // if the data uploaded, then also store the file path
-                self.db.collection("images").document().setData(["url":path])
+                //add to cached images
                 DispatchQueue.main.async {
                     if let image = image {
                         print("Before saving to downloadedImages after upload the image is \(image)")
-                        let menuImage = MenuImage(key: path, image: image)
-                        self.downloadedImages.append(menuImage)
+                        let menuImage = MenuImage(url: path, image: image)
+                        self.downloadedImages.append(MenuImage(url: path, image: image))
                     }
                 }
             }
@@ -263,74 +225,137 @@ class AppData {
     }
     
     
-    func deleteImage(_ image: UIImage?) {
-        // a string to reference the new image path
-        let path = "images/\(UUID().uuidString).jpg"
-        // check we have an image or bail
-        guard image != nil else  { return }
-        // create a reference to the storage container path
-        let storageRef = Storage.storage().reference()
-        // compress the image into data
-        let imageData = image!.jpegData(compressionQuality: 0.8)
-        // check that we have data
-        guard imageData != nil else  { return } //TODO: Make Error String
-        // create a reference to the file path
-        let fileRef = storageRef.child(path)
-        // upload the data
-        fileRef.delete() { error in
-            if let error = error {
-                print("ERROR")
-            } else {
-                print("Deleted image")
-            }
-        }
-                
-    }
-    
+
     
     //This function downloads all images, not just the ones needed.  I think there's probably a better way to handle this call, on demand.  
-    func downloadImagesFromCloud() {
+//    func downloadImagesFromCloud() {
+//
+//        //clear images
+//        //downloadedImages = []
+//
+////        db.collection("images").getDocuments { snapshot, error in
+////            if error == nil && snapshot != nil {
+//                var paths = [String]()
+//        for eachItem in menuItems {
+//            paths.append(eachItem.imageURL)
+//        //for doc in snapshot!.documents {
+//                    //paths.append(doc["url"] as? String ?? "Image")
+//                }
+//                for path in paths {
+//                    let storageRef = Storage.storage().reference()
+//                    let fileRef = storageRef.child(path)
+//                    fileRef.getData(maxSize: 5 * 2000 * 2000) { data, error in
+//                        if error == nil && data != nil {
+//                            if let imageFromData = UIImage(data: data!) {
+//                                DispatchQueue.main.async {
+//                                    //print("Before saving to downloadedImages after download the snapshot doc is \(imageFromData)")
+//                                    let menuImage = MenuImage(url: path, image: imageFromData)
+//                                    self.downloadImage.append(menuImage)
+//                                    print("image count is \(self.downloadedImages.count)")
+//                                }
+//                            }
+//                        }
+//                    }
+//               // }
+//           // }
+//        }
+//    }
+    
+//    func downloadImage (for imageURL: String) -> UIImage {
+//
+//        var image = UIImage(named: "Iced_Tea")
+//
+//        let storageRef = Storage.storage().reference()
+//
+//        let fileRef = storageRef.child("\(imageURL)")
+//        print("image url is -> \(imageURL)")
+//        print("file ref is \(fileRef)")
+//
+//            fileRef.getData(maxSize: 5 * 2000 * 2000) { data, error in
+//
+//                if error == nil && data != nil {
+//
+//                    if let imageFromData = UIImage(data: data!) {
+//
+//                        image = imageFromData
+//
+//                    }
+//
+//                }
+//
+//
+//        }
+//        return image!
+//    }
+    
+    
+
+    func loadImageFromStorage(imagePath: String, imageView: UIImageView, placeholderImage: UIImage? = nil) {
+        let storage = Storage.storage()
+        let storageReference = storage.reference(withPath: imagePath)
+        var isLoaded = false
         
-        //clear images
-        downloadedImages = []
+        // Set a placeholder image while the download is in progress
+        if let placeholderImage = placeholderImage {
+            imageView.image = placeholderImage
+        }
         
-        db.collection("images").getDocuments { snapshot, error in
-            if error == nil && snapshot != nil {
-                var paths = [String]()
-                for doc in snapshot!.documents {
-                    paths.append(doc["url"] as! String)
-                }
-                for path in paths {
-                    let storageRef = Storage.storage().reference()
-                    let fileRef = storageRef.child(path)
-                    fileRef.getData(maxSize: 5 * 2000 * 2000) { data, error in
-                        if error == nil && data != nil {
-                            if let imageFromData = UIImage(data: data!) {
-                                DispatchQueue.main.async {
-                                    //print("Before saving to downloadedImages after download the snapshot doc is \(imageFromData)")
-                                    let menuImage = MenuImage(key: path, image: imageFromData)
-                                    self.downloadedImages.append(menuImage)
-                                    print("image count is \(self.downloadedImages.count)")
-                                }
-                            }
-                        }
-                    }
+        //TODO:  Use an array of stored images and check here if the image already is downloaded.  Then if it is already downloaded return the matching image.  If it isn't then continue with the download.  This way we aren't using a TON of data every time the user loads each view.
+
+        for menuImg in downloadedImages {
+            if menuImg.url == imagePath {
+                imageView.image = menuImg.image
+                isLoaded = true
+            }
+        }
+
+        // Check if we loaded a cached version of the image
+        guard !isLoaded else { return }
+ 
+        // Download the image if we haven't found it
+        storageReference.getData(maxSize: 5 * 2000 * 2000) { data, error in
+            if let error = error {
+                print("Error downloading image: \(error.localizedDescription)")
+                // Handle the error here (e.g., show an error message)
+            } else {
+                if let imageData = data, let image = UIImage(data: imageData) {
+                    // Update the UIImageView with the downloaded image
+                    self.cacheImageLocally(url: imagePath, image: image)
+
+                    imageView.image = image
+                } else {
+                    print("Failed to create UIImage from data")
+                    // Handle the error here (e.g., show an error message)
                 }
             }
         }
+    }
+
+    func cacheImageLocally(url: String, image: UIImage) {
+        downloadedImages.append(MenuImage(url: url, image: image))
     }
     
     /// Associate the image that is downloaded based on the url path that is stored for each menuImage
-    func assignImage(withKey: String) -> UIImage {
-        // Of the menuImages we have downloaded from Firestore data, return if any match the url for this menu item.
-        if let menuImage = AppData.shared.downloadedImages.first (where: { $0.key == withKey } ) {
-            return menuImage.image
-            
-        } else {
-            //If none match then just return the default image.
-            return AppData.defaultImage
-        }
-    }
+//    func assignImage(imageURL: String) -> UIImage {
+//        // Of the menuImages we have downloaded from Firestore data, return if any match the url for this menu item.
+//        //if let menuImage = AppData.shared.downloadedImages.first (where: { $0.url == withKey } ) {
+//       //     return menuImage.image
+////        if let menuImage = AppData.shared.downloadImage(for: imageURL) {
+////
+////        } else {
+////            //If none match then just return the default image.
+////            return AppData.defaultImage
+////        }
+//
+//        var image = UIImage(named: "Image")
+//
+////        DispatchQueue.main.async {
+////            image = self.downloadImage(for: imageURL)
+////        }
+//
+//        return image!
+//
+//    }
     
     
     func fetchMenuItems(categoryName: String = "", completion: @escaping([MenuItem]?) -> Void) {
@@ -348,13 +373,11 @@ class AppData {
                         print("Category ID is \(String(describing: item["category"]) )")
 
                         let imageURL = item["imageURL"] as? String ?? ""
-                        let tempImage = assignImage(withKey: imageURL)
 
                                                 
                         return MenuItem(id: item.documentID,
                                         categoryId: item["category"] as? String ?? "",
                                         imageURL: item["imageURL"] as? String ?? "",
-                                        image: tempImage,
                                         name: item["name"] as? String ?? "",
                                         price: item["price"] as? [String] ?? ["unknown"],
                                         size: item["size"] as? [String] ?? [""])
@@ -380,13 +403,12 @@ class AppData {
                         
                         print("First item is \(item["imageURL"] ?? "")")
                         let imageURL =  item["imageURL"] as? String ?? ""
-                        let tempImage = assignImage(withKey: imageURL)
 
                                                 
                         return MenuCategory(id: item.documentID,
                                             name: item["name"] as? String ?? "",
                                             imageURL: imageURL,
-                                            image: tempImage)
+                                            image: AppData.defaultImage)
                     }
                 }
                 completion(AppData.shared.categories)
@@ -453,13 +475,10 @@ class AppData {
                         print("Category ID is \(String(describing: item["category"]) )")
                         
                         let imageURL = item["imageURL"] as? String ?? ""
-                        var tempImage = assignImage(withKey: imageURL)
-                        
                         
                         return MenuItem(id: item.documentID,
                                         categoryId: item["category"] as? String ?? "",
                                         imageURL: item["imageURL"] as? String ?? "",
-                                        image: tempImage,
                                         name: item["name"] as? String ?? "",
                                         price: item["price"] as? [String] ?? ["unknown"],
                                         size: item["size"] as? [String] ?? [""])
@@ -500,12 +519,11 @@ class AppData {
                         print("First item ID is \(item.documentID )")
                         
                         let imageURL = item["imageURL"] as? String ?? ""
-                        let tempImage = assignImage(withKey: imageURL)
                         
                         return MenuCategory(id: item.documentID,
                                             name: item["name"] as? String ?? "",
                                             imageURL: imageURL,
-                                            image: tempImage)
+                                            image: AppData.defaultImage)
                     }
                 }
                 //                completion(MenuItem.shared.allItems)
@@ -533,14 +551,11 @@ class AppData {
             return nil
         }
 
-        let imageURL = data["imageURL"] as? String ?? ""
-        let tempImage = AppData.shared.assignImage(withKey: imageURL)
-        
+        let imageURL = data["imageURL"] as? String ?? ""        
         
         let item = MenuItem(id: id,
                         categoryId: data["category"] as? String ?? "",
                         imageURL: data["imageURL"] as? String ?? "",
-                        image: tempImage,
                         name: data["name"] as? String ?? "",
                         price: data["price"] as? [String] ?? ["unknown"],
                         size: data["size"] as? [String] ?? [""])

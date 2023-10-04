@@ -15,7 +15,7 @@ class HomeVC: UIViewController {
         
         DispatchQueue.main.async {
             //Download the images from the cloud
-            AppData.shared.downloadImagesFromCloud()
+            //AppData.shared.downloadImagesFromCloud()
             
             //Using a shared Singleton pattern to fetch items
             AppData.shared.fetchMenuItems { (menuItems) in

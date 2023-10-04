@@ -48,7 +48,11 @@ class MenuCategoriesTableVC: UITableViewController {
         cell.textLabel?.text = category.name
 
         DispatchQueue.main.async {
-            cell.imageView?.image = AppData.shared.assignImage(withKey: category.imageURL)
+//            cell.imageView?.image = AppData.shared.downloadImage(for: category.imageURL)
+            
+            AppData.shared.loadImageFromStorage(imagePath: category.imageURL, imageView: cell.imageView!)
+
+            
             cell.setNeedsLayout() // adding this fixes the image resizing when clicked
             self.fitImage(in: cell)
         }

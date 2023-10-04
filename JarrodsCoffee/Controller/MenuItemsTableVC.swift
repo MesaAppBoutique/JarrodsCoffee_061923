@@ -50,7 +50,7 @@ class MenuItemsTableVC: UITableViewController {
 //            }
 //        }
         
-//        updateUI()
+       updateUI()
         
     }
     
@@ -107,13 +107,18 @@ class MenuItemsTableVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCellIdentifier", for: indexPath)
 
         // configure the cell with menu list data
-        let menuItem = AppData.shared.shownItems[indexPath.row]
+        //let menuItem = AppData.shared.shownItems[indexPath.row]
         
         // the left label of the cell should display the name of the item
-        cell.textLabel?.text = menuItem.name
+        cell.textLabel?.text = AppData.shared.shownItems[indexPath.row].name
 
         DispatchQueue.main.async  {
-            cell.imageView?.image = AppData.shared.assignImage(withKey: menuItem.imageURL)
+            
+            
+            AppData.shared.loadImageFromStorage(imagePath: AppData.shared.shownItems[indexPath.row].imageURL, imageView: cell.imageView!, placeholderImage: UIImage(named: "Image"))
+
+            
+            //cell.imageView?.image = AppData.shared.downloadImage(for: menuItem.imageURL)
             //cell.imageView?.image = menuItem.image
             //cell.imageView?.image = AppData.shared.assignImage(withKey: menuItem.imageURL)
             cell.setNeedsLayout() // adding this fixes the image resizing when clicked
@@ -160,7 +165,8 @@ class MenuItemsTableVC: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
 
         AppData.shared.selectedItemIndex = indexPath.row
-        AppData.shared.shownItems[AppData.shared.selectedItemIndex].image = AppData.shared.assignImage(withKey: AppData.shared.shownItems[AppData.shared.selectedItemIndex].imageURL)
+        
+        //AppData.shared.shownItems[AppData.shared.selectedItemIndex].image = AppData.shared.assignImage(imageURL: AppData.shared.shownItems[AppData.shared.selectedItemIndex].imageURL)
 
         performSegue(withIdentifier: "showDetails", sender: indexPath)
         
@@ -174,16 +180,24 @@ class MenuItemsTableVC: UITableViewController {
             
             //TODO: add spinner
             //TODO: make this function similar to the delete item one below.
-            AppData.shared.deleteImage(item.image)
+            AppData.shared.deleteImage(item: item) { err in
+                if let error = err {
+                    print("Error deleting IMAGE")
+
+                } else {
+                    print("Success deleting IMAGE")
+
+                }
+            }
 
             //TODO: add spinner
             AppData.shared.delete(item: item, index: indexPath.row) { err in
                 if let error = err {
-                    print("Error deleting item")
+                    print("Error deleting ITEM")
                     //TODO: remove spinner
                     tableView.reloadData()
                 } else {
-                    print("Successfully deleted item")
+                    print("Successfully deleted ITEM")
                     //TODO: remove spinner
                     //TODO: Add some nicer animation in the future here                     tableView.deleteRows(at: [indexPath], with: .top)
 

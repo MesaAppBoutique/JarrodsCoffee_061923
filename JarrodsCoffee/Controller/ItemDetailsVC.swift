@@ -53,11 +53,13 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        updateItem(item: AppData.shared.shownItems[AppData.shared.selectedItemIndex])
-        if AppData.shared.isAdminLoggedIn {
-            self.editItemButton.isHidden = false
-        } else {
-            self.editItemButton.isHidden = true
+        DispatchQueue.main.async {
+            self.updateItem(item: AppData.shared.shownItems[AppData.shared.selectedItemIndex])
+            if AppData.shared.isAdminLoggedIn {
+                self.editItemButton.isHidden = false
+            } else {
+                self.editItemButton.isHidden = true
+            }
         }
     }
 
@@ -146,10 +148,11 @@ class ItemDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
     }
     
-    func updateItem (item:MenuItem) {
+    func updateItem (item: MenuItem) {
         DispatchQueue.main.async {
             self.titleLabel.text = AppData.shared.shownItems[AppData.shared.selectedItemIndex].name
-            self.imageView.image = AppData.shared.shownItems[AppData.shared.selectedItemIndex].image
+            
+            AppData.shared.loadImageFromStorage(imagePath: item.imageURL, imageView: self.imageView)
         }
     }
 }
