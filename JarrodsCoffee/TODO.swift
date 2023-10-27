@@ -3,10 +3,6 @@
 //  Created by David Levy on 8/24/23.
 
 // V1.0
-// After editing menu category, it creates a new instance of category instead of modifying the existing category.
-// New categories aren't shown until backing out of menu.
-// Delete category is not working.
-
 // Category Images aren't loading
 // The new image isn't shown on details page after saving new image
 
