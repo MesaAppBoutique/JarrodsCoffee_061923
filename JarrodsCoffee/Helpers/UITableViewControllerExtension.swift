@@ -62,18 +62,18 @@ extension UITableViewController {
     }
     
     //fit image in cell
-    func fitImage(in cell: UITableViewCell) {
-        guard let imageView = cell.imageView else { return }
-        
-        let oldWidth = imageView.frame.width
-        
-        imageView.frame.size = CGSize(width: 100, height: 100)
-        
-        let leftShift = oldWidth - imageView.frame.width
-        
-        guard let textLabel = cell.textLabel else { return }
-
-        textLabel.frame.origin.x -= leftShift
-    }
+//    func fitImage(in cell: UITableViewCell) {
+//        guard let imageView = cell.imageView else { return }
+//        
+//        let oldWidth = imageView.frame.width
+//        
+//        imageView.frame.size = CGSize(width: 100, height: 100)
+//        
+//        let leftShift = oldWidth - imageView.frame.width
+//        
+//        guard let textLabel = cell.textLabel else { return }
+//
+//        textLabel.frame.origin.x -= leftShift
+//    }
 }
 

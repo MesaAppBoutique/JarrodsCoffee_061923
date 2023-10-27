@@ -121,7 +121,7 @@ class MenuItemsTableVC: UITableViewController {
             //cell.imageView?.image = AppData.shared.downloadImage(for: menuItem.imageURL)
             //cell.imageView?.image = menuItem.image
             //cell.imageView?.image = AppData.shared.assignImage(withKey: menuItem.imageURL)
-            cell.setNeedsLayout() // adding this fixes the image resizing when clicked
+            //cell.setNeedsLayout() // adding this fixes the image resizing when clicked
             //self.fitImage(in: cell)
 
         }

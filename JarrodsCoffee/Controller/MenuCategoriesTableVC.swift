@@ -52,8 +52,8 @@ class MenuCategoriesTableVC: UITableViewController {
             
             AppData.shared.loadImageFromStorage(imagePath: category.imageURL, imageView: cell.imageView!)
             
-            cell.setNeedsLayout() // adding this fixes the image resizing when clicked
-            self.fitImage(in: cell)
+            //cell.setNeedsLayout() // adding this fixes the image resizing when clicked
+            //self.fitImage(in: cell)
         }
         
         return cell

@@ -11,7 +11,6 @@
 // -*** Assign items without categories to an Unassigned category
 // -** Move Home image, hours of operation, phone number, location, headline, menu titles to Cloud data
 // -** Move Events page description, and events listing to cloud data
-// -** Fix color issues in Dark-Mode on the iPhone
 // -* Enable re-ordering of categories
 // -* Enable re-ordering of items
 // - Test integrations:
