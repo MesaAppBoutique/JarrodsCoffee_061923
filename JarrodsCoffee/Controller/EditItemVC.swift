@@ -118,7 +118,7 @@ extension EditItemVC: UIImagePickerControllerDelegate, UINavigationControllerDel
             //delete old image
             DispatchQueue.main.async {
                 
-            AppData.shared.deleteImage(item: AppData.shared.shownItems[AppData.shared.selectedItemIndex]) { err in
+                AppData.shared.deleteImage(imageURL: AppData.shared.shownItems[AppData.shared.selectedItemIndex].imageURL) { err in
                 if let error = err {
                     print("Error deleting IMAGE")
 

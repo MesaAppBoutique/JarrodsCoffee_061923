@@ -17,7 +17,9 @@ class EditCategoryVC: UIViewController {
     @IBOutlet weak var imageOutlet: UIImageView?
     @IBAction func saveCategoryAction(_ sender: Any) {
         
-        AppData.shared.addCategory(name: textField?.text ?? "", imageURL: category?.imageURL ?? "", image: category?.image)
+        //AppData.shared.addCategory(name: textField?.text ?? "", imageURL: category?.imageURL ?? "", image: category?.image)
+        
+        AppData.shared.updateCategory(id: AppData.shared.categories[AppData.shared.selectedCatIndex].id, name: textField?.text ?? "" , imageURL: category?.imageURL ?? "", image: category?.image ?? AppData.defaultImage)
 
         self.dismiss(animated: true)
     }

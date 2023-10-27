@@ -57,11 +57,41 @@ class AppData {
 //        task.resume()
 //    }
     
+    func updateCategory(id: String, name: String, imageURL: String, image: UIImage) {
+        
+        AppData.shared.categories[AppData.shared.selectedCatIndex] = categories[AppData.shared.selectedCatIndex] //I don't get this part... is this even doing anything?
+        
+        AppData.shared.categories[AppData.shared.selectedCatIndex].id = id
+        AppData.shared.categories[AppData.shared.selectedCatIndex].name = name
+        AppData.shared.categories[AppData.shared.selectedCatIndex].imageURL = imageURL
+        AppData.shared.categories[AppData.shared.selectedCatIndex].image = image
+        
+        
+        let docRef = db.collection("categories").document(id)
+                
+        docRef.updateData(["name": name, "imageURL": imageURL]) { error in
+            if let error = error  {
+                print("\(error) \n error updating, let's try and make a new document")
+                
+                self.db.collection("categories").addDocument(data: ["name": name, "imageURL": AppData.defaultItem.imageURL])
+                
+            } else {
+                print("successfully updated!")
+                let imageURL = self.uploadImage(image)
+                AppData.shared.categories[AppData.shared.selectedCatIndex].imageURL = imageURL
+                docRef.updateData(["imageURL": imageURL])
+            }
+        }
+        
+
+    }
+                
+    
     //TODO: Will update but not yet create a new item.
     //TODO: Test image persists still
     func updateMenuItem(id: String, name: String, size: [String], price: [String], category: String, image: UIImage?, imageURL: String) {
                 
-        AppData.shared.shownItems[AppData.shared.selectedItemIndex] = shownItems[AppData.shared.selectedItemIndex]
+        AppData.shared.shownItems[AppData.shared.selectedItemIndex] = shownItems[AppData.shared.selectedItemIndex] //I don't get this part... is this even doing anything?
         
         AppData.shared.shownItems[AppData.shared.selectedItemIndex].id = id
         AppData.shared.shownItems[AppData.shared.selectedItemIndex].name = name
@@ -146,19 +176,38 @@ class AppData {
          }
     }
 
+    func delete(cat: MenuCategory, index: Int, completion: @escaping (Error?) -> Void) {
+        
+        categories.remove(at: index)
+        
+        // Reference to the document you want to delete
+        let documentReference = db.collection("categories").document(cat.id)
+         
+         // Delete the document
+         documentReference.delete { error in
+             if let error = error {
+                 print("Error deleting document: \(error)")
+                 completion(error)
+             } else {
+                 print("Document successfully deleted.")
+                 completion(nil)
+             }
+         }
+    }
+    
     /// Delete the associated image from the Firebase Storage
-    func deleteImage(item: MenuItem, completion: @escaping (Error?) -> Void) {
+    func deleteImage(imageURL: String, completion: @escaping (Error?) -> Void) {
         
         let storageRef = Storage.storage().reference()
         
-        let fileRef = storageRef.child(item.imageURL)
+        let fileRef = storageRef.child(imageURL)
         
         fileRef.delete { error in
             if error == nil {
                 print("image file deleted")
                 DispatchQueue.main.async {
                     self.downloadedImages.removeAll { img in
-                        img.url == item.imageURL
+                        img.url == imageURL
                     }
 
                 }

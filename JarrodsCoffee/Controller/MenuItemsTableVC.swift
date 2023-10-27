@@ -180,7 +180,7 @@ class MenuItemsTableVC: UITableViewController {
             
             //TODO: add spinner
             //TODO: make this function similar to the delete item one below.
-            AppData.shared.deleteImage(item: item) { err in
+            AppData.shared.deleteImage(imageURL: item.imageURL) { err in
                 if let error = err {
                     print("Error deleting IMAGE")
 

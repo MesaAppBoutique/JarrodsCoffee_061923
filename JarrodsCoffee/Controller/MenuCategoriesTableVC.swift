@@ -47,6 +47,9 @@ class MenuCategoriesTableVC: UITableViewController {
         let category = AppData.shared.categories[indexPath.row]
         cell.textLabel?.text = category.name
 
+        print("The category url is \(category.imageURL)")
+        
+        
         DispatchQueue.main.async {
 //            cell.imageView?.image = AppData.shared.downloadImage(for: category.imageURL)
             
@@ -105,7 +108,38 @@ class MenuCategoriesTableVC: UITableViewController {
         let deleteOption = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
         //TODO: Implement deleted
             print("BALETED!")
-        }
+          
+                    AppData.shared.selectedCatIndex = indexPath.row
+                    let cat = AppData.shared.categories[AppData.shared.selectedCatIndex]
+                    
+                    //TODO: add spinner
+                    //TODO: make this function similar to the delete item one below.
+            AppData.shared.deleteImage(imageURL: cat.imageURL) { err in
+                        if let error = err {
+                            print("Error deleting IMAGE")
+
+                        } else {
+                            print("Success deleting IMAGE")
+
+                        }
+                    }
+
+                    //TODO: add spinner
+            AppData.shared.delete(cat: cat, index: indexPath.row) { err in
+                        if let error = err {
+                            print("Error deleting CAT")
+                            //TODO: remove spinner
+                            tableView.reloadData()
+                        } else {
+                            print("Successfully deleted CAT")
+                            //TODO: remove spinner
+                            //TODO: Add some nicer animation in the future here                     tableView.deleteRows(at: [indexPath], with: .top)
+
+                            tableView.reloadData()
+                            
+                        }
+                    }
+                }
         
         //This lets the owner edit the categories if logged in
         let modifyOption = UIContextualAction(style: .normal, title: "Modify") {  (contextualAction, view, success) in
