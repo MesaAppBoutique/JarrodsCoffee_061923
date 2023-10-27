@@ -208,8 +208,23 @@ class MenuItemsTableVC: UITableViewController {
             
             
         }
-        let modifyOption = UIContextualAction(style: .normal, title: "Modify") {  (contextualAction, view, boolValue) in
+        let modifyOption = UIContextualAction(style: .normal, title: "Modify") {  (contextualAction, view, success) in
             print("MOFIDICO!")
+            
+            //This lets the owner edit the item if logged in
+
+                AppData.shared.selectedItemIndex = indexPath.row
+
+                OperationQueue.main.addOperation {
+                   let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                   let newViewController = storyBoard.instantiateViewController(withIdentifier: "EditItem") as! EditItemVC
+                   
+                    self.navigationController?.pushViewController(newViewController, animated: true)
+                    //self.present(newViewController, animated: true, completion: nil)
+                    success(true)
+                }
+            
+            
         }
         let swipeActions = UISwipeActionsConfiguration(actions: [deleteOption, modifyOption])
 
@@ -220,16 +235,16 @@ class MenuItemsTableVC: UITableViewController {
 
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //
-////        if segue.identifier == "addItem" {
-////            let editItemVC = segue.destination as! EditItemVC
-////
-////            //Create an empty selectedCategory before the view dismisses
-////            AppData.shared.shownItems.append(AppData.defaultItem)
-////            //Assign the index of the newly created category
-////            AppData.shared.selectedItemIndex = AppData.shared.shownItems.count - 1
-////        }
+//        if segue.identifier == "FromMenuToEditItem" {
+//            let editItemVC = segue.destination as! EditItemVC
+//
+//            //Create an empty selectedCategory before the view dismisses
+//            AppData.shared.shownItems.append(AppData.defaultItem)
+//            //Assign the index of the newly created category
+//            AppData.shared.selectedItemIndex = AppData.shared.shownItems.count - 1
+//        }
 //    }
-    
+//    
     
 }
 

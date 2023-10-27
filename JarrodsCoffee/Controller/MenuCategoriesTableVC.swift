@@ -47,14 +47,10 @@ class MenuCategoriesTableVC: UITableViewController {
         let category = AppData.shared.categories[indexPath.row]
         cell.textLabel?.text = category.name
 
-        print("The category url is \(category.imageURL)")
-        
-        
+            
         DispatchQueue.main.async {
-//            cell.imageView?.image = AppData.shared.downloadImage(for: category.imageURL)
             
             AppData.shared.loadImageFromStorage(imagePath: category.imageURL, imageView: cell.imageView!)
-
             
             cell.setNeedsLayout() // adding this fixes the image resizing when clicked
             self.fitImage(in: cell)
@@ -149,7 +145,13 @@ class MenuCategoriesTableVC: UITableViewController {
             OperationQueue.main.addOperation {
                let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                let newViewController = storyBoard.instantiateViewController(withIdentifier: "EditCategory") as! EditCategoryVC
-               self.present(newViewController, animated: true, completion: nil)
+               
+                //This method preserves the navigation bar items
+                self.navigationController?.pushViewController(newViewController, animated: true)
+
+                //This method flips around and fills the screen without Navigation Bar items.
+                //self.present(newViewController, animated: true, completion: nil)
+                
                 success(true)
             }
         }

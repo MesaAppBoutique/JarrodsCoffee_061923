@@ -3,23 +3,18 @@
 //  Created by David Levy on 8/24/23.
 
 // V1.0
-// Category Images aren't loading
-// The new image isn't shown on details page after saving new image
-
-// -***** Category Images not saving/loading properly
-// -***** Search app for TODO items.
-// -***** When selecting item to edit the category it doesn't switch the picker to the right cat
+// REMAINING TODO ITEMS
+// -***** Search app for various TODO items.
 // -***** Images that are not resized will show very wide on the menu items view
-// -***** Get official coffee house menu and enter data and images
-// -*** Assign items without categories to Unassigned category
-// -** Might be fetching more images than are needed!
+// -***** Menu images stretched a little until clicked.
+// -***** Get the official coffee house menu and enter data and images
+// -*** Assign items without categories to an Unassigned category
 // -** Move Home image, hours of operation, phone number, location, headline, menu titles to Cloud data
 // -** Move Events page description, and events listing to cloud data
+// -** Fix color issues in Dark-Mode on the iPhone
 // -* Enable re-ordering of categories
-// -* Enable deletion of categories
 // -* Enable re-ordering of items
-
-// - Test integrations:c
+// - Test integrations:
 // ---- Map Get Directions button (not working)
 // ---- Grubhub
 // ---- Seamless

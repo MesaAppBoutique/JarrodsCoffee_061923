@@ -16,10 +16,8 @@ class EditCategoryVC: UIViewController {
     @IBOutlet weak var textField: UITextField?
     @IBOutlet weak var imageOutlet: UIImageView?
     @IBAction func saveCategoryAction(_ sender: Any) {
-        
-        //AppData.shared.addCategory(name: textField?.text ?? "", imageURL: category?.imageURL ?? "", image: category?.image)
-        
-        AppData.shared.updateCategory(id: AppData.shared.categories[AppData.shared.selectedCatIndex].id, name: textField?.text ?? "" , imageURL: category?.imageURL ?? "", image: category?.image ?? AppData.defaultImage)
+                
+        AppData.shared.updateCategory(id: AppData.shared.categories[AppData.shared.selectedCatIndex].id, name: textField?.text ?? "" , imageURL: category?.imageURL ?? "", image: imageOutlet?.image ?? AppData.defaultImage)
 
         self.dismiss(animated: true)
     }
@@ -41,16 +39,27 @@ class EditCategoryVC: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.textField?.text = category?.name
-        self.imageOutlet?.image = self.category?.image
-            //Enable nav bar
+        
+        if let cat = category {
+            updateCategory(cat: cat)
+        }
         self.navigationController?.isNavigationBarHidden = false
+    }
+    
+    func updateCategory (cat:MenuCategory) {
+        DispatchQueue.main.async {
+            self.textField?.text = AppData.shared.categories[AppData.shared.selectedCatIndex].name
+            
+            AppData.shared.loadImageFromStorage(imagePath: AppData.shared.categories[AppData.shared.selectedCatIndex].imageURL, imageView: self.imageOutlet!)
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+    }
 }
 
 // Required for the photo picker
