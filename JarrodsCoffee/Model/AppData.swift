@@ -87,8 +87,6 @@ class AppData {
     }
                 
     
-    //TODO: Will update but not yet create a new item.
-    //TODO: Test image persists still
     func updateMenuItem(id: String, name: String, size: [String], price: [String], category: String, image: UIImage?, imageURL: String) {
                 
         AppData.shared.shownItems[AppData.shared.selectedItemIndex] = shownItems[AppData.shared.selectedItemIndex] //I don't get this part... is this even doing anything?
@@ -100,17 +98,13 @@ class AppData {
         AppData.shared.shownItems[AppData.shared.selectedItemIndex].imageURL = imageURL
         
         
-        //TODO:  If the item gets deleted via Firestore dashboard, and then attempted to be updated via the app, this could error out.
-        
-        //TODO: Need to build in to create new docRef if one doesn't exist.
-        
         let docRef = db.collection("menuItems").document(id)
                 
         docRef.updateData(["name": name, "category": category, "size": size, "price": price]) { error in
             if let error = error  {
                 print("\(error) \n error updating, let's try and make a new document")
                 
-                //TODO:  This seems a little jank.  Might work on moving it to check if exists prior to performing update.  Then if exists, update, if not addDoc.
+                // This seems a little jank.  Might work on moving it to check if exists prior to performing update.  Then if exists, update, if not addDoc.
                 //There was a problem, we should create a new item here?
                 self.db.collection("menuItems").addDocument(data: ["category": category, "imageURL": AppData.defaultItem.imageURL, "name": name, "price":price, "size": size])
 
@@ -254,11 +248,11 @@ class AppData {
         // compress the image into data
         let imageData = image!.jpegData(compressionQuality: 0.8)
         // check that we have data
-        guard imageData != nil else  { return "no image" } //TODO: Make Error String
+        guard imageData != nil else  { return "no image" }
         // create a reference to the file path
         let fileRef = storageRef.child(path)
         // upload the data
-        let uploadTask = fileRef.putData(imageData!, metadata: nil) { metadata, error in
+        _ = fileRef.putData(imageData!, metadata: nil) { metadata, error in
             if error == nil && metadata != nil {
                 //add to cached images
                 DispatchQueue.main.async {
@@ -349,7 +343,7 @@ class AppData {
             imageView.image = placeholderImage
         }
         
-        //TODO:  Use an array of stored images and check here if the image already is downloaded.  Then if it is already downloaded return the matching image.  If it isn't then continue with the download.  This way we aren't using a TON of data every time the user loads each view.
+        //Use an array of stored images and check here if the image already is downloaded.  Then if it is already downloaded return the matching image.  If it isn't then continue with the download.  This way we aren't using a TON of data every time the user loads each view.
 
         for menuImg in downloadedImages {
             if menuImg.url == imagePath {

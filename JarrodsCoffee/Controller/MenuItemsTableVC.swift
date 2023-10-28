@@ -69,7 +69,6 @@ class MenuItemsTableVC: UITableViewController {
     }
     
     @IBAction func addItemAction(_ sender: Any) {
-        //TODO: Add animation when adding items
         let newItem = AppData.defaultItem
         AppData.shared.shownItems.insert(newItem, at: 0)
         tableView.reloadData()
@@ -178,29 +177,21 @@ class MenuItemsTableVC: UITableViewController {
             AppData.shared.selectedItemIndex = indexPath.row
             let item = AppData.shared.shownItems[AppData.shared.selectedItemIndex]
             
-            //TODO: add spinner
-            //TODO: make this function similar to the delete item one below.
             AppData.shared.deleteImage(imageURL: item.imageURL) { err in
                 if let error = err {
-                    print("Error deleting IMAGE")
+                    print("Error deleting IMAGE: \(error)")
 
                 } else {
                     print("Success deleting IMAGE")
-
                 }
             }
 
-            //TODO: add spinner
             AppData.shared.delete(item: item, index: indexPath.row) { err in
                 if let error = err {
-                    print("Error deleting ITEM")
-                    //TODO: remove spinner
+                    print("Error deleting ITEM: \(error)")
                     tableView.reloadData()
                 } else {
                     print("Successfully deleted ITEM")
-                    //TODO: remove spinner
-                    //TODO: Add some nicer animation in the future here                     tableView.deleteRows(at: [indexPath], with: .top)
-
                     tableView.reloadData()
                     
                 }

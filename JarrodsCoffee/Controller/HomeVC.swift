@@ -72,6 +72,7 @@ class HomeVC: UIViewController {
     }
     
     func generateLoginAlert () {
+        
         //TODO: Eventually use official FireAuth here
 
         var textField = UITextField()

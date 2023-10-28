@@ -102,17 +102,13 @@ class MenuCategoriesTableVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteOption = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
-        //TODO: Implement deleted
-            print("BALETED!")
           
                     AppData.shared.selectedCatIndex = indexPath.row
                     let cat = AppData.shared.categories[AppData.shared.selectedCatIndex]
                     
-                    //TODO: add spinner
-                    //TODO: make this function similar to the delete item one below.
             AppData.shared.deleteImage(imageURL: cat.imageURL) { err in
                         if let error = err {
-                            print("Error deleting IMAGE")
+                            print("Error deleting IMAGE: \(error)")
 
                         } else {
                             print("Success deleting IMAGE")
@@ -120,19 +116,13 @@ class MenuCategoriesTableVC: UITableViewController {
                         }
                     }
 
-                    //TODO: add spinner
             AppData.shared.delete(cat: cat, index: indexPath.row) { err in
                         if let error = err {
-                            print("Error deleting CAT")
-                            //TODO: remove spinner
+                            print("Error deleting CAT: \(error)")
                             tableView.reloadData()
                         } else {
                             print("Successfully deleted CAT")
-                            //TODO: remove spinner
-                            //TODO: Add some nicer animation in the future here                     tableView.deleteRows(at: [indexPath], with: .top)
-
                             tableView.reloadData()
-                            
                         }
                     }
                 }
