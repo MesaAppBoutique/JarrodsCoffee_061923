@@ -3,7 +3,7 @@
 //  JarrodsMenuRev
 //
 //  Created by Jason Carter on 4/4/22.
-//
+//  Updated by Dave Levy 10/23
 
 import Foundation
 import UIKit
@@ -35,27 +35,6 @@ class AppData {
     let adminLoginText = "Employee Access"
     let adminLogoutText = "Log out"
     
-    
-//    /// Execute GET request for categories
-//    func fetchCategories(completion: @escaping ([String]?) -> Void) {
-//
-//
-//        let categoryURL = baseURL.appendingPathComponent("categories")
-//
-//        // create a task for network call to get the list of categories
-//        let task = URLSession.shared.dataTask(with: categoryURL) { data, response, error in
-//            // /categories endpoint decoded into a Categories object
-//            if let data = data,
-//               let jsonDictionary = ((try? JSONSerialization.jsonObject(with: data) as? [String:Any]) as [String : Any]??),
-//               let categories = jsonDictionary?["categories"] as? [String] {
-//                completion(categories)
-//            } else {
-//                completion(nil)
-//            }
-//        }
-//        // begin the call to get the list of categories
-//        task.resume()
-//    }
     
     func updateCategory(id: String, name: String, imageURL: String, image: UIImage) {
         
@@ -435,18 +414,7 @@ class AppData {
             $0.categoryId.uppercased() == categoryId.uppercased()
             
         })
-        
-//        let notFoundItems = menuItems.filter({
-//            $0.categoryId.uppercased() != categoryId.uppercased()
-//        })
-//
-//        var unassignedItems = notFoundItems.map{ (item) -> MenuItem in
-//            var _item = item
-//            _item.categoryId = "unassigned category"
-//            return _item
-//        }
-        
-        return foundItems //+ unassignedItems
+        return foundItems
     }
     
     func removeReference(to categoryId:String) {
