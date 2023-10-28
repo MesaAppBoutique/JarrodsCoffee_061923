@@ -116,37 +116,6 @@ class AppData {
                 docRef.updateData(["imageURL": imageURL])
             }
         }
-        
-        
-
-        
-        
-        
-        
-        
-        //CREATES NEW ITEM BUT WON'T UPDATE
-//        db.collection("menuItems")
-//            .whereField("uid", isEqualTo: id) //FIXME: NOT WORKING YET!
-//            .getDocuments() { (querySnapshot, err) in
-//                if let err = err {
-//                    // Some error occured
-//                } else if querySnapshot!.documents.count == 0 {
-//                    print("didn't find it, let's make a new item")
-//                    self.db.collection("menuItems").addDocument(data: ["category": category, "imageURL": imageURL, "name":name, "price":price, "size": size])
-//                } else {
-//                    print("lets update the first record with the same id")
-//                    let document = querySnapshot!.documents.first
-//                    document?.reference.updateData(["category":category, "imageURL": imageURL, "name":name, "price":price, "size": size])
-//                }
-//            }
-        
-        // Upload that data
-        
-        
-        //Do we need this HERE?
-        //FIXME:
-        //AppData.shared.downloadImagesFromCloud()
-
     }
     
     
@@ -229,13 +198,6 @@ class AppData {
                     document?.reference.updateData(["imageURL": newURL, "name": name])
                 }
             }
-        
-        // Upload that data
-        
-        
-//FIXME:
-       //AppData.shared.downloadImagesFromCloud()
-
     }
     
     func uploadImage(_ image: UIImage?) -> String {
@@ -462,10 +424,9 @@ class AppData {
     }
     
     func repairBrokenCategories () {
-        print("TODO: If an item has a category that can not be loaded in the categories database, then set that item's category as unassigned and create an unassigned category to the shared.categories array so it can be selected still")
-        //FIXME:  Add in some extra logic to find any categories that are named in the Item, but that don't exist in the Category database.
+        print("If an item has a category that can not be loaded in the categories database, then set that item's category as unassigned and create an unassigned category to the shared.categories array so it can be selected still")
+        //TODO:  Add in some extra logic to find any categories that are named in the Item, but that don't exist in the Category database.
         //If an item has a category that can not be loaded in the categories database, then set that item's category as "unassigned" and create an "unassigned" category to the shared.categories array so it can be selected still.
-        
         
     }
     
