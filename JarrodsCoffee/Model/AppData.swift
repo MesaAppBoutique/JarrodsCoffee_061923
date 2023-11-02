@@ -22,12 +22,13 @@ class AppData {
     var menuItems: [MenuItem] = []
     var shownItems: [MenuItem] = []
     var categories: [MenuCategory] = []
+    var unassignedItems: [MenuItem] = []
 
     var selectedItemIndex = 0
     var selectedCatIndex = 0
 
     static var defaultImage = UIImage(named: "Image")!
-    static var defaultItem = MenuItem(id: UUID().uuidString, categoryId: "Unassigned", imageURL: "", name: "", price: ["","",""], size: ["","",""])
+    static var defaultItem = MenuItem(id: UUID().uuidString, categoryId: "Other", imageURL: "", name: "", price: ["","",""], size: ["","",""])
     /// Base URL
     let baseURL = URL(string: "https://github.com/MesaAppBoutique/JarrodsCoffee/blob/main/JarrodsCoffee/data.json")!
     var isAdminLoggedIn = false
@@ -164,6 +165,7 @@ class AppData {
             .whereField("name", isEqualTo: name)
             .getDocuments() { (querySnapshot, err) in
                 if let err = err {
+                    print("Error: \(err)")
                     // Some error occured
                 } else if querySnapshot!.documents.count == 0 {
                     //none exist with that name, let's make a new one!
@@ -345,7 +347,7 @@ class AppData {
     func fetchMenuItems(categoryName: String = "", completion: @escaping([MenuItem]?) -> Void) {
         
         print("Loading menu items from Firestore cloud data.")
-        
+        AppData.shared.unassignedItems = [] //reset unassigned
         
         db.collection("menuItems").addSnapshotListener { [self] snapshot, error in
             if error == nil {
@@ -356,11 +358,26 @@ class AppData {
                         print("First item ID is \(item.documentID )")
                         print("Category ID is \(String(describing: item["category"]) )")
 
-                        let imageURL = item["imageURL"] as? String ?? ""
-
-                                                
+                        // Let's do some jank to check if the category exists, if it doesn't exist, let's prepare the unassigned category.
+                        var catID: String = item["category"] as? String ?? "unknown"
+//                        var isExistingCategory = false
+//
+//                        for cat in AppData.shared.categories {
+//                            if cat.id == catID {
+//                                isExistingCategory = true
+//                            }
+//                        }
+//                
+//                        //Didn't find a category, let's just throw it in the first category we find for now
+//                        if isExistingCategory == false {
+//                            if AppData.shared.categories.count > 0 {
+//                                catID = AppData.shared.categories[0].id
+//                            }
+//                        }
+//                        
+//                                                
                         return MenuItem(id: item.documentID,
-                                        categoryId: item["category"] as? String ?? "",
+                                        categoryId: catID,
                                         imageURL: item["imageURL"] as? String ?? "",
                                         name: item["name"] as? String ?? "",
                                         price: item["price"] as? [String] ?? ["unknown"],
@@ -397,16 +414,28 @@ class AppData {
                 }
                 completion(AppData.shared.categories)
             } else {
-                print("error fetching!")
+                print("error fetching categories!")
             }
         }
     }
     
-    func repairBrokenCategories () {
-        print("If an item has a category that can not be loaded in the categories database, then set that item's category as unassigned and create an unassigned category to the shared.categories array so it can be selected still")
-        //TODO:  Add in some extra logic to find any categories that are named in the Item, but that don't exist in the Category database.
-        //If an item has a category that can not be loaded in the categories database, then set that item's category as "unassigned" and create an "unassigned" category to the shared.categories array so it can be selected still.
+    func cleanupUncategorizedItems () {
+        //To prevent against menu items getting lost with a renamed category
+        //Check all the items to see if any have categories that no longer exist
+        //If they no longer exist, add a new Other category and assign its catId to the item.
         
+        for (i, item) in AppData.shared.menuItems.enumerated() {
+            var isExistingCategory = false
+            for cat in AppData.shared.categories {
+                if cat.id == item.categoryId {
+                    isExistingCategory = true
+                }
+            }
+            if isExistingCategory == false {
+                AppData.shared.menuItems[i].categoryId = MenuCategory.unassigned.id
+                AppData.shared.categories.append(MenuCategory.unassigned)
+            }
+        }
     }
     
     func menuFiltered(by categoryId: String, fromItems menuItems: [MenuItem]) -> [MenuItem] {
@@ -447,6 +476,8 @@ class AppData {
                         print("Category ID is \(String(describing: item["category"]) )")
                         
                         let imageURL = item["imageURL"] as? String ?? ""
+                        
+                 
                         
                         return MenuItem(id: item.documentID,
                                         categoryId: item["category"] as? String ?? "",
@@ -516,6 +547,9 @@ class AppData {
         //    }
     }
 
+    
+    
+    
     
     func itemFrom(data: [String:Any]) -> MenuItem? {
         

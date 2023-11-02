@@ -16,6 +16,7 @@ struct MenuCategory {
     var image: UIImage = AppData.defaultImage
     
     static let shared = MenuCategory()
+    static let unassigned = MenuCategory(id: "Other", name: "Other")
     
     func loadCategory(withId id: String) -> MenuCategory {
         
@@ -33,21 +34,13 @@ struct MenuCategory {
     func loadCategories() {
         //just the cateogry uid strings
         AppData.shared.categories = []
-        // Add to list of categories
-        //         let itemsWithUniqueCategories = MenuItem.allItems.unique{$0.category}
-        //         for each in itemsWithUniqueCategories { //ew.  But it at least adds all unique categories
-        //
-        //             let newCategory = MenuCategory(
-        //
-        //             MenuItem.categories.append(each)
-        //         }
         
         //bringing in an array of category objects
         AppData.shared.fetchCategories { categories in
             print("Categories have been fetched.")
         }
         
-        
+
         
         
     }

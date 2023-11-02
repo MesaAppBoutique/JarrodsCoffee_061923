@@ -21,35 +21,14 @@ class MenuItemsTableVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //MenuController.shared.downloadImagesFromCloud()
-//        db.collection("menuItems").addSnapshotListener { (snapshot, error) in
-//            switch (snapshot, error) {
-//            case (.none, .none):
-//                print("no data")
-//            case (.none, .some(let error)):
-//                print("some error \(error.localizedDescription)")
-//            case (.some(let snapshot), _):
-//                print("collection updated, now it contains \(snapshot.documents.count) documents")
-//            }
-//        }
-        
+     
         //fetch data and update views
         
         //Enable nav bar
         self.navigationController?.isNavigationBarHidden = false
         // Table title is capitalized category name
         title = showName.capitalized
-                
-//        // Load the menu for a given category
-//        MenuController.shared.fetchMenuItems(categoryName: category) { (menuItems) in
-//            // if we indeed got the menu items
-//
-//            if let menuItems = menuItems {
-//                // update the interface
-//                self.updateUI(with: menuItems)
-//            }
-//        }
-        
+                        
        updateUI()
         
     }

@@ -17,7 +17,15 @@ class MenuCategoriesTableVC: UITableViewController {
         
         AppData.shared.fetchCategoryData { fetched in
             AppData.shared.categories = fetched
-            self.updateUI(with: fetched)
+            
+            
+            //TODO: Fixthis
+            DispatchQueue.main.async {
+                AppData.shared.cleanupUncategorizedItems()
+                self.updateUI(with: AppData.shared.categories)
+
+            }
+            
         }
         //Enable nav bar is okay here
         self.navigationController?.isNavigationBarHidden = false
