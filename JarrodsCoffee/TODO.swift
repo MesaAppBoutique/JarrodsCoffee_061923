@@ -5,11 +5,12 @@
 // V1.0
 // REMAINING TODO ITEMS
 // -***** Get the official coffee house menu and enter data and images
+// -*** When backing out after editing images, on some table views the images are not updated until backing out completely
 // -** Move Home image, hours of operation, phone number, location, headline, menu titles to Cloud data
-// -** Move Events page description, and events listing to cloud data
 // -* Enable re-ordering of categories
 // -* Enable re-ordering of items
 // -* I think the details page design could be improved. (opinion)
+// -*** Sometimes the bottom category takes on the first category's image
 // - Test integrations:
 // ---- Map Get Directions button (not working)
 // ---- Grubhub

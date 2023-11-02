@@ -29,7 +29,7 @@ class MenuItemsTableVC: UITableViewController {
         // Table title is capitalized category name
         title = showName.capitalized
                         
-       updateUI()
+       //updateUI()
         
     }
     

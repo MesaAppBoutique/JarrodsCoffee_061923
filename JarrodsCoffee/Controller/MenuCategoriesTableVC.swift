@@ -39,6 +39,8 @@ class MenuCategoriesTableVC: UITableViewController {
         } else {
             self.navigationItem.rightBarButtonItems = []
         }
+        
+        
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
