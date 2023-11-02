@@ -5,8 +5,6 @@
 // V1.0
 // REMAINING TODO ITEMS
 // -***** Get the official coffee house menu and enter data and images
-// -*** Check that category images are deleting when updated.
-// -*** Flush unused images?
 // -** Move Home image, hours of operation, phone number, location, headline, menu titles to Cloud data
 // -** Move Events page description, and events listing to cloud data
 // -* Enable re-ordering of categories

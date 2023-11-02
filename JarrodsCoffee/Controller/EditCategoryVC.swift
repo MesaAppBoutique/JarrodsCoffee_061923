@@ -19,7 +19,7 @@ class EditCategoryVC: UIViewController {
                 
         AppData.shared.updateCategory(id: AppData.shared.categories[AppData.shared.selectedCatIndex].id, name: textField?.text ?? "" , imageURL: category?.imageURL ?? "", image: imageOutlet?.image ?? AppData.defaultImage)
 
-        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func editCategoryAction(_ sender: Any) {
@@ -68,8 +68,25 @@ extension EditCategoryVC: UIImagePickerControllerDelegate, UINavigationControlle
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         //get photo
         if let image = info[UIImagePickerController.InfoKey(rawValue:   "UIImagePickerControllerEditedImage")] as? UIImage {
-            imageOutlet?.image = image
+            self.imageOutlet?.image = image
             picker.dismiss(animated: true)
+            
+            //delete old image
+            DispatchQueue.main.async {
+                
+                AppData.shared.deleteImage(imageURL: AppData.shared.categories[AppData.shared.selectedCatIndex].imageURL) { err in
+                    if let error = err {
+                        print("Error deleting IMAGE")
+                        
+                        //assign new image to view
+                        
+                    } else {
+                        print("Success deleting IMAGE")
+                        
+                        //assign new image to view
+                    }
+                }
+            }
         }
     }
     

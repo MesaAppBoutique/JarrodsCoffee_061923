@@ -141,6 +141,8 @@ class AppData {
     /// Delete the associated image from the Firebase Storage
     func deleteImage(imageURL: String, completion: @escaping (Error?) -> Void) {
         
+        print("Delete an image with url = \(imageURL)")
+        
         let storageRef = Storage.storage().reference()
         
         let fileRef = storageRef.child(imageURL)
